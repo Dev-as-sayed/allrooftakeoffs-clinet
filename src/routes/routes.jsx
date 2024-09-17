@@ -1,9 +1,16 @@
 import { createBrowserRouter } from "react-router-dom";
-import App from "../App";
+import User from "../Layout/user";
+import UserTable from "../pages/userTable";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <User />,
+    children: [
+      {
+        path: "/",
+        element: <UserTable />,
+      },
+    ],
   },
 ]);

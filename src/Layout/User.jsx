@@ -1,14 +1,15 @@
-import { Layout } from "antd";
-import { Content, Footer, Header } from "antd/es/layout/layout";
+import NavBar from "../shared/NavBar";
+import { Outlet } from "react-router-dom";
 
 const User = () => {
   return (
-    <div>
-      <Layout>
-        <Header>Header</Header>
-        <Content>Content</Content>
-        <Footer>Footer</Footer>
-      </Layout>
+    <div className="bg-stoke px-24">
+      <div className="">
+        <NavBar />
+      </div>
+      <div>
+        <Outlet />
+      </div>
     </div>
   );
 };
