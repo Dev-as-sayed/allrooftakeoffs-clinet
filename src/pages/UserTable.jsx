@@ -1,4 +1,8 @@
+import { Button, Drawer } from "antd";
 import { useState } from "react";
+import { GoChevronDown } from "react-icons/go";
+import { MdOutlineFileDownload } from "react-icons/md";
+import Details from "./Details";
 
 const UserTable = () => {
   const [activeButton, setActiveButton] = useState("All Project");
@@ -103,7 +107,7 @@ const UserTable = () => {
 
   return (
     <div className="min-h-screen">
-      <div className="flex justify-between">
+      <div className="flex justify-between my-6">
         <input
           type="text"
           className="px-6 h-9 rounded-md placeholder:text-medium "
@@ -132,43 +136,49 @@ const UserTable = () => {
           </button>
         </div>
       </div>
-      <div>
-        <table className="w-full">
-          <tr className="text-left">
-            <th>Company</th>
-            <th>Contact</th>
-            <th>Country</th>
-          </tr>
-          <tr>
-            <td>Alfreds Futterkiste</td>
-            <td>Maria Anders</td>
-            <td>Germany</td>
-          </tr>
-          <tr>
-            <td>Centro comercial Moctezuma</td>
-            <td>Francisco Chang</td>
-            <td>Mexico</td>
-          </tr>
-          <tr>
-            <td>Ernst Handel</td>
-            <td>Roland Mendel</td>
-            <td>Austria</td>
-          </tr>
-          <tr>
-            <td>Island Trading</td>
-            <td>Helen Bennett</td>
-            <td>UK</td>
-          </tr>
-          <tr>
-            <td>Laughing Bacchus Winecellars</td>
-            <td>Yoshi Tannamuri</td>
-            <td>Canada</td>
-          </tr>
-          <tr>
-            <td>Magazzini Alimentari Riuniti</td>
-            <td>Giovanni Rovelli</td>
-            <td>Italy</td>
-          </tr>
+      <div className="overflow-x-auto bg-white p-4 rounded-md ">
+        <table className="w-full min-w-[600px]">
+          <thead>
+            <tr className="text-left h-10 bg-primary-10 text-medium ">
+              <td className="pl-2">
+                <span className="flex">
+                  Project Name <GoChevronDown />
+                </span>
+              </td>
+              <td>Country</td>
+              <td>Posting date</td>
+              <td>Cost</td>
+              <td>Dateline</td>
+              <td>Action</td>
+            </tr>
+          </thead>
+          <tbody>
+            {tData.map((data) => (
+              <>
+                <tr className="border-t-[1px] text-semiBold">
+                  <td className="pl-2">
+                    <span className="font-semibold">{data.name}</span>
+                    <br />
+                    <span>{data.description}</span>
+                  </td>
+                  <td>{data.country}</td>
+                  <td>{data.posting_date}</td>
+                  <td>${data.cost}</td>
+                  <td>{data.dateline}</td>
+                  <td className="flex gap-2 text-primary my-2">
+                    <Details />
+                    <button className="px-2 py-1 rounded-md border-2 border-primary">
+                      <span className="flex gap-2">
+                        <MdOutlineFileDownload className="mt-1" /> Download
+                      </span>
+                    </button>
+                  </td>
+                </tr>
+              </>
+            ))}
+
+            {/* Add more rows as needed */}
+          </tbody>
         </table>
       </div>
     </div>
