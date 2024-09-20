@@ -12,10 +12,10 @@ export const router = createBrowserRouter([
         path: "/",
         element: <UserTable />,
       },
-      {
-        path: "/login",
-        element: <Login />,
-      },
     ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
   },
 ]);
