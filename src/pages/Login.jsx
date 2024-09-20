@@ -1,5 +1,9 @@
 const Login = () => {
-  return <div></div>;
+  return (
+    <div>
+      <img src="../assets/auth.png" alt="" />
+    </div>
+  );
 };
 
 export default Login;

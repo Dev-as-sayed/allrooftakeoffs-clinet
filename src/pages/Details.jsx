@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Button, Drawer } from "antd";
-const Details = () => {
+const Details = ({ data }) => {
+  console.log(data);
+
   const [open, setOpen] = useState(false);
   const showDrawer = () => {
     setOpen(true);

@@ -1,4 +1,3 @@
-import { Button, Drawer } from "antd";
 import { useState } from "react";
 import { GoChevronDown } from "react-icons/go";
 import { MdOutlineFileDownload } from "react-icons/md";
@@ -166,7 +165,7 @@ const UserTable = () => {
                   <td>${data.cost}</td>
                   <td>{data.dateline}</td>
                   <td className="flex gap-2 text-primary my-2">
-                    <Details />
+                    <Details data={data} />
                     <button className="px-2 py-1 rounded-md border-2 border-primary">
                       <span className="flex gap-2">
                         <MdOutlineFileDownload className="mt-1" /> Download
