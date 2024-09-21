@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Drawer } from "antd";
+import { Button, Drawer, Space } from "antd";
 const Details = ({ data }) => {
   console.log(data);
 
@@ -20,12 +20,22 @@ const Details = ({ data }) => {
         View
       </Button>
       <Drawer
+        extra={
+          <Space>
+            <Button onClick={onClose}>Cancel</Button>
+            <Button type="primary" onClick={onClose}>
+              OK
+            </Button>
+          </Space>
+        }
         title="Multi-level drawer"
-        width={520}
+        width={370}
         closable={false}
         onClose={onClose}
         open={open}
-      ></Drawer>
+      >
+        <h1>hlw world</h1>
+      </Drawer>
     </>
   );
 };
