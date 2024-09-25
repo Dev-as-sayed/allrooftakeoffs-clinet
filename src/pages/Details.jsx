@@ -1,6 +1,9 @@
 import { useState } from "react";
+import DrawerProjects from "../Components/DrawerDetails/DrawerProjects";
+
 import { Button, Drawer, Space } from "antd";
-const Details = ({ data }) => {
+import DrawerUploadProject from "../Components/DrawerDetails/DrawerUploadProject";
+const Details = ({ data, children, type }) => {
   console.log(data);
 
   const [open, setOpen] = useState(false);
@@ -17,7 +20,7 @@ const Details = ({ data }) => {
         className="text-primary bg-white border-stoke hover:text-white hover:bg-primary"
         onClick={showDrawer}
       >
-        View
+        {children}
       </Button>
       <Drawer
         extra={
@@ -34,7 +37,8 @@ const Details = ({ data }) => {
         onClose={onClose}
         open={open}
       >
-        <h1>hlw world</h1>
+        {type === "projects" && <DrawerProjects />}
+        {type === "uploadProject" && <DrawerUploadProject />}
       </Drawer>
     </>
   );
