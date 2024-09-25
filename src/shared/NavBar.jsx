@@ -4,6 +4,7 @@ import profileImg from "../assets/profile.png";
 import detialIcon from "../assets/detailIcon.png";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { Button } from "antd";
 
 const NavBar = () => {
   const [activeLink, setActiveLink] = useState("users");
@@ -18,7 +19,7 @@ const NavBar = () => {
         <img src={logo} alt="" />
         <p className="py-0 w-fit text-medium">ALL ROOF TAKE-OFFS</p>
       </div>
-      {isAdmin ? (
+      {isAdmin && (
         <div className="h-fit flex my-auto text-textGray">
           <ul className="flex gap-4 text-semiBold">
             <li>
@@ -49,10 +50,13 @@ const NavBar = () => {
             </li>
           </ul>
         </div>
-      ) : (
-        <></>
       )}
       <div className="flex gap-3 h-fit">
+        {isAdmin && (
+          <Button className="text-white bg-primary my-auto">
+            Upload Project
+          </Button>
+        )}
         <button>
           <CiBellOn className="w-10 h-10 p-2 border-2 rounded-full" />
         </button>

@@ -1,5 +1,5 @@
-import { GoChevronDown } from "react-icons/go";
-import Details from "../../pages/Details";
+import { Button, Checkbox, Modal } from "antd";
+import React from "react";
 
 const users = [
   {
@@ -99,67 +99,52 @@ const users = [
       "https://www.shutterstock.com/image-photo/indian-student-profile-picture-260nw-2508708153.jpg",
   },
 ];
+const AsignUser = () => {
+  const [open, setOpen] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
+  const showLoading = () => {
+    setOpen(true);
+    setLoading(true);
 
-export default function AllUsersTable() {
+    // Simple loading mock. You should add cleanup logic in real world.
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  };
   return (
     <>
-      <thead>
-        <tr className="text-left h-10 bg-primary-10 text-medium ">
-          <td className="pl-2">
-            <span className="flex items-center gap-2 text-sm">
-              Client Name <GoChevronDown />
-            </span>
-          </td>
-          <td>
-            <span className="flex items-center gap-2 text-sm">
-              Address <GoChevronDown />
-            </span>
-          </td>
-          <td>
-            <span className="flex items-center gap-2 text-sm">
-              Phone <GoChevronDown />
-            </span>
-          </td>
-          <td>
-            <span className="flex items-center gap-2 text-sm">
-              Email <GoChevronDown />
-            </span>
-          </td>
-          <td>
-            <span className="flex items-center gap-2 text-sm">
-              Project Assign <GoChevronDown />
-            </span>
-          </td>
-          <td>Action</td>
-        </tr>
-      </thead>
-      <tbody>
-        {users.map((data) => (
-          <>
-            <tr key={data.id} className="border-t-[1px] text-semiBold">
-              <td className="pl-2 flex items-center gap-2 justify-start">
-                <figure className="rounded-full w-12">
-                  <img
-                    className="rounded-full w-full h-full"
-                    src={data.image}
-                    alt=""
-                  />
-                </figure>
-                <span className="font-semibold">{data.name}</span>
-              </td>
-              <td>{data.address}</td>
-              <td>{data.phone}</td>
-              <td>${data.email}</td>
-              <td>{data.projectAssign}</td>
-              <td className="flex gap-2 text-primary my-2">
-                <Details type={"projects"}>View Projects</Details>
-              </td>
-            </tr>
-          </>
+      <Button
+        type="primary"
+        className="bg-white text-textBlack border-secondary"
+        onClick={showLoading}
+      >
+        Assign user
+      </Button>
+      <Modal
+        title={<p>Loading Modal</p>}
+        footer={
+          <Button type="primary" className="w-full" onClick={showLoading}>
+            Confirm
+          </Button>
+        }
+        loading={loading}
+        open={open}
+        onCancel={() => setOpen(false)}
+        width={300}
+      >
+        {users.map((user) => (
+          <div
+            key={user?.id}
+            className="flex gap-2 my-3 justify-start items-center"
+          >
+            <Checkbox />
+            <img src={user.image} className="w-10 rounded-full" alt="" />
+            <p className="text-lg">{user.name}</p>
+          </div>
         ))}
-
-        {/* Add more rows as needed */}
-      </tbody>
+      </Modal>
     </>
   );
-}
+};
+
+export default AsignUser;

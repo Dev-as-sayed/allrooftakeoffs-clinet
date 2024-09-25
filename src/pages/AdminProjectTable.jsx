@@ -1,11 +1,12 @@
 import { useState } from "react";
-import Details from "./Details";
 import { MdOutlineFileDownload } from "react-icons/md";
+import Details from "./Details";
 import { GoChevronDown } from "react-icons/go";
+import AsignUser from "../Components/AsignUser";
 
-const UserTable = () => {
+const AdminProjectTable = () => {
   const [activeButton, setActiveButton] = useState("All Project");
-  const tData = [
+  const projects = [
     {
       name: "Product A",
       description:
@@ -29,6 +30,16 @@ const UserTable = () => {
       summary:
         "Perfect for long-distance runners, offering comfort and durability for all terrains.",
       product_classification: "Footwear",
+      user: {
+        id: 6,
+        name: "Sophia Miller",
+        email: "sophia.miller@example.com",
+        address: "876 Birch St, Miami, FL 33101",
+        phone: "+1 (305) 777-3456",
+        projectAssign: 6,
+        image:
+          "https://pics.craiyon.com/2023-11-26/oMNPpACzTtO5OVERUZwh3Q.webp",
+      },
     },
     {
       name: "Office Chair",
@@ -53,6 +64,16 @@ const UserTable = () => {
       summary:
         "These earbuds offer superior sound quality and noise-cancelling technology, perfect for music lovers.",
       product_classification: "Accessories",
+      user: {
+        id: 4,
+        name: "Emily Davis",
+        email: "emily.davis@example.com",
+        address: "321 Oak St, Houston, TX 77002",
+        phone: "+1 (713) 999-1234",
+        projectAssign: 7,
+        image:
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0BgjHcHUjk1OijBj0nzw-Gdp4Og6cgk9OtnktYg6EA1gjiqsTRy-ZXpy97LleR4-FpGI&usqp=CAU",
+      },
     },
     {
       name: "Product A",
@@ -65,6 +86,16 @@ const UserTable = () => {
       summary:
         "This smartphone offers fast performance with the latest processor, high-resolution camera, and long battery life.",
       product_classification: "Electronics",
+      user: {
+        id: 3,
+        name: "Robert Brown",
+        email: "robert.brown@example.com",
+        address: "789 Pine St, Chicago, IL 60601",
+        phone: "+1 (312) 555-2468",
+        projectAssign: 2,
+        image:
+          "https://pics.craiyon.com/2024-06-08/3DqbWy0eQDed7KNPy6eXZQ.webp",
+      },
     },
     {
       name: "Running Shoes",
@@ -77,6 +108,16 @@ const UserTable = () => {
       summary:
         "Perfect for long-distance runners, offering comfort and durability for all terrains.",
       product_classification: "Footwear",
+      user: {
+        id: 2,
+        name: "Jane Smith",
+        email: "jane.smith@example.com",
+        address: "456 Elm St, Los Angeles, CA 90001",
+        phone: "+1 (213) 987-6543",
+        projectAssign: 5,
+        image:
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTacBEOxzVt2idhxO0WXyuPKzHanDF8qupFBJSWQAuy0dk324BY92xqKOgh17AdWsx4-tk&usqp=CAU",
+      },
     },
     {
       name: "Office Chair",
@@ -89,6 +130,16 @@ const UserTable = () => {
       summary:
         "Designed for long hours of comfort, this chair improves posture and reduces back strain.",
       product_classification: "Furniture",
+      user: {
+        id: 1,
+        name: "John Doe",
+        email: "john.doe@example.com",
+        address: "123 Main St, New York, NY 10001",
+        phone: "+1 (123) 456-7890",
+        projectAssign: 3,
+        image:
+          "https://pics.craiyon.com/2023-11-26/oMNPpACzTtO5OVERUZwh3Q.webp",
+      },
     },
     {
       name: "Wireless Earbuds",
@@ -101,6 +152,16 @@ const UserTable = () => {
       summary:
         "These earbuds offer superior sound quality and noise-cancelling technology, perfect for music lovers.",
       product_classification: "Accessories",
+      user: {
+        id: 10,
+        name: "Isabella Thompson",
+        email: "isabella.thompson@example.com",
+        address: "789 Aspen St, Denver, CO 80201",
+        phone: "+1 (303) 555-7890",
+        projectAssign: 3,
+        image:
+          "https://www.shutterstock.com/image-photo/indian-student-profile-picture-260nw-2508708153.jpg",
+      },
     },
   ];
 
@@ -112,7 +173,7 @@ const UserTable = () => {
           className="px-6 h-9 rounded-md placeholder:text-medium "
           placeholder="Search"
         />
-        <div className="flex gap-6 py-1 px-1 text-medium text-textGray rounded-full bg-white w-fit ">
+        <div className="flex gap-6 py-1 px-1 text-medium text-textGray rounded-full bg-white w-fit">
           <button
             className={`px-4 py-1 rounded-full transition-colors duration-300 ${
               activeButton === "All Project"
@@ -131,7 +192,17 @@ const UserTable = () => {
             }`}
             onClick={() => setActiveButton("Last Update")}
           >
-            Last Update
+            New Project
+          </button>
+          <button
+            className={`px-4 py-1 rounded-full transition-colors duration-300 ${
+              activeButton === "Unassigns Projects"
+                ? "bg-secondary text-white"
+                : "bg-transparent text-textGray"
+            }`}
+            onClick={() => setActiveButton("Unassigns Projects")}
+          >
+            Unassigns Projects
           </button>
         </div>
       </div>
@@ -139,11 +210,12 @@ const UserTable = () => {
         <table className="w-full min-w-[600px]">
           <thead>
             <tr className="text-left h-10 bg-primary-10 text-medium ">
-              <td className="pl-2">
+              <td className="pl-2 max-w-52">
                 <span className="flex">
                   Project Name <GoChevronDown />
                 </span>
               </td>
+              <td>Assign With</td>
               <td>Country</td>
               <td>Posting date</td>
               <td>Cost</td>
@@ -152,13 +224,29 @@ const UserTable = () => {
             </tr>
           </thead>
           <tbody>
-            {tData.map((data) => (
+            {projects.map((data) => (
               <>
                 <tr className="border-t-[1px] text-semiBold">
-                  <td className="pl-2">
+                  <td className="pl-2 max-w-52">
                     <span className="font-semibold">{data.name}</span>
                     <br />
                     <span>{data.description}</span>
+                  </td>
+                  <td className="flex items-center my-2">
+                    {data.user ? (
+                      <>
+                        <img
+                          src={data.user?.image}
+                          alt=""
+                          className="w-10 rounded-full"
+                        />
+                        <p className="my-2">{data.user?.name}</p>
+                      </>
+                    ) : (
+                      <>
+                        <AsignUser />
+                      </>
+                    )}
                   </td>
                   <td>{data.country}</td>
                   <td>{data.posting_date}</td>
@@ -186,4 +274,4 @@ const UserTable = () => {
   );
 };
 
-export default UserTable;
+export default AdminProjectTable;

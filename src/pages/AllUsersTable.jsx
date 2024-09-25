@@ -1,5 +1,6 @@
 import { GoChevronDown } from "react-icons/go";
-import Details from "../../pages/Details";
+import Details from "./Details";
+import { useState } from "react";
 
 const users = [
   {
@@ -101,8 +102,114 @@ const users = [
 ];
 
 export default function AllUsersTable() {
+  const [activeButton, setActiveButton] = useState("All Users");
+
   return (
     <>
+      <div className="min-h-screen">
+        <div className="flex justify-between my-6">
+          <input
+            type="text"
+            className="px-6 h-9 rounded-md placeholder:text-medium "
+            placeholder="Search"
+          />
+          <div className="flex gap-6 py-1 px-1 text-medium text-textGray rounded-full bg-white w-fit">
+            <button
+              className={`px-4 py-1 rounded-full transition-colors duration-300 ${
+                activeButton === "All Users"
+                  ? "bg-secondary text-white"
+                  : "bg-transparent text-textGray"
+              }`}
+              onClick={() => setActiveButton("All Users")}
+            >
+              All Users
+            </button>
+            <button
+              className={`px-4 py-1 rounded-full transition-colors duration-300 ${
+                activeButton === "Last Update"
+                  ? "bg-secondary text-white"
+                  : "bg-transparent text-textGray"
+              }`}
+              onClick={() => setActiveButton("Last Update")}
+            >
+              New User
+            </button>
+            <button
+              className={`px-4 py-1 rounded-full transition-colors duration-300 ${
+                activeButton === "Unassigns Projects"
+                  ? "bg-secondary text-white"
+                  : "bg-transparent text-textGray"
+              }`}
+              onClick={() => setActiveButton("Unassigns Projects")}
+            >
+              Last Updated
+            </button>
+          </div>
+        </div>
+        <div className="overflow-x-auto bg-white p-4 rounded-md ">
+          <table className="w-full min-w-[600px]">
+            <thead>
+              <tr className="text-left h-10 bg-primary-10 text-medium ">
+                <td className="pl-2">
+                  <span className="flex items-center gap-2 text-sm">
+                    Client Name <GoChevronDown />
+                  </span>
+                </td>
+                <td>
+                  <span className="flex items-center gap-2 text-sm">
+                    Address <GoChevronDown />
+                  </span>
+                </td>
+                <td>
+                  <span className="flex items-center gap-2 text-sm">
+                    Phone <GoChevronDown />
+                  </span>
+                </td>
+                <td>
+                  <span className="flex items-center gap-2 text-sm">
+                    Email <GoChevronDown />
+                  </span>
+                </td>
+                <td>
+                  <span className="flex items-center gap-2 text-sm">
+                    Project Assign <GoChevronDown />
+                  </span>
+                </td>
+                <td>Action</td>
+              </tr>
+            </thead>
+            <tbody>
+              {users.map((data) => (
+                <>
+                  <tr key={data.id} className="border-t-[1px] text-semiBold">
+                    <td className="pl-2 flex items-center gap-2 justify-start">
+                      <figure className="rounded-full w-12">
+                        <img
+                          className="rounded-full w-full h-full"
+                          src={data.image}
+                          alt=""
+                        />
+                      </figure>
+                      <span className="font-semibold">{data.name}</span>
+                    </td>
+                    <td>{data.address}</td>
+                    <td>{data.phone}</td>
+                    <td>${data.email}</td>
+                    <td>{data.projectAssign}</td>
+                    <td className="flex gap-2 text-primary my-2">
+                      <Details type={"projects"} data={data}>
+                        View Projects
+                      </Details>
+                    </td>
+                  </tr>
+                </>
+              ))}
+
+              {/* Add more rows as needed */}
+            </tbody>
+          </table>
+        </div>
+      </div>
       <thead>
         <tr className="text-left h-10 bg-primary-10 text-medium ">
           <td className="pl-2">
@@ -152,7 +259,9 @@ export default function AllUsersTable() {
               <td>${data.email}</td>
               <td>{data.projectAssign}</td>
               <td className="flex gap-2 text-primary my-2">
-                <Details type={"projects"}>View Projects</Details>
+                <Details type={"projects"} data={data}>
+                  View Projects
+                </Details>
               </td>
             </tr>
           </>

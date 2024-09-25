@@ -1,9 +1,9 @@
+import { Button, Drawer, Space } from "antd";
 import { useState } from "react";
-import Details from "./Details";
-import { MdOutlineFileDownload } from "react-icons/md";
 import { GoChevronDown } from "react-icons/go";
+import { MdOutlineFileDownload } from "react-icons/md";
 
-const UserTable = () => {
+const Projects = () => {
   const [activeButton, setActiveButton] = useState("All Project");
   const tData = [
     {
@@ -104,6 +104,14 @@ const UserTable = () => {
     },
   ];
 
+  const [open, setOpen] = useState(false);
+  const showDrawer = () => {
+    setOpen(true);
+  };
+  const onClose = () => {
+    setOpen(false);
+  };
+
   return (
     <div className="min-h-screen">
       <div className="flex justify-between my-6">
@@ -112,7 +120,7 @@ const UserTable = () => {
           className="px-6 h-9 rounded-md placeholder:text-medium "
           placeholder="Search"
         />
-        <div className="flex gap-6 py-1 px-1 text-medium text-textGray rounded-full bg-white w-fit ">
+        <div className="flex gap-6 py-1 px-1 text-medium text-textGray rounded-full bg-white w-fit">
           <button
             className={`px-4 py-1 rounded-full transition-colors duration-300 ${
               activeButton === "All Project"
@@ -131,7 +139,17 @@ const UserTable = () => {
             }`}
             onClick={() => setActiveButton("Last Update")}
           >
-            Last Update
+            New Project
+          </button>
+          <button
+            className={`px-4 py-1 rounded-full transition-colors duration-300 ${
+              activeButton === "Unassigns Projects"
+                ? "bg-secondary text-white"
+                : "bg-transparent text-textGray"
+            }`}
+            onClick={() => setActiveButton("Unassigns Projects")}
+          >
+            Unassigns Projects
           </button>
         </div>
       </div>
@@ -165,9 +183,32 @@ const UserTable = () => {
                   <td>${data.cost}</td>
                   <td>{data.dateline}</td>
                   <td className="flex gap-2 text-primary my-2">
-                    <Details type={"uploadProject"} data={data}>
-                      View
-                    </Details>
+                    <>
+                      <Button
+                        type="primary"
+                        className="text-primary bg-white border-stoke hover:text-white hover:bg-primary"
+                        onClick={showDrawer}
+                      >
+                        View
+                      </Button>
+                      <Drawer
+                        extra={
+                          <Space>
+                            <Button onClick={onClose}>Cancel</Button>
+                            <Button type="primary" onClick={onClose}>
+                              OK
+                            </Button>
+                          </Space>
+                        }
+                        title="Multi-level drawer"
+                        width={370}
+                        closable={false}
+                        onClose={onClose}
+                        open={open}
+                      >
+                        <h1>hlw world</h1>
+                      </Drawer>
+                    </>
                     <button className="px-2 py-1 rounded-md border-2 border-primary">
                       <span className="flex gap-2">
                         <MdOutlineFileDownload className="mt-1" /> Download
@@ -186,4 +227,4 @@ const UserTable = () => {
   );
 };
 
-export default UserTable;
+export default Projects;
