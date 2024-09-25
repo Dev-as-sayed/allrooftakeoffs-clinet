@@ -3,6 +3,7 @@ import User from "../Layout/user";
 import UserTable from "../pages/userTable";
 import Login from "../pages/Login";
 import Ragister from "../pages/Ragister";
+// import PrivateRoutes from "./PrivateRoutes";
 
 export const router = createBrowserRouter([
   {

@@ -1,8 +1,12 @@
 import { Input } from "antd";
 import authImg from "../assets/auth.png";
 import logo from "../assets/logo.png";
+import { useContext } from "react";
+import { AuthContaxt } from "../auth/AuthProvider";
+import { Navigate } from "react-router-dom";
 
 const Login = () => {
+  const { setUser, user } = useContext(AuthContaxt);
   const handelLogin = (e) => {
     e.preventDefault();
 
@@ -11,6 +15,11 @@ const Login = () => {
     const password = form.password.value;
 
     console.log({ email, password });
+    setUser(true);
+
+    if (user) {
+      return <Navigate to="/" />;
+    }
   };
   return (
     <div className="flex flex-col-reverse md:flex-row h-screen">
