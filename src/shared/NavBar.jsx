@@ -1,10 +1,10 @@
 import { CiBellOn } from "react-icons/ci";
 import logo from "../assets/logo.png";
-import profileImg from "../assets/profile.png";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import UploadeProjects from "../Components/UploadeProjects";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import ProfileDroyer from "../Components/ProfileDroyer";
 
 const NavBar = () => {
   const [activeLink, setActiveLink] = useState("users");
@@ -63,7 +63,8 @@ const NavBar = () => {
         <button>
           <CiBellOn className="w-10 h-10 p-2 border-2 border-gray-400 rounded-full" />
         </button>
-        <img src={profileImg} className=" w-11 h-11" alt="" />
+        <ProfileDroyer />
+        {/* <img src={profileImg} className=" w-11 h-11" alt="" /> */}
         <div className="">
           <h3 className="">A M Sayed</h3>
           <p className="text-textGray">Web developer</p>

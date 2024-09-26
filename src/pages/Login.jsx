@@ -2,11 +2,12 @@ import { Input } from "antd";
 import authImg from "../assets/auth.png";
 import logo from "../assets/logo.png";
 import { useContext } from "react";
-import { AuthContaxt } from "../auth/AuthProvider";
-import { Navigate } from "react-router-dom";
+import { AuthContext } from "../auth/AuthProvider";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const { setUser, user } = useContext(AuthContaxt);
+  const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
   const handelLogin = (e) => {
     e.preventDefault();
 
@@ -15,11 +16,8 @@ const Login = () => {
     const password = form.password.value;
 
     console.log({ email, password });
-    setUser(true);
-
-    if (user) {
-      return <Navigate to="/" />;
-    }
+    login();
+    navigate("/");
   };
   return (
     <div className="flex flex-col-reverse md:flex-row h-screen">
@@ -69,6 +67,9 @@ const Login = () => {
             Login
           </button>
         </form>
+        <p className="text-blue-400 underline mt-4">
+          <Link to="/ragister">Create accout</Link>
+        </p>
       </div>
     </div>
   );

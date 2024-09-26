@@ -1,6 +1,7 @@
 import { Checkbox, Input } from "antd";
 import authImg from "../assets/auth.png";
 import logo from "../assets/logo.png";
+import { Link } from "react-router-dom";
 
 const Ragister = () => {
   const onChange = (e) => {
@@ -114,6 +115,9 @@ const Ragister = () => {
             Create account
           </button>
         </form>
+        <p className="text-blue-400 underline mt-4">
+          <Link to="/login">Login naw</Link>
+        </p>
       </div>
     </div>
   );

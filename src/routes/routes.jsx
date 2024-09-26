@@ -5,6 +5,7 @@ import Login from "../pages/Login";
 import Ragister from "../pages/Ragister";
 import AllUsersTable from "../pages/AllUsersTable";
 import AdminProjectTable from "../pages/AdminProjectTable";
+import PrivateRoutes from "./PrivateRoutes";
 // import PrivateRoutes from "./PrivateRoutes";
 
 export const router = createBrowserRouter([
@@ -14,7 +15,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <UserTable />,
+        element: (
+          <PrivateRoutes>
+            <UserTable />
+          </PrivateRoutes>
+        ),
       },
       {
         path: "/users",
