@@ -3,6 +3,7 @@ import { useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { Button, Drawer, Space } from "antd";
 import { FaArrowLeftLong } from "react-icons/fa6";
+import { MdOutlineFileDownload } from "react-icons/md";
 // eslint-disable-next-line react/prop-types
 const Details = ({ data }) => {
   console.log(data);
@@ -154,6 +155,29 @@ const Details = ({ data }) => {
                 </div>
               </>
             )}
+          </div>
+          <div className="bg-bgGray p-3 rounded-lg my-3">
+            {/* BUTTON SECTION */}
+            <div className="flex justify-between" onClick={toggleOrg}>
+              <h2 className="font-semibold text-textBlack">
+                Notice Details and document
+              </h2>
+              <FaChevronDown />
+              {/* {isOpenOrg ? <FaChevronUp /> : <FaChevronDown />} */}
+            </div>
+            <div>
+              <div className="h-[1px] my-2 bg-stoke" />
+              <p className="text-textGray font-sans my-2">
+                Bidding package informationApplicable processBidding lawName of
+                bidding packageBidding package TV-02: Geological
+                surveyInvestorBTL VÙN 4 HAI QUANInviting
+              </p>
+              <button className="px-2 py-1 rounded-md w-full  bg-primary">
+                <span className="flex justify-center gap-2">
+                  <MdOutlineFileDownload className="mt-1" /> Download
+                </span>
+              </button>
+            </div>
           </div>
         </div>
       </Drawer>

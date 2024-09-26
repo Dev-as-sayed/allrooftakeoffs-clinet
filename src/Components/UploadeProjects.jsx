@@ -1,9 +1,8 @@
 import { Button, Drawer, Space } from "antd";
 import { useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
-import { InboxOutlined } from "@ant-design/icons";
 import { message, Upload } from "antd";
-import { MdUploadFile } from "react-icons/md";
+import { MdOutlineFileDownload, MdUploadFile } from "react-icons/md";
 
 const UploadeProjects = () => {
   const [open, setOpen] = useState(false);
@@ -43,7 +42,7 @@ const UploadeProjects = () => {
   };
   return (
     <div>
-      <Button className=" text-white bg-primary " onClick={showDrawer}>
+      <Button className=" text-white bg-primary py-5" onClick={showDrawer}>
         Upload Project
       </Button>
       <Drawer
@@ -64,16 +63,25 @@ const UploadeProjects = () => {
         onClose={onClose}
         open={open}
       >
-        <div className="h-44 bg-blue-50 border-dotted border-blue-600 rounded-md">
-          <Dragger {...props} className="bg-secondary">
-            <p className="flex justify-center my-2">
-              {/* <InboxOutlined /> */}
-              <MdUploadFile className="text-2xl text-textGray " />
-            </p>
-            <p className="ant-upload-text">
-              Click or drag file to this area to upload
-            </p>
-          </Dragger>
+        <div className="min-h-[80vh] flex flex-col justify-between">
+          <div className="h-44 bg-blue-50 border-dotted border-blue-600 rounded-md">
+            <Dragger {...props} className="bg-secondary">
+              <p className="flex justify-center my-2">
+                {/* <InboxOutlined /> */}
+                <MdUploadFile className="text-2xl text-textGray " />
+              </p>
+              <p className="ant-upload-text">
+                Click or drag file to this area to upload
+              </p>
+            </Dragger>
+          </div>
+          <div>
+            <button className="px-2 py-1 rounded-md w-full  bg-primary">
+              <span className="flex justify-center gap-2">
+                <MdOutlineFileDownload className="mt-1" /> Download
+              </span>
+            </button>
+          </div>
         </div>
       </Drawer>
     </div>

@@ -1,5 +1,6 @@
 import { Button, Drawer, Space } from "antd";
 import { useState } from "react";
+import { CiSearch } from "react-icons/ci";
 import { GoChevronDown } from "react-icons/go";
 import { MdOutlineFileDownload } from "react-icons/md";
 
@@ -115,11 +116,16 @@ const Projects = () => {
   return (
     <div className="min-h-screen">
       <div className="flex justify-between my-6">
-        <input
-          type="text"
-          className="px-6 h-9 rounded-md placeholder:text-medium "
-          placeholder="Search"
-        />
+        <div>
+          <div className="relative">
+            <CiSearch className="absolute top-[11px] left-2" />
+            <input
+              type="text"
+              className="pl-10 h-9 rounded-md placeholder:text-medium "
+              placeholder="Search"
+            />
+          </div>
+        </div>
         <div className="flex gap-6 py-1 px-1 text-medium text-textGray rounded-full bg-white w-fit">
           <button
             className={`px-4 py-1 rounded-full transition-colors duration-300 ${

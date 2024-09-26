@@ -61,7 +61,7 @@ const NavBar = () => {
           </div>
         )}
         <button>
-          <CiBellOn className="w-10 h-10 p-2 border-2 rounded-full" />
+          <CiBellOn className="w-10 h-10 p-2 border-2 border-gray-400 rounded-full" />
         </button>
         <img src={profileImg} className=" w-11 h-11" alt="" />
         <div className="">

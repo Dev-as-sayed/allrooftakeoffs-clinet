@@ -1,6 +1,7 @@
 import { GoChevronDown } from "react-icons/go";
 import { useState } from "react";
 import UsersTabaleDetaile from "../Components/UsersTabaleDetaile";
+import { CiSearch } from "react-icons/ci";
 
 const users = [
   {
@@ -108,11 +109,16 @@ export default function AllUsersTable() {
     <>
       <div className="min-h-screen">
         <div className="flex justify-between my-6">
-          <input
-            type="text"
-            className="px-6 h-9 rounded-md placeholder:text-medium "
-            placeholder="Search"
-          />
+          <div>
+            <div className="relative">
+              <CiSearch className="absolute top-[11px] left-2" />
+              <input
+                type="text"
+                className="pl-10 h-9 rounded-md placeholder:text-medium "
+                placeholder="Search"
+              />
+            </div>
+          </div>
           <div className="flex gap-6 py-1 px-1 text-medium text-textGray rounded-full bg-white w-fit">
             <button
               className={`px-4 py-1 rounded-full transition-colors duration-300 ${
@@ -183,7 +189,7 @@ export default function AllUsersTable() {
                 <>
                   <tr key={data.id} className="border-t-[1px] text-semiBold">
                     <td className=" items-center  justify-start">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 py-2">
                         <figure className="rounded-full w-10">
                           <img
                             className="rounded-full w-full h-full"
@@ -198,8 +204,10 @@ export default function AllUsersTable() {
                     <td>{data.phone}</td>
                     <td>${data.email}</td>
                     <td>{data.projectAssign}</td>
-                    <td className="flex gap-2 text-primary my-2">
-                      <UsersTabaleDetaile data={data} />
+                    <td className=" text-primary">
+                      <div>
+                        <UsersTabaleDetaile data={data} />
+                      </div>
                     </td>
                   </tr>
                 </>

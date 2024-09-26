@@ -2,6 +2,7 @@ import { useState } from "react";
 import Details from "./Details";
 import { MdOutlineFileDownload } from "react-icons/md";
 import { GoChevronDown } from "react-icons/go";
+import { CiSearch } from "react-icons/ci";
 
 const UserTable = () => {
   const [activeButton, setActiveButton] = useState("All Project");
@@ -107,11 +108,16 @@ const UserTable = () => {
   return (
     <div className="min-h-screen">
       <div className="flex justify-between my-6">
-        <input
-          type="text"
-          className="px-6 h-9 rounded-md placeholder:text-medium "
-          placeholder="Search"
-        />
+        <div>
+          <div className="relative">
+            <CiSearch className="absolute top-[11px] left-2" />
+            <input
+              type="text"
+              className="pl-10 h-9 rounded-md placeholder:text-medium "
+              placeholder="Search"
+            />
+          </div>
+        </div>
         <div className="flex gap-6 py-1 px-1 text-medium text-textGray rounded-full bg-white w-fit ">
           <button
             className={`px-4 py-1 rounded-full transition-colors duration-300 ${
@@ -155,7 +161,7 @@ const UserTable = () => {
             {tData.map((data) => (
               <>
                 <tr className="border-t-[1px] text-semiBold">
-                  <td className="pl-2">
+                  <td className="pl-2 py-2">
                     <span className="font-semibold">{data.name}</span>
                     <br />
                     <span>{data.description}</span>
@@ -164,14 +170,15 @@ const UserTable = () => {
                   <td>{data.posting_date}</td>
                   <td>${data.cost}</td>
                   <td>{data.dateline}</td>
-                  <td className="flex gap-2 text-primary my-2">
-                    <Details type={"uploadProject"} data={data}></Details>
-
-                    <button className="px-2 py-1 rounded-md border-2 border-primary">
-                      <span className="flex gap-2">
-                        <MdOutlineFileDownload className="mt-1" /> Download
-                      </span>
-                    </button>
+                  <td className=" text-primary my-2">
+                    <div className="flex gap-2">
+                      <Details type={"uploadProject"} data={data}></Details>
+                      <button className="px-2 py-1 rounded-md border-2 border-primary">
+                        <span className="flex gap-2">
+                          <MdOutlineFileDownload className="mt-1" /> Download
+                        </span>
+                      </button>
+                    </div>
                   </td>
                 </tr>
               </>
