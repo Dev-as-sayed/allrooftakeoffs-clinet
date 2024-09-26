@@ -232,35 +232,41 @@ const AdminProjectTable = () => {
                     <br />
                     <span>{data.description}</span>
                   </td>
-                  <td className="flex items-center gap-2 my-2">
-                    {data.user ? (
-                      <>
-                        <img
-                          src={data.user?.image}
-                          alt=""
-                          className="w-10 rounded-full"
-                        />
-                        <p className="my-2">{data.user?.name}</p>
-                      </>
-                    ) : (
-                      <>
-                        <AsignUser />
-                      </>
-                    )}
+                  <td className="items-center">
+                    <div className="flex gap-2">
+                      {data.user ? (
+                        <>
+                          <img
+                            src={data.user?.image}
+                            alt=""
+                            className="w-10 rounded-full"
+                          />
+                          <p className="my-2">{data.user?.name}</p>
+                        </>
+                      ) : (
+                        <>
+                          <div className="h-full">
+                            <AsignUser />
+                          </div>
+                        </>
+                      )}
+                    </div>
                   </td>
                   <td>{data.country}</td>
                   <td>{data.posting_date}</td>
                   <td>${data.cost}</td>
                   <td>{data.dateline}</td>
-                  <td className="flex gap-2 text-primary items-center ">
-                    <Details type={"uploadProject"} data={data}>
-                      View
-                    </Details>
-                    <button className="px-2 py-1 rounded-md border-2 border-primary">
-                      <span className="flex gap-2">
-                        <FaFileArrowUp className="mt-1" /> Download
-                      </span>
-                    </button>
+                  <td className=" text-primary items-center ">
+                    <div className="flex gap-2">
+                      <Details type={"uploadProject"} data={data}>
+                        View
+                      </Details>
+                      <button className="px-2 py-1 rounded-md border-2 border-primary">
+                        <span className="flex gap-2">
+                          <FaFileArrowUp className="mt-1" /> Download
+                        </span>
+                      </button>
+                    </div>
                   </td>
                 </tr>
               </>

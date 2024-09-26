@@ -165,9 +165,8 @@ const UserTable = () => {
                   <td>${data.cost}</td>
                   <td>{data.dateline}</td>
                   <td className="flex gap-2 text-primary my-2">
-                    <Details type={"uploadProject"} data={data}>
-                      View
-                    </Details>
+                    <Details type={"uploadProject"} data={data}></Details>
+
                     <button className="px-2 py-1 rounded-md border-2 border-primary">
                       <span className="flex gap-2">
                         <MdOutlineFileDownload className="mt-1" /> Download

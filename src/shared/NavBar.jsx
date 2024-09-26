@@ -1,10 +1,10 @@
 import { CiBellOn } from "react-icons/ci";
 import logo from "../assets/logo.png";
 import profileImg from "../assets/profile.png";
-import detialIcon from "../assets/detailIcon.png";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { Button } from "antd";
+import UploadeProjects from "../Components/UploadeProjects";
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 const NavBar = () => {
   const [activeLink, setActiveLink] = useState("users");
@@ -51,11 +51,14 @@ const NavBar = () => {
           </ul>
         </div>
       )}
-      <div className="flex gap-3 h-fit">
+      <div className="flex gap-3 h-fit items-center">
         {isAdmin && (
-          <Button className="text-white bg-primary my-auto">
-            Upload Project
-          </Button>
+          // <Button className="text-white bg-primary my-auto">
+          //   Upload Project
+          // </Button>
+          <div>
+            <UploadeProjects />
+          </div>
         )}
         <button>
           <CiBellOn className="w-10 h-10 p-2 border-2 rounded-full" />
@@ -65,7 +68,7 @@ const NavBar = () => {
           <h3 className="">A M Sayed</h3>
           <p className="text-textGray">Web developer</p>
         </div>
-        <img src={detialIcon} alt="" className="h-full my-auto " />
+        <BsThreeDotsVertical />
       </div>
     </nav>
   );

@@ -115,7 +115,7 @@ const AsignUser = () => {
     <>
       <Button
         type="primary"
-        className="bg-white text-textBlack border-secondary"
+        className="bg-white text-textBlack border-secondary shadow-none "
         onClick={showLoading}
       >
         Assign user

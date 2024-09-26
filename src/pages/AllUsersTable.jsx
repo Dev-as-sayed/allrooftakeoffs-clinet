@@ -1,6 +1,6 @@
 import { GoChevronDown } from "react-icons/go";
-import Details from "./Details";
 import { useState } from "react";
+import UsersTabaleDetaile from "../Components/UsersTabaleDetaile";
 
 const users = [
   {
@@ -182,24 +182,24 @@ export default function AllUsersTable() {
               {users.map((data) => (
                 <>
                   <tr key={data.id} className="border-t-[1px] text-semiBold">
-                    <td className="pl-2 flex items-center gap-2 justify-start">
-                      <figure className="rounded-full w-12">
-                        <img
-                          className="rounded-full w-full h-full"
-                          src={data.image}
-                          alt=""
-                        />
-                      </figure>
-                      <span className="font-semibold">{data.name}</span>
+                    <td className=" items-center  justify-start">
+                      <div className="flex items-center gap-2">
+                        <figure className="rounded-full w-10">
+                          <img
+                            className="rounded-full w-full h-full"
+                            src={data.image}
+                            alt=""
+                          />
+                        </figure>
+                        <span className="font-semibold">{data.name}</span>
+                      </div>
                     </td>
                     <td>{data.address}</td>
                     <td>{data.phone}</td>
                     <td>${data.email}</td>
                     <td>{data.projectAssign}</td>
                     <td className="flex gap-2 text-primary my-2">
-                      <Details type={"projects"} data={data}>
-                        View Projects
-                      </Details>
+                      <UsersTabaleDetaile data={data} />
                     </td>
                   </tr>
                 </>

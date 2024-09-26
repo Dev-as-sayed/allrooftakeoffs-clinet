@@ -3,10 +3,8 @@ import { useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { Button, Drawer, Space } from "antd";
 import { FaArrowLeftLong } from "react-icons/fa6";
-// eslint-disable-next-line react/prop-types
-const Details = ({ data }) => {
-  console.log(data);
 
+const UsersTabaleDetaile = ({ data }) => {
   const [open, setOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenOrg, setIsOpenOrg] = useState(false);
@@ -38,7 +36,7 @@ const Details = ({ data }) => {
         className="text-primary bg-white border-stoke shadow-none hover:text-white hover:bg-primary"
         onClick={showDrawer}
       >
-        View
+        View Projects
       </Button>
       <Drawer
         extra={<Space></Space>}
@@ -160,4 +158,5 @@ const Details = ({ data }) => {
     </>
   );
 };
-export default Details;
+
+export default UsersTabaleDetaile;
