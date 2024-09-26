@@ -210,65 +210,6 @@ export default function AllUsersTable() {
           </table>
         </div>
       </div>
-      <thead>
-        <tr className="text-left h-10 bg-primary-10 text-medium ">
-          <td className="pl-2">
-            <span className="flex items-center gap-2 text-sm">
-              Client Name <GoChevronDown />
-            </span>
-          </td>
-          <td>
-            <span className="flex items-center gap-2 text-sm">
-              Address <GoChevronDown />
-            </span>
-          </td>
-          <td>
-            <span className="flex items-center gap-2 text-sm">
-              Phone <GoChevronDown />
-            </span>
-          </td>
-          <td>
-            <span className="flex items-center gap-2 text-sm">
-              Email <GoChevronDown />
-            </span>
-          </td>
-          <td>
-            <span className="flex items-center gap-2 text-sm">
-              Project Assign <GoChevronDown />
-            </span>
-          </td>
-          <td>Action</td>
-        </tr>
-      </thead>
-      <tbody>
-        {users.map((data) => (
-          <>
-            <tr key={data.id} className="border-t-[1px] text-semiBold">
-              <td className="pl-2 flex items-center gap-2 justify-start">
-                <figure className="rounded-full w-12">
-                  <img
-                    className="rounded-full w-full h-full"
-                    src={data.image}
-                    alt=""
-                  />
-                </figure>
-                <span className="font-semibold">{data.name}</span>
-              </td>
-              <td>{data.address}</td>
-              <td>{data.phone}</td>
-              <td>${data.email}</td>
-              <td>{data.projectAssign}</td>
-              <td className="flex gap-2 text-primary my-2">
-                <Details type={"projects"} data={data}>
-                  View Projects
-                </Details>
-              </td>
-            </tr>
-          </>
-        ))}
-
-        {/* Add more rows as needed */}
-      </tbody>
     </>
   );
 }

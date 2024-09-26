@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { MdOutlineFileDownload } from "react-icons/md";
 import Details from "./Details";
 import { GoChevronDown } from "react-icons/go";
 import AsignUser from "../Components/AsignUser";
+import { FaFileArrowUp } from "react-icons/fa6";
 
 const AdminProjectTable = () => {
   const [activeButton, setActiveButton] = useState("All Project");
@@ -232,7 +232,7 @@ const AdminProjectTable = () => {
                     <br />
                     <span>{data.description}</span>
                   </td>
-                  <td className="flex items-center my-2">
+                  <td className="flex items-center gap-2 my-2">
                     {data.user ? (
                       <>
                         <img
@@ -252,13 +252,13 @@ const AdminProjectTable = () => {
                   <td>{data.posting_date}</td>
                   <td>${data.cost}</td>
                   <td>{data.dateline}</td>
-                  <td className="flex gap-2 text-primary my-2">
+                  <td className="flex gap-2 text-primary items-center ">
                     <Details type={"uploadProject"} data={data}>
                       View
                     </Details>
                     <button className="px-2 py-1 rounded-md border-2 border-primary">
                       <span className="flex gap-2">
-                        <MdOutlineFileDownload className="mt-1" /> Download
+                        <FaFileArrowUp className="mt-1" /> Download
                       </span>
                     </button>
                   </td>

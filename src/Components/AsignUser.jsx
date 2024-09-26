@@ -109,7 +109,7 @@ const AsignUser = () => {
     // Simple loading mock. You should add cleanup logic in real world.
     setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 400);
   };
   return (
     <>
@@ -121,7 +121,7 @@ const AsignUser = () => {
         Assign user
       </Button>
       <Modal
-        title={<p>Loading Modal</p>}
+        // title={<p>Loading Modal</p>}
         footer={
           <Button type="primary" className="w-full" onClick={showLoading}>
             Confirm
