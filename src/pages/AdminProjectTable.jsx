@@ -168,8 +168,8 @@ const AdminProjectTable = () => {
 
   return (
     <div className="min-h-screen">
-      <div className="flex justify-between my-6">
-        <div>
+      <div className="w-fit mx-auto gap-2  md:flex lg:w-full md:flex-row lg:flex-row  md:justify-between lg:justify-between my-6">
+        <div className="w-fit  mx-auto md:mx-0 lg:mx-0 my-2">
           <div className="relative">
             <CiSearch className="absolute top-[11px] left-2" />
             <input
@@ -179,7 +179,7 @@ const AdminProjectTable = () => {
             />
           </div>
         </div>
-        <div className="flex gap-6 py-1 px-1 text-medium text-textGray rounded-full bg-white w-fit">
+        <div className="flex gap-4 md:gap-6 lg:gap-6 py-1 px-1 text-medium text-textGray rounded-full bg-white w-fit">
           <button
             className={`px-4 py-1 rounded-full transition-colors duration-300 ${
               activeButton === "All Project"
@@ -188,7 +188,7 @@ const AdminProjectTable = () => {
             }`}
             onClick={() => setActiveButton("All Project")}
           >
-            All Project
+            All Projects
           </button>
           <button
             className={`px-4 py-1 rounded-full transition-colors duration-300 ${
@@ -198,7 +198,7 @@ const AdminProjectTable = () => {
             }`}
             onClick={() => setActiveButton("Last Update")}
           >
-            New Project
+            New Projects
           </button>
           <button
             className={`px-4 py-1 rounded-full transition-colors duration-300 ${
@@ -208,7 +208,7 @@ const AdminProjectTable = () => {
             }`}
             onClick={() => setActiveButton("Unassigns Projects")}
           >
-            Unassigns Projects
+            Last Updated
           </button>
         </div>
       </div>

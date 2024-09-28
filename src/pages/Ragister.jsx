@@ -11,14 +11,14 @@ const Ragister = () => {
     <div className="flex flex-col-reverse md:flex-row ">
       {/* Left side: Image */}
       <div className=" flex items-center justify-center">
-        <img src={authImg} className="h-auto object-cover" alt="Auth image" />
+        <img src={authImg} className="h-auto object-cover " alt="Auth image" />
       </div>
+      {/* Right side: Form and logo */}
 
       {/* Right side: Form and logo */}
       <div className="w-full md:w-1/2 flex flex-col items-center justify-center p-6">
         <div className="w-full max-w-xs mx-auto">
           <img src={logo} className="w-32 " alt="Logo" />
-          <p className=" py-2 text-medium">ALL ROOF TAKE-OFFS</p>
           <div className="my-3 ">
             <h2 className="text-smallBold text-textBlack">
               Create an account!

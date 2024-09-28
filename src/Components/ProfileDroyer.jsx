@@ -23,7 +23,7 @@ const ProfileDroyer = () => {
   return (
     <>
       <div onClick={showDrawer} className="">
-        <img src={user.image} className=" w-11 h-11 rounded-full" alt="" />
+        <img src={user?.image} className=" w-11 h-11 rounded-full" alt="" />
       </div>
       <Drawer
         extra={<Space></Space>}
