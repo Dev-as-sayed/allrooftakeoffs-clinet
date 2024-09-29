@@ -2,8 +2,8 @@ import { useState } from "react";
 import Details from "./Details";
 import { GoChevronDown } from "react-icons/go";
 import AsignUser from "../Components/AsignUser";
-import { FaFileArrowUp } from "react-icons/fa6";
 import { CiSearch } from "react-icons/ci";
+import UploadeFile from "../Components/UploadeFile";
 
 const AdminProjectTable = () => {
   const [activeButton, setActiveButton] = useState("All Project");
@@ -267,11 +267,7 @@ const AdminProjectTable = () => {
                       <Details type={"uploadProject"} data={data}>
                         View
                       </Details>
-                      <button className="px-2 py-1 rounded-md border-2 border-primary">
-                        <span className="flex gap-2">
-                          <FaFileArrowUp className="mt-1" /> Upload File
-                        </span>
-                      </button>
+                      <UploadeFile />
                     </div>
                   </td>
                 </tr>

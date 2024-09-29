@@ -8,10 +8,10 @@ const Ragister = () => {
     console.log(`checked = ${e.target.checked}`);
   };
   return (
-    <div className="flex flex-col-reverse md:flex-row ">
+    <div className="h-fit flex flex-col-reverse md:flex-row ">
       {/* Left side: Image */}
       <div className=" flex items-center justify-center">
-        <img src={authImg} className="h-auto object-cover " alt="Auth image" />
+        <img src={authImg} className=" h-full " alt="Auth image" />
       </div>
       {/* Right side: Form and logo */}
 

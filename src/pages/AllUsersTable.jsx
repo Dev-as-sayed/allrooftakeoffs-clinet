@@ -205,7 +205,7 @@ export default function AllUsersTable() {
                     <td>${data.email}</td>
                     <td>{data.projectAssign}</td>
                     <td className=" text-primary">
-                      <div>
+                      <div className="">
                         <UsersTabaleDetaile data={data} />
                       </div>
                     </td>

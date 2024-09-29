@@ -20,15 +20,15 @@ const Login = () => {
     navigate("/");
   };
   return (
-    <div className="flex flex-col-reverse md:flex-row h-screen">
+    <div className="flex flex-col-reverse md:flex-row lg:flex-row">
       {/* Left side: Image */}
-      <div className="items-center justify-center">
-        <img src={authImg} className="h-auto object-cover" alt="Auth image" />
+      <div className=" md:w-1/2 lg:w-1/2">
+        <img src={authImg} className="h-screen" alt="Auth image" />
       </div>
 
       {/* Right side: Form and logo */}
-      <div className="w-full md:w-1/2 flex flex-col items-center justify-center p-6">
-        <div className="w-full max-w-xs mx-auto">
+      <div className="py-4 flex flex-col justify-center mx-auto">
+        <div className="w-full ">
           <img src={logo} className="w-32 " alt="Logo" />
           <div className="my-4 ">
             <h2 className="text-smallBold text-textBlack">Welcome Back!</h2>
@@ -65,10 +65,10 @@ const Login = () => {
           <button className="w-full bg-primary text-white font-semibold py-2 rounded-md">
             Login
           </button>
+          <p className="text-blue-400 underline text-center m-4">
+            <Link to="/ragister">Create accout</Link>
+          </p>
         </form>
-        <p className="text-blue-400 underline mt-4">
-          <Link to="/ragister">Create accout</Link>
-        </p>
       </div>
     </div>
   );

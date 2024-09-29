@@ -1,10 +1,9 @@
-import { Button, Drawer, Space } from "antd";
+import { Drawer, message, Upload } from "antd";
 import { useState } from "react";
-import { FaArrowLeftLong } from "react-icons/fa6";
-import { message, Upload } from "antd";
+import { FaArrowLeftLong, FaFileArrowUp } from "react-icons/fa6";
 import { MdOutlineFileDownload, MdUploadFile } from "react-icons/md";
 
-const UploadeProjects = () => {
+const UploadeFile = () => {
   const [open, setOpen] = useState(false);
 
   const showDrawer = () => {
@@ -42,11 +41,15 @@ const UploadeProjects = () => {
   };
   return (
     <div>
-      <Button className=" text-white bg-primary py-5" onClick={showDrawer}>
-        Upload Project
-      </Button>
+      <button
+        className="px-2 py-1 rounded-md border-2 border-primary"
+        onClick={showDrawer}
+      >
+        <span className="flex gap-2">
+          <FaFileArrowUp className="mt-1" /> Upload File
+        </span>
+      </button>
       <Drawer
-        extra={<Space></Space>}
         title={
           <>
             <div className="flex gap-3">
@@ -88,4 +91,4 @@ const UploadeProjects = () => {
   );
 };
 
-export default UploadeProjects;
+export default UploadeFile;
