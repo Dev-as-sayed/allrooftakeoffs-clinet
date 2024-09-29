@@ -66,7 +66,7 @@ const Login = () => {
             Login
           </button>
           <p className="text-blue-400 underline text-center m-4">
-            <Link to="/ragister">Create accout</Link>
+            <Link to="/ragister">Create account</Link>
           </p>
         </form>
       </div>

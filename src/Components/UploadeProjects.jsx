@@ -78,7 +78,7 @@ const UploadeProjects = () => {
           <div>
             <button className="px-2 py-2 rounded-md w-full  bg-primary">
               <span className="flex justify-center gap-2">
-                <MdOutlineFileDownload className="mt-1 " /> Download
+                <MdOutlineFileDownload className="mt-1 " /> Uploade
               </span>
             </button>
           </div>

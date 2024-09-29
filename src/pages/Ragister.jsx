@@ -116,7 +116,7 @@ const Ragister = () => {
           </button>
         </form>
         <p className="text-blue-400 underline mt-4">
-          <Link to="/login">Login naw</Link>
+          <Link to="/login">Login now</Link>
         </p>
       </div>
     </div>

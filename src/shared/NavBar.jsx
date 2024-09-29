@@ -27,7 +27,7 @@ const NavBar = () => {
   const onClose = () => {
     setOpen(false);
   };
-  const isAdmin = true;
+  const isAdmin = false;
   return (
     <div>
       {/* Learge and medualm device */}
