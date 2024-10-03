@@ -16,14 +16,14 @@ const Login = () => {
     const password = form.password.value;
 
     console.log({ email, password });
-    login();
+    login({ email, password });
     navigate("/");
   };
   return (
     <div className="flex flex-col-reverse md:flex-row lg:flex-row">
       {/* Left side: Image */}
       <div className=" md:w-1/2 lg:w-1/2">
-        <img src={authImg} className="h-screen" alt="Auth image" />
+        <img src={authImg} className="h-screen w-full" alt="Auth image" />
       </div>
 
       {/* Right side: Form and logo */}

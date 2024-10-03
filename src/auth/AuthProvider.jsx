@@ -1,44 +1,51 @@
 import { createContext, useEffect, useState } from "react";
+import useAxiosPublic from "../hooks/AxiosPublic/useAxiosPublic";
 
-export const AuthContext = createContext(); // Fixed typo: 'AuthContaxt' -> 'AuthContext'
+export const AuthContext = createContext();
 
-// Dummy user data
-const demoUser = {
-  id: 1,
-  name: "John Doe",
-  role: "admin",
-  email: "john.doe@example.com",
-  address: "123 Main St, New York, NY 10001",
-  phone: "+1 (123) 456-7890",
-  projectAssign: 3,
-  image: "https://pics.craiyon.com/2023-11-26/oMNPpACzTtO5OVERUZwh3Q.webp",
-};
-
-// eslint-disable-next-line react/prop-types
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null); // Start with no user
+  const [user, setUser] = useState(null); // Store user data
   const [loading, setLoading] = useState(true); // Simulate loading state
+  const axiosPublic = useAxiosPublic(); // Use axios instance for secure requests
 
   // Check local storage for existing user
   useEffect(() => {
     const storedUser = localStorage.getItem("authUser");
+    const token = localStorage.getItem("authToken");
 
-    if (storedUser) {
-      setUser(JSON.parse(storedUser)); // If user exists in local storage, update state
+    if (storedUser && token) {
+      setUser(JSON.parse(storedUser)); // Set user if found in local storage
     }
     setLoading(false); // Loading complete
   }, []);
 
-  // Simulate login function
-  const login = () => {
-    localStorage.setItem("authUser", JSON.stringify(demoUser));
-    setUser(demoUser); // Set user in state
-    console.log(user);
+  // Login function with backend integration
+  const login = async ({ email, password }) => {
+    try {
+      const response = await axiosPublic.post("/login", { email, password });
+      console.log(response);
+
+      if (response.data.success) {
+        const { user, token } = response.data.data;
+
+        // Store the user and token in localStorage
+        localStorage.setItem("authUser", JSON.stringify(user));
+        localStorage.setItem("authToken", token);
+
+        // Update state with user data
+        setUser(user);
+      } else {
+        console.error("Login failed:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error during login:", error.message);
+    }
   };
 
-  // Simulate logout function
+  // Logout function
   const logout = () => {
     localStorage.removeItem("authUser");
+    localStorage.removeItem("authToken");
     setUser(null); // Clear user from state
   };
 
