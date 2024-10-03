@@ -3,9 +3,8 @@ import { Navigate, useLocation } from "react-router-dom"; // Added useLocation
 import { AuthContext } from "../auth/AuthProvider";
 
 // eslint-disable-next-line react/prop-types
-const PrivateRoutes = ({ children }) => {
+const AdminRoutes = ({ children }) => {
   const { loading, user } = useContext(AuthContext);
-  console.log(user);
 
   const location = useLocation(); // Get the current location for redirection after login
 
@@ -22,7 +21,7 @@ const PrivateRoutes = ({ children }) => {
   }
 
   // If user exists, render the protected children (i.e., the page content)
-  if (user && existToken) {
+  if (user && existToken && user.role === "Admin") {
     return children;
   }
 
@@ -30,4 +29,4 @@ const PrivateRoutes = ({ children }) => {
   return <Navigate to="/login" state={{ from: location }} />;
 };
 
-export default PrivateRoutes;
+export default AdminRoutes;
