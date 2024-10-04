@@ -1,15 +1,18 @@
 import axios from "axios";
 
 const axiosSecure = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "http://localhost:5000", // Replace with your actual backend URL
 });
 
 // Request interceptor to add the token to headers
 axiosSecure.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token"); // Retrieve the token from localStorage
+    const token = localStorage.getItem("authToken"); // Retrieve the token from localStorage
+    console.log(token);
+
     if (token) {
-      config.headers.Authorization = token; // Attach token to Authorization header
+      // Attach token to Authorization header in the format 'Bearer <token>'
+      config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
