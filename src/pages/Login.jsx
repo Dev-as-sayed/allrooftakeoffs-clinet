@@ -16,8 +16,11 @@ const Login = () => {
     const password = form.password.value;
 
     console.log({ email, password });
-    login({ email, password });
-    navigate("/");
+    login({ email, password })
+      .then((res) => {
+        navigate("/");
+      })
+      .catch((err) => console.log(err));
   };
   return (
     <div className="flex flex-col-reverse md:flex-row lg:flex-row">

@@ -2,8 +2,47 @@ import { Checkbox, Input } from "antd";
 import authImg from "../assets/auth.png";
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
+import useAxiosPublic from "../hooks/AxiosPublic/useAxiosPublic";
+import { useState } from "react";
 
 const Ragister = () => {
+  const [passErr, setPassErr] = useState("");
+  const axiosPublic = useAxiosPublic();
+  const url = "/register";
+
+  const handelRagister = (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const address = form.address.value;
+    const phone = form.phone.value;
+    const org = form.org.value;
+    const password = form.password.value;
+    const reTypePassword = form.reTypePassword.value;
+
+    console.log({ name, email, address, phone, org, password, reTypePassword });
+
+    const userData = {
+      name,
+      email,
+      address,
+      phone,
+      org,
+      password,
+      reTypePassword,
+    };
+
+    if (password !== reTypePassword) {
+      setPassErr("re-type corract password");
+      return;
+    }
+    axiosPublic
+      .post(url, userData)
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
+  };
   const onChange = (e) => {
     console.log(`checked = ${e.target.checked}`);
   };
@@ -30,21 +69,25 @@ const Ragister = () => {
         </div>
 
         {/* Login form */}
-        <form action="" className="w-full max-w-xs mx-auto">
+        <form
+          action=""
+          className="w-full max-w-xs mx-auto"
+          onSubmit={handelRagister}
+        >
           <div className="flex flex-col mb-4">
-            <label className="mb-2 text-semiBold">Email</label>
+            <label className="mb-2 text-semiBold">Name</label>
             <Input
-              name="email"
-              placeholder="Enter your email"
+              name="name"
+              placeholder="Enter your name"
               className="w-full"
               variant="filled"
             />
           </div>
           <div className="flex flex-col mb-4">
-            <label className="mb-2 text-semiBold">Password</label>
+            <label className="mb-2 text-semiBold">Email</label>
             <Input
-              name="password"
-              placeholder="Enter your password"
+              name="email"
+              placeholder="Enter your Email"
               className="w-full"
               variant="filled"
             />
@@ -95,9 +138,11 @@ const Ragister = () => {
                 placeholder="Enter your password"
                 className="w-full"
                 variant="filled"
+                onChange={() => setPassErr("")}
               />
             </div>
           </div>
+          {passErr && <p className="text-red-500">{passErr}</p>}
           <div>
             <Checkbox onChange={onChange}>
               By clicking create account button you will be agree with our{" "}
