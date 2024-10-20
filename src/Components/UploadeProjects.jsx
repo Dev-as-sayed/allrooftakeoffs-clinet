@@ -1,8 +1,10 @@
-import { Button, Drawer, Space } from "antd";
+import { Button, Drawer, Space, Upload, message } from "antd";
 import { useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
-import { message, Upload } from "antd";
 import { MdOutlineFileDownload, MdUploadFile } from "react-icons/md";
+import * as XLSX from "xlsx"; // Import XLSX for file extraction
+import axios from "axios"; // Use axios to send data to the backend
+import useAxiosSecure from "../hooks/AxoisSecure/useAxiosSecure";
 
 const UploadeProjects = () => {
   const [open, setOpen] = useState(false);
@@ -19,44 +21,74 @@ const UploadeProjects = () => {
    * UPLOADE FILE RELATED
    * ===========================
    */
-
   const { Dragger } = Upload;
+  const axiosSecure = useAxiosSecure();
+
+  // Function to handle file upload
+  const handleFileUpload = (file) => {
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, { type: "array" });
+
+      // Assuming the first sheet is the required one
+      const sheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[sheetName];
+
+      // Convert sheet to JSON
+      const jsonData = XLSX.utils.sheet_to_json(worksheet);
+
+      // Hit the endpoint with the extracted data
+      try {
+        const response = await axiosSecure.post("/add-projects", jsonData);
+        message.success("File uploaded and data sent successfully.");
+        console.log("Response from server:", response.data);
+      } catch (err) {
+        message.error("Failed to upload data.");
+        console.error("Error uploading data:", err);
+      }
+    };
+
+    reader.readAsArrayBuffer(file);
+  };
+
   const props = {
     name: "file",
-    multiple: true,
-    action: "https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload",
-    onChange(info) {
-      const { status } = info.file;
-      if (status !== "uploading") {
-        console.log(info.file, info.fileList);
+    multiple: false, // Only allow one file upload at a time
+    beforeUpload(file) {
+      const isXlsx =
+        file.type ===
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+      if (!isXlsx) {
+        message.error(`${file.name} is not an Excel file`);
       }
-      if (status === "done") {
-        message.success(`${info.file.name} file uploaded successfully.`);
-      } else if (status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
-      }
+      return isXlsx || Upload.LIST_IGNORE;
     },
-    onDrop(e) {
-      console.log("Dropped files", e.dataTransfer.files);
+    customRequest({ file, onSuccess }) {
+      setTimeout(() => {
+        onSuccess("ok"); // Simulate the success callback
+      }, 0);
+      handleFileUpload(file); // Handle file processing
     },
   };
+
+  console.log(props);
+
   return (
     <div>
-      <Button className=" text-white bg-primary py-5" onClick={showDrawer}>
+      <Button className="text-white bg-primary py-5" onClick={showDrawer}>
         Upload Project
       </Button>
       <Drawer
         extra={<Space></Space>}
         title={
-          <>
-            <div className="flex gap-3">
-              <FaArrowLeftLong
-                className=" my-auto hover:bottom-2"
-                onClick={onClose}
-              />
-              <p className=""> Back</p>
-            </div>
-          </>
+          <div className="flex gap-3">
+            <FaArrowLeftLong
+              className="my-auto hover:bottom-2"
+              onClick={onClose}
+            />
+            <p>Back</p>
+          </div>
         }
         width={370}
         closable={false}
@@ -67,8 +99,7 @@ const UploadeProjects = () => {
           <div className="h-44 bg-blue-50 border-dotted border-blue-600 rounded-md">
             <Dragger {...props} className="bg-secondary">
               <p className="flex justify-center my-2">
-                {/* <InboxOutlined /> */}
-                <MdUploadFile className="text-2xl text-textGray " />
+                <MdUploadFile className="text-2xl text-textGray" />
               </p>
               <p className="ant-upload-text">
                 Click or drag file to this area to upload
@@ -76,9 +107,9 @@ const UploadeProjects = () => {
             </Dragger>
           </div>
           <div>
-            <button className="px-2 py-2 rounded-md w-full  bg-primary">
+            <button className="px-2 py-2 rounded-md w-full bg-primary">
               <span className="flex justify-center gap-2">
-                <MdOutlineFileDownload className="mt-1 " /> Uploade
+                <MdOutlineFileDownload className="mt-1" /> Upload
               </span>
             </button>
           </div>

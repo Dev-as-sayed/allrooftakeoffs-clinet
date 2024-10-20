@@ -7,6 +7,7 @@ import { useState } from "react";
 
 const Ragister = () => {
   const [passErr, setPassErr] = useState("");
+  const [resError, setResError] = useState({});
   const axiosPublic = useAxiosPublic();
   const url = "/register";
 
@@ -40,8 +41,19 @@ const Ragister = () => {
     }
     axiosPublic
       .post(url, userData)
-      .then((res) => console.log(res.data))
-      .catch((err) => console.log(err));
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.success === false) {
+          setResError(res.data);
+          return;
+        }
+        form.reset();
+      })
+      .catch((err) => {
+        console.log(err);
+        setResError(err);
+        alert(err.message);
+      });
   };
   const onChange = (e) => {
     console.log(`checked = ${e.target.checked}`);
@@ -73,7 +85,11 @@ const Ragister = () => {
           action=""
           className="w-full max-w-xs mx-auto"
           onSubmit={handelRagister}
+          onChange={() => {
+            setResError({});
+          }}
         >
+          {resError && alert(resError.message)}
           <div className="flex flex-col mb-4">
             <label className="mb-2 text-semiBold">Name</label>
             <Input

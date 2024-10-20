@@ -110,11 +110,24 @@ export default function AllUsersTable() {
                     <td className=" items-center  justify-start">
                       <div className="flex items-center gap-2 py-2">
                         <figure className="rounded-full w-10">
-                          <img
+                          {data.image ? (
+                            <img
+                              className="rounded-full w-full h-full"
+                              src={data.image}
+                              alt=""
+                            />
+                          ) : (
+                            <div className="rounded-full w-full  h-10 flex justify-center align-middle bg-bgGray">
+                              <h1 className="h-fit my-auto text-xl text-textBlack font-serif font-medium">
+                                {data.name.slice(0, 2)}
+                              </h1>
+                            </div>
+                          )}
+                          {/* <img
                             className="rounded-full w-full h-full"
                             src={data.image}
                             alt=""
-                          />
+                          /> */}
                         </figure>
                         <span className="font-semibold">{data.name}</span>
                       </div>
@@ -131,8 +144,6 @@ export default function AllUsersTable() {
                   </tr>
                 </>
               ))}
-
-              {/* Add more rows as needed */}
             </tbody>
           </table>
         </div>

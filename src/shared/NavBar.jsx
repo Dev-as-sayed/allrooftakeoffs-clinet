@@ -23,6 +23,7 @@ const NavBar = () => {
   const showDrawer = () => {
     setOpen(true);
   };
+  // eslint-disable-next-line no-unused-vars
   const onChange = (e) => {
     setPlacement(e.target.value);
   };

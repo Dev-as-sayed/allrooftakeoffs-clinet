@@ -6,7 +6,7 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import { MdOutlineFileDownload } from "react-icons/md";
 // eslint-disable-next-line react/prop-types
 const Details = ({ data }) => {
-  console.log(data);
+  // console.log(data);
 
   const [open, setOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);

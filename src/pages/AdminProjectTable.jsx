@@ -1,170 +1,185 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Details from "./Details";
 import { GoChevronDown } from "react-icons/go";
 import AsignUser from "../Components/AsignUser";
 import { CiSearch } from "react-icons/ci";
 import UploadeFile from "../Components/UploadeFile";
+import useAxiosSecure from "../hooks/AxoisSecure/useAxiosSecure";
 
 const AdminProjectTable = () => {
   const [activeButton, setActiveButton] = useState("All Project");
-  const projects = [
-    {
-      name: "Product A",
-      description:
-        "High-quality smartphone with a 6.5-inch display and 128GB storage",
-      country: "USA",
-      posting_date: "2024-09-15",
-      cost: 699.99,
-      dateline: "2024-09-30",
-      summary:
-        "This smartphone offers fast performance with the latest processor, high-resolution camera, and long battery life.",
-      product_classification: "Electronics",
-    },
-    {
-      name: "Running Shoes",
-      description:
-        "Lightweight running shoes with breathable mesh and cushioned sole",
-      country: "Germany",
-      posting_date: "2024-09-10",
-      cost: 129.99,
-      dateline: "2024-09-20",
-      summary:
-        "Perfect for long-distance runners, offering comfort and durability for all terrains.",
-      product_classification: "Footwear",
-      user: {
-        id: 6,
-        name: "Sophia Miller",
-        email: "sophia.miller@example.com",
-        address: "876 Birch St, Miami, FL 33101",
-        phone: "+1 (305) 777-3456",
-        projectAssign: 6,
-        image:
-          "https://pics.craiyon.com/2023-11-26/oMNPpACzTtO5OVERUZwh3Q.webp",
-      },
-    },
-    {
-      name: "Office Chair",
-      description:
-        "Ergonomic office chair with adjustable height and lumbar support",
-      country: "Canada",
-      posting_date: "2024-08-25",
-      cost: 199.99,
-      dateline: "2024-09-05",
-      summary:
-        "Designed for long hours of comfort, this chair improves posture and reduces back strain.",
-      product_classification: "Furniture",
-    },
-    {
-      name: "Wireless Earbuds",
-      description:
-        "Noise-cancelling wireless earbuds with up to 24 hours battery life",
-      country: "Japan",
-      posting_date: "2024-09-12",
-      cost: 149.99,
-      dateline: "2024-09-25",
-      summary:
-        "These earbuds offer superior sound quality and noise-cancelling technology, perfect for music lovers.",
-      product_classification: "Accessories",
-      user: {
-        id: 4,
-        name: "Emily Davis",
-        email: "emily.davis@example.com",
-        address: "321 Oak St, Houston, TX 77002",
-        phone: "+1 (713) 999-1234",
-        projectAssign: 7,
-        image:
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0BgjHcHUjk1OijBj0nzw-Gdp4Og6cgk9OtnktYg6EA1gjiqsTRy-ZXpy97LleR4-FpGI&usqp=CAU",
-      },
-    },
-    {
-      name: "Product A",
-      description:
-        "High-quality smartphone with a 6.5-inch display and 128GB storage",
-      country: "USA",
-      posting_date: "2024-09-15",
-      cost: 699.99,
-      dateline: "2024-09-30",
-      summary:
-        "This smartphone offers fast performance with the latest processor, high-resolution camera, and long battery life.",
-      product_classification: "Electronics",
-      user: {
-        id: 3,
-        name: "Robert Brown",
-        email: "robert.brown@example.com",
-        address: "789 Pine St, Chicago, IL 60601",
-        phone: "+1 (312) 555-2468",
-        projectAssign: 2,
-        image:
-          "https://pics.craiyon.com/2024-06-08/3DqbWy0eQDed7KNPy6eXZQ.webp",
-      },
-    },
-    {
-      name: "Running Shoes",
-      description:
-        "Lightweight running shoes with breathable mesh and cushioned sole",
-      country: "Germany",
-      posting_date: "2024-09-10",
-      cost: 129.99,
-      dateline: "2024-09-20",
-      summary:
-        "Perfect for long-distance runners, offering comfort and durability for all terrains.",
-      product_classification: "Footwear",
-      user: {
-        id: 2,
-        name: "Jane Smith",
-        email: "jane.smith@example.com",
-        address: "456 Elm St, Los Angeles, CA 90001",
-        phone: "+1 (213) 987-6543",
-        projectAssign: 5,
-        image:
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTacBEOxzVt2idhxO0WXyuPKzHanDF8qupFBJSWQAuy0dk324BY92xqKOgh17AdWsx4-tk&usqp=CAU",
-      },
-    },
-    {
-      name: "Office Chair",
-      description:
-        "Ergonomic office chair with adjustable height and lumbar support",
-      country: "Canada",
-      posting_date: "2024-08-25",
-      cost: 199.99,
-      dateline: "2024-09-05",
-      summary:
-        "Designed for long hours of comfort, this chair improves posture and reduces back strain.",
-      product_classification: "Furniture",
-      user: {
-        id: 1,
-        name: "John Doe",
-        email: "john.doe@example.com",
-        address: "123 Main St, New York, NY 10001",
-        phone: "+1 (123) 456-7890",
-        projectAssign: 3,
-        image:
-          "https://pics.craiyon.com/2023-11-26/oMNPpACzTtO5OVERUZwh3Q.webp",
-      },
-    },
-    {
-      name: "Wireless Earbuds",
-      description:
-        "Noise-cancelling wireless earbuds with up to 24 hours battery life",
-      country: "Japan",
-      posting_date: "2024-09-12",
-      cost: 149.99,
-      dateline: "2024-09-25",
-      summary:
-        "These earbuds offer superior sound quality and noise-cancelling technology, perfect for music lovers.",
-      product_classification: "Accessories",
-      user: {
-        id: 10,
-        name: "Isabella Thompson",
-        email: "isabella.thompson@example.com",
-        address: "789 Aspen St, Denver, CO 80201",
-        phone: "+1 (303) 555-7890",
-        projectAssign: 3,
-        image:
-          "https://www.shutterstock.com/image-photo/indian-student-profile-picture-260nw-2508708153.jpg",
-      },
-    },
-  ];
+  const [projects, setProjects] = useState([]);
+  // const projects = [
+  //   {
+  //     name: "Product A",
+  //     description:
+  //       "High-quality smartphone with a 6.5-inch display and 128GB storage",
+  //     country: "USA",
+  //     posting_date: "2024-09-15",
+  //     cost: 699.99,
+  //     dateline: "2024-09-30",
+  //     summary:
+  //       "This smartphone offers fast performance with the latest processor, high-resolution camera, and long battery life.",
+  //     product_classification: "Electronics",
+  //   },
+  //   {
+  //     name: "Running Shoes",
+  //     description:
+  //       "Lightweight running shoes with breathable mesh and cushioned sole",
+  //     country: "Germany",
+  //     posting_date: "2024-09-10",
+  //     cost: 129.99,
+  //     dateline: "2024-09-20",
+  //     summary:
+  //       "Perfect for long-distance runners, offering comfort and durability for all terrains.",
+  //     product_classification: "Footwear",
+  //     user: {
+  //       id: 6,
+  //       name: "Sophia Miller",
+  //       email: "sophia.miller@example.com",
+  //       address: "876 Birch St, Miami, FL 33101",
+  //       phone: "+1 (305) 777-3456",
+  //       projectAssign: 6,
+  //       image:
+  //         "https://pics.craiyon.com/2023-11-26/oMNPpACzTtO5OVERUZwh3Q.webp",
+  //     },
+  //   },
+  //   {
+  //     name: "Office Chair",
+  //     description:
+  //       "Ergonomic office chair with adjustable height and lumbar support",
+  //     country: "Canada",
+  //     posting_date: "2024-08-25",
+  //     cost: 199.99,
+  //     dateline: "2024-09-05",
+  //     summary:
+  //       "Designed for long hours of comfort, this chair improves posture and reduces back strain.",
+  //     product_classification: "Furniture",
+  //   },
+  //   {
+  //     name: "Wireless Earbuds",
+  //     description:
+  //       "Noise-cancelling wireless earbuds with up to 24 hours battery life",
+  //     country: "Japan",
+  //     posting_date: "2024-09-12",
+  //     cost: 149.99,
+  //     dateline: "2024-09-25",
+  //     summary:
+  //       "These earbuds offer superior sound quality and noise-cancelling technology, perfect for music lovers.",
+  //     product_classification: "Accessories",
+  //     user: {
+  //       id: 4,
+  //       name: "Emily Davis",
+  //       email: "emily.davis@example.com",
+  //       address: "321 Oak St, Houston, TX 77002",
+  //       phone: "+1 (713) 999-1234",
+  //       projectAssign: 7,
+  //       image:
+  //         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0BgjHcHUjk1OijBj0nzw-Gdp4Og6cgk9OtnktYg6EA1gjiqsTRy-ZXpy97LleR4-FpGI&usqp=CAU",
+  //     },
+  //   },
+  //   {
+  //     name: "Product A",
+  //     description:
+  //       "High-quality smartphone with a 6.5-inch display and 128GB storage",
+  //     country: "USA",
+  //     posting_date: "2024-09-15",
+  //     cost: 699.99,
+  //     dateline: "2024-09-30",
+  //     summary:
+  //       "This smartphone offers fast performance with the latest processor, high-resolution camera, and long battery life.",
+  //     product_classification: "Electronics",
+  //     user: {
+  //       id: 3,
+  //       name: "Robert Brown",
+  //       email: "robert.brown@example.com",
+  //       address: "789 Pine St, Chicago, IL 60601",
+  //       phone: "+1 (312) 555-2468",
+  //       projectAssign: 2,
+  //       image:
+  //         "https://pics.craiyon.com/2024-06-08/3DqbWy0eQDed7KNPy6eXZQ.webp",
+  //     },
+  //   },
+  //   {
+  //     name: "Running Shoes",
+  //     description:
+  //       "Lightweight running shoes with breathable mesh and cushioned sole",
+  //     country: "Germany",
+  //     posting_date: "2024-09-10",
+  //     cost: 129.99,
+  //     dateline: "2024-09-20",
+  //     summary:
+  //       "Perfect for long-distance runners, offering comfort and durability for all terrains.",
+  //     product_classification: "Footwear",
+  //     user: {
+  //       id: 2,
+  //       name: "Jane Smith",
+  //       email: "jane.smith@example.com",
+  //       address: "456 Elm St, Los Angeles, CA 90001",
+  //       phone: "+1 (213) 987-6543",
+  //       projectAssign: 5,
+  //       image:
+  //         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTacBEOxzVt2idhxO0WXyuPKzHanDF8qupFBJSWQAuy0dk324BY92xqKOgh17AdWsx4-tk&usqp=CAU",
+  //     },
+  //   },
+  //   {
+  //     name: "Office Chair",
+  //     description:
+  //       "Ergonomic office chair with adjustable height and lumbar support",
+  //     country: "Canada",
+  //     posting_date: "2024-08-25",
+  //     cost: 199.99,
+  //     dateline: "2024-09-05",
+  //     summary:
+  //       "Designed for long hours of comfort, this chair improves posture and reduces back strain.",
+  //     product_classification: "Furniture",
+  //     user: {
+  //       id: 1,
+  //       name: "John Doe",
+  //       email: "john.doe@example.com",
+  //       address: "123 Main St, New York, NY 10001",
+  //       phone: "+1 (123) 456-7890",
+  //       projectAssign: 3,
+  //       image:
+  //         "https://pics.craiyon.com/2023-11-26/oMNPpACzTtO5OVERUZwh3Q.webp",
+  //     },
+  //   },
+  //   {
+  //     name: "Wireless Earbuds",
+  //     description:
+  //       "Noise-cancelling wireless earbuds with up to 24 hours battery life",
+  //     country: "Japan",
+  //     posting_date: "2024-09-12",
+  //     cost: 149.99,
+  //     dateline: "2024-09-25",
+  //     summary:
+  //       "These earbuds offer superior sound quality and noise-cancelling technology, perfect for music lovers.",
+  //     product_classification: "Accessories",
+  //     user: {
+  //       id: 10,
+  //       name: "Isabella Thompson",
+  //       email: "isabella.thompson@example.com",
+  //       address: "789 Aspen St, Denver, CO 80201",
+  //       phone: "+1 (303) 555-7890",
+  //       projectAssign: 3,
+  //       image:
+  //         "https://www.shutterstock.com/image-photo/indian-student-profile-picture-260nw-2508708153.jpg",
+  //     },
+  //   },
+  // ];
+
+  const axiosSecure = useAxiosSecure();
+  const url = "/get-projects";
+
+  useEffect(() => {
+    axiosSecure
+      .get(url)
+      .then((res) => {
+        setProjects(res.data.data);
+        console.log(res.data.data);
+      })
+      .catch((err) => console.log(err));
+  }, [axiosSecure]);
 
   return (
     <div className="min-h-screen">
