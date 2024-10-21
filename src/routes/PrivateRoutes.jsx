@@ -10,7 +10,6 @@ const PrivateRoutes = ({ children }) => {
   const location = useLocation(); // Get the current location for redirection after login
 
   const existToken = localStorage.getItem("authToken");
-  console.log(existToken);
 
   // If the authentication state is still loading, display a loading message
   if (loading) {
