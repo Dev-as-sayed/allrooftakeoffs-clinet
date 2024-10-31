@@ -5,6 +5,8 @@ import AsignUser from "../Components/AsignUser";
 import { CiSearch } from "react-icons/ci";
 import UploadeFile from "../Components/UploadeFile";
 import useAxiosSecure from "../hooks/AxoisSecure/useAxiosSecure";
+import { Button } from "antd";
+import { Link } from "react-router-dom";
 
 const AdminProjectTable = () => {
   const [activeButton, setActiveButton] = useState("All Project");
@@ -13,6 +15,8 @@ const AdminProjectTable = () => {
   // const [debouncedSearch, setDebouncedSearch] = useState(search);
   const axiosSecure = useAxiosSecure();
   const url = "/get-projects";
+
+  console.log(projects);
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
@@ -135,15 +139,18 @@ const AdminProjectTable = () => {
                       )}
                     </div>
                   </td>
-                  <td>{data.country}</td>
+                  <td>{data.location}</td>
                   <td>{data.posting_date}</td>
                   <td>${data.cost}</td>
                   <td>{data.dateline}</td>
                   <td className=" text-primary items-center ">
                     <div className="flex gap-2">
-                      <Details type={"uploadProject"} data={data}>
+                      {/* <Details type={"uploadProject"} data={data}>
                         View
-                      </Details>
+                      </Details> */}
+                      <Button>
+                        <Link to={`/project/${data?._id}`}>View</Link>
+                      </Button>
                       <UploadeFile id={data?._id} />
                     </div>
                   </td>

@@ -6,6 +6,8 @@ import Ragister from "../pages/Ragister";
 import AllUsersTable from "../pages/AllUsersTable";
 import AdminProjectTable from "../pages/AdminProjectTable";
 import PrivateRoutes from "./PrivateRoutes";
+import AddNewProjects from "../pages/AddNewProjects";
+import ProjectsView from "../pages/ProjectsView";
 // import PrivateRoutes from "./PrivateRoutes";
 
 export const router = createBrowserRouter([
@@ -28,6 +30,14 @@ export const router = createBrowserRouter([
       {
         path: "/projects",
         element: <AdminProjectTable />,
+      },
+      {
+        path: "/addNewProject",
+        element: <AddNewProjects />,
+      },
+      {
+        path: "/project/:id",
+        element: <ProjectsView />,
       },
     ],
   },

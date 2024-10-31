@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import Details from "./Details";
+import { Button } from "antd";
 import { MdOutlineFileDownload } from "react-icons/md";
 import { GoChevronDown } from "react-icons/go";
 import { CiSearch } from "react-icons/ci";
 import useAxiosSecure from "../hooks/AxoisSecure/useAxiosSecure";
+import { Link } from "react-router-dom";
 
 const UserTable = () => {
   const [activeButton, setActiveButton] = useState("All Project");
@@ -107,6 +109,8 @@ const UserTable = () => {
   //   },
   // ];
 
+  console.log(tData);
+
   const axoisSecure = useAxiosSecure();
   const url = "/get-projects";
 
@@ -186,13 +190,16 @@ const UserTable = () => {
                     <br />
                     <span>{data.description}</span>
                   </td>
-                  <td>{data.country}</td>
+                  <td>{data.location}</td>
                   <td>{data.posting_date}</td>
                   <td>${data.cost}</td>
                   <td>{data.dateline}</td>
                   <td className=" text-primary my-2">
                     <div className="flex gap-2">
-                      <Details type={"uploadProject"} data={data}></Details>
+                      {/* <Details type={"uploadProject"} data={data}></Details> */}
+                      <Button>
+                        <Link to={`/project/${data?._id}`}>View</Link>
+                      </Button>
                       <button className="px-2 py-1 rounded-md border-2 border-primary">
                         <span className="flex gap-2">
                           <MdOutlineFileDownload className="mt-1" /> Download

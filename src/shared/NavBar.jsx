@@ -7,7 +7,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import ProfileDroyer from "../Components/ProfileDroyer";
 import { IoIosMenu } from "react-icons/io";
 
-import { Drawer } from "antd";
+import { Button, Drawer } from "antd";
 import { AuthContext } from "../auth/AuthProvider";
 
 const NavBar = () => {
@@ -79,12 +79,15 @@ const NavBar = () => {
         )}
         <div className="flex gap-3 h-fit items-center">
           {isAdmin && (
-            // <Button className="text-white bg-primary my-auto">
-            //   Upload Project
-            // </Button>
-            <div>
-              <UploadeProjects />
-            </div>
+            <Button
+              className="text-white bg-primary py-5"
+              // onClick={showDrawer}
+            >
+              <Link to="/addNewProject">Upload Project</Link>
+            </Button>
+            // <div>
+            //   <UploadeProjects />
+            // </div>
           )}
           <button>
             <CiBellOn className="w-10 h-10 p-2 border-2 border-gray-400 rounded-full" />
@@ -143,9 +146,15 @@ const NavBar = () => {
                     </Link>
                   </li>
                 </ul>
-                <button onClick={showDrawer}>
+                {/* <button onClick={showDrawer}>
                   <UploadeProjects />
-                </button>
+                </button> */}
+                <Button
+                  className="text-white bg-primary py-5"
+                  onClick={showDrawer}
+                >
+                  <Link to="/addNewProject">Upload Project</Link>
+                </Button>
               </div>
             </Drawer>
           </div>

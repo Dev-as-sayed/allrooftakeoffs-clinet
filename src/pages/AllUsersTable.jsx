@@ -6,6 +6,7 @@ import useAxiosSecure from "../hooks/AxoisSecure/useAxiosSecure";
 
 export default function AllUsersTable() {
   const [activeButton, setActiveButton] = useState("All Users");
+  const [serch, setSearch] = useState("");
 
   const [users, setUsers] = useState([]);
   console.log(users);
@@ -13,9 +14,22 @@ export default function AllUsersTable() {
   const axoisSecure = useAxiosSecure();
   const url = "/get-users";
 
+  const handleSearchChange = (e) => {
+    setSearch(e.target.value);
+  };
+  console.log(serch);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {}, 500);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [serch]);
+
   useEffect(() => {
     axoisSecure
-      .get(url)
+      .get(url, { params: { serch } })
       .then((res) => {
         console.log(res?.data?.data);
         setUsers(res?.data?.data);
@@ -23,7 +37,7 @@ export default function AllUsersTable() {
       .catch((err) => {
         console.log(err);
       });
-  }, [axoisSecure]);
+  }, [axoisSecure, serch]);
   return (
     <>
       <div className="min-h-screen">
@@ -35,6 +49,7 @@ export default function AllUsersTable() {
                 type="text"
                 className="pl-10 h-9 rounded-md placeholder:text-medium "
                 placeholder="Search"
+                onChange={handleSearchChange}
               />
             </div>
           </div>
