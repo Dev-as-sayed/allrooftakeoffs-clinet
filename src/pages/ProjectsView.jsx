@@ -120,7 +120,7 @@ const ProjectsView = () => {
             </div>
           </div>
         </div>
-        <FileUpload />
+        <FileUpload projectId={id} />
       </div>
     </div>
   );
