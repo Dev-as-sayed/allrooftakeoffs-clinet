@@ -15,8 +15,6 @@ const ProfileDroyer = () => {
     setOpen(false);
   };
 
-  console.log(user);
-
   const navigate = useNavigate();
   const handelLogOut = () => {
     logout();

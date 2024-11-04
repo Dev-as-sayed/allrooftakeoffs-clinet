@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Details from "./Details";
 import { GoChevronDown } from "react-icons/go";
 import AsignUser from "../Components/AsignUser";
 import { CiSearch } from "react-icons/ci";
@@ -12,11 +11,10 @@ const AdminProjectTable = () => {
   const [activeButton, setActiveButton] = useState("All Project");
   const [projects, setProjects] = useState([]);
   const [serch, setSearch] = useState("");
+  const [users, setUsers] = useState([]);
   // const [debouncedSearch, setDebouncedSearch] = useState(search);
   const axiosSecure = useAxiosSecure();
   const url = "/get-projects";
-
-  console.log(projects);
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
@@ -45,6 +43,14 @@ const AdminProjectTable = () => {
     fetchProjects();
   }, [axiosSecure, serch]);
 
+  const handelGetUser = () => {
+    axiosSecure
+      .get("/get-userData")
+      .then((res) => {
+        setUsers(res.data.data);
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <div className="min-h-screen">
       <div className="w-fit mx-auto gap-2  md:flex lg:w-full md:flex-row lg:flex-row  md:justify-between lg:justify-between my-6">
@@ -133,7 +139,18 @@ const AdminProjectTable = () => {
                       ) : (
                         <>
                           <div className="h-full">
-                            <AsignUser />
+                            <button onClick={handelGetUser}>
+                              {users ? (
+                                <AsignUser users={users} projectId={data._id} />
+                              ) : (
+                                <Button
+                                  type="primary"
+                                  className="bg-white text-textBlack border-secondary shadow-none "
+                                >
+                                  Assign user
+                                </Button>
+                              )}
+                            </button>
                           </div>
                         </>
                       )}
@@ -141,7 +158,7 @@ const AdminProjectTable = () => {
                   </td>
                   <td>{data.location}</td>
                   <td>{data.posting_date}</td>
-                  <td>${data.cost}</td>
+                  <td>${data.total}</td>
                   <td>{data.dateline}</td>
                   <td className=" text-primary items-center ">
                     <div className="flex gap-2">
@@ -151,7 +168,7 @@ const AdminProjectTable = () => {
                       <Button>
                         <Link to={`/project/${data?._id}`}>View</Link>
                       </Button>
-                      <UploadeFile id={data?._id} />
+                      {/* <UploadeFile id={data?._id} /> */}
                     </div>
                   </td>
                 </tr>

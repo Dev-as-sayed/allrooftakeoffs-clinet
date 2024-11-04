@@ -4,16 +4,16 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import { Link, useParams } from "react-router-dom";
 import useAxiosSecure from "../hooks/AxoisSecure/useAxiosSecure";
 import FileUpload from "../Components/FileUpload";
+import isAdmin from "../hooks/isAdmin/isAdmin";
 
 const ProjectsView = () => {
   const [project, setProjet] = useState({});
+
+  isAdmin();
   const { id } = useParams();
 
   const axiouSecure = useAxiosSecure();
   const url = `/get-project/${id}`;
-
-  console.log(project);
-
   useEffect(() => {
     axiouSecure
       .get(url)
@@ -29,7 +29,7 @@ const ProjectsView = () => {
     <div className="min-h-screen font-serif ">
       <div>
         <p className="flex gap-3 my-3 ">
-          <Link to="/users">
+          <Link to="/projects">
             <FaArrowLeftLong className="text-2xl text-textGray" />{" "}
           </Link>
           Project View
@@ -80,22 +80,28 @@ const ProjectsView = () => {
           </div>
         </div>
         {/* 3rd row  */}
-        <div className="flex flex-col gap-y-4 gap-x-4 md:flex-row">
+        <div className="flex flex-col h-fit gap-y-4 gap-x-4 md:flex-row">
           <div className="flex-1 bg-white p-4 rounded-md">
-            <div className="flex justify-between mb-4">
-              <p className="text-textGray">File and attachment</p>
-              <Button className="bg-transparent border-primary text-primary">
-                Download all
-              </Button>
-            </div>
-            {project?.files?.map((file, index) => (
-              <div key={index} className="flex h-fit justify-between pb-1 ">
-                <p className="text-textGray my-auto">{file.name}</p>
-                <Button className="bg-transparent border-primary text-primary">
-                  Download
-                </Button>
-              </div>
-            ))}
+            {isAdmin ? (
+              <FileUpload projectId={id} />
+            ) : (
+              <>
+                <div className="flex justify-between mb-4">
+                  <p className="text-textGray">File and attachment</p>
+                  <Button className="bg-transparent border-primary text-primary">
+                    Download all
+                  </Button>
+                </div>
+                {project?.files?.map((file, index) => (
+                  <div key={index} className="flex h-fit justify-between pb-1 ">
+                    <p className="text-textGray my-auto">{file.name}</p>
+                    <Button className="bg-transparent border-primary text-primary">
+                      Download
+                    </Button>
+                  </div>
+                ))}
+              </>
+            )}
           </div>
           <div className="flex-1 space-y-4">
             <div className="bg-white p-4 rounded-md">
@@ -120,7 +126,7 @@ const ProjectsView = () => {
             </div>
           </div>
         </div>
-        <FileUpload projectId={id} />
+        {/* <FileUpload projectId={id} /> */}
       </div>
     </div>
   );

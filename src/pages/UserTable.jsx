@@ -192,7 +192,7 @@ const UserTable = () => {
                   </td>
                   <td>{data.location}</td>
                   <td>{data.posting_date}</td>
-                  <td>${data.cost}</td>
+                  <td>${data?.subTotal + data?.gst}</td>
                   <td>{data.dateline}</td>
                   <td className=" text-primary my-2">
                     <div className="flex gap-2">

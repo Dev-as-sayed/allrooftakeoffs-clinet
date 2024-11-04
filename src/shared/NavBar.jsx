@@ -1,18 +1,16 @@
 import { CiBellOn } from "react-icons/ci";
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
-import { useContext, useState } from "react";
-import UploadeProjects from "../Components/UploadeProjects";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import ProfileDroyer from "../Components/ProfileDroyer";
 import { IoIosMenu } from "react-icons/io";
 
 import { Button, Drawer } from "antd";
-import { AuthContext } from "../auth/AuthProvider";
+import isAdmin from "../hooks/isAdmin/isAdmin";
+import { useState } from "react";
 
 const NavBar = () => {
   const [activeLink, setActiveLink] = useState("users");
-  const { user } = useContext(AuthContext);
 
   const handleLinkClick = (link) => {
     setActiveLink(link);
@@ -31,12 +29,7 @@ const NavBar = () => {
     setOpen(false);
   };
 
-  let isAdmin = false;
-  if (user?.role === "Admin") {
-    isAdmin = true;
-  } else {
-    isAdmin = false;
-  }
+  isAdmin();
 
   return (
     <div>

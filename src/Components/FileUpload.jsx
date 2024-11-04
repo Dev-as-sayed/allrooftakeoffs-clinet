@@ -1,5 +1,8 @@
 import { useState } from "react";
 import useAxiosSecure from "../hooks/AxoisSecure/useAxiosSecure";
+import Dragger from "antd/es/upload/Dragger";
+import { Button, message } from "antd";
+import { InboxOutlined } from "@ant-design/icons";
 
 const FileUpload = ({ projectId }) => {
   const [file, setFile] = useState(null);
@@ -30,37 +33,36 @@ const FileUpload = ({ projectId }) => {
     }
   };
 
-  //   const handleUpload = async () => {
-  //     if (!file) {
-  //       setUploadStatus("No file selected.");
-  //       return;
-  //     }
-
-  //     // Create a FormData object to send the file
-  //     const formData = new FormData();
-  //     formData.append("file", file); // 'file' should match the name used in your multer setup
-
-  //     try {
-  //       // Send a POST request to the server
-  //       const res = await axiouSecure.post(url, formData, {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data", // Required for file uploads
-  //         },
-  //       });
-  //       console.log(res.data);
-  //       setUploadStatus(
-  //         "File uploaded successfully. File ID: " + res.data.fileId
-  //       );
-  //     } catch (err) {
-  //       console.error(err);
-  //       setUploadStatus("Failed to upload file.");
-  //     }
-  //   };
-
   return (
     <div>
-      <input type="file" onChange={handleFileChange} />
-      <button onClick={handleUpload}>Upload</button>
+      <Dragger
+        name="file"
+        multiple={false}
+        beforeUpload={(file) => {
+          setFile(file);
+          message.success(`${file.name} file selected.`);
+          return false; // Prevents automatic upload
+        }}
+        onRemove={() => setFile(null)} // Optional: clear file on remove
+      >
+        <p className="ant-upload-drag-icon">
+          <InboxOutlined />
+        </p>
+        <p className="ant-upload-text">
+          Click or drag file to this area to upload
+        </p>
+        <p className="ant-upload-hint">
+          Support for a single or bulk upload. Strictly prohibited from
+          uploading company data or other banned files.
+        </p>
+      </Dragger>
+      <Button
+        onClick={handleUpload}
+        disabled={!file}
+        className="mt-4 bg-secondary text-white w-full"
+      >
+        Upload
+      </Button>
       {uploadStatus && <p>{uploadStatus}</p>}
     </div>
   );

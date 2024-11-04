@@ -153,7 +153,7 @@ export default function AllUsersTable() {
                     <td>{data.projectAssign}</td>
                     <td className=" text-primary">
                       <div className="">
-                        <UsersTabaleDetaile data={data} />
+                        <UsersTabaleDetaile id={data._id} />
                       </div>
                     </td>
                   </tr>
