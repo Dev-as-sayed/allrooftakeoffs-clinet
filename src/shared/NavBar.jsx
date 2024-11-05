@@ -6,18 +6,24 @@ import ProfileDroyer from "../Components/ProfileDroyer";
 import { IoIosMenu } from "react-icons/io";
 
 import { Button, Drawer } from "antd";
-import useIsAdmin from "../hooks/isAdmin/useIsAdmin"; // Adjust the hook import
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../auth/AuthProvider";
+import useIsAdmin from "../hooks/isAdmin/useIsAdmin";
 
 const NavBar = () => {
   const [activeLink, setActiveLink] = useState("users");
   const [open, setOpen] = useState(false);
   const [placement, setPlacement] = useState("right");
-  const isAdmin = useIsAdmin(); // Assuming useIsAdmin hook returns a boolean for admin status
 
   const handleLinkClick = (link) => setActiveLink(link);
   const showDrawer = () => setOpen(true);
   const onClose = () => setOpen(false);
+
+  const { user } = useContext(AuthContext);
+
+  const isAdmin = user?.role === "Admin";
+
+  console.log(isAdmin);
 
   return (
     <div>
@@ -27,7 +33,7 @@ const NavBar = () => {
           <img src={logo} alt="Logo" className="w-36" />
         </div>
 
-        {isAdmin && (
+        {isAdmin ? (
           <div className="flex my-auto text-textGray">
             <ul className="flex gap-4 text-semiBold">
               <li>
@@ -58,21 +64,27 @@ const NavBar = () => {
               </li>
             </ul>
           </div>
+        ) : (
+          <></>
         )}
 
         <div className="flex gap-3 h-fit items-center">
-          {isAdmin && (
+          {isAdmin ? (
             <Button className="text-white bg-primary py-5">
               <Link to="/addNewProject">Upload Project</Link>
             </Button>
+          ) : (
+            <></>
           )}
           <button>
             <CiBellOn className="w-10 h-10 p-2 border-2 border-gray-400 rounded-full" />
           </button>
           <ProfileDroyer />
           <div>
-            <h3>A M Sayed</h3>
-            <p className="text-textGray">Web developer</p>
+            {/* <h3>A M Sayed</h3>
+            <p className="text-textGray">Web developer</p> */}
+            <h3>{user?.name}</h3>
+            <p className="text-textGray">{user?.org}</p>
           </div>
           <BsThreeDotsVertical />
         </div>

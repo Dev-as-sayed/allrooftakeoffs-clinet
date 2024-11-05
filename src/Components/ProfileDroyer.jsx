@@ -2,7 +2,7 @@ import { Button, Drawer, Space } from "antd";
 import { useContext, useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { AuthContext } from "../auth/AuthProvider";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ProfileDroyer = () => {
   const [open, setOpen] = useState(false);
@@ -84,6 +84,9 @@ const ProfileDroyer = () => {
           <p>{user?.email}</p>
           <p>{user?.address}</p>
           <p>{user?.phone}</p>
+          <Button className="text-white bg-primary py-5">
+            <Link to="/addNewProject">Upload Project</Link>
+          </Button>
         </div>
       </Drawer>
     </>
