@@ -2,15 +2,17 @@
 import { useContext } from "react";
 import { AuthContext } from "../../auth/AuthProvider";
 
-const isAdmin = () => {
+const useIsAdmin = () => {
   const { user } = useContext(AuthContext);
 
   let isAdmin = false;
   if (user?.role === "Admin") {
     isAdmin = true;
   } else {
+    console.log(isAdmin);
+
     return isAdmin;
   }
 };
 
-export default isAdmin;
+export default useIsAdmin;

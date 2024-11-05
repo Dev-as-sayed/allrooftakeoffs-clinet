@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Details from "./Details";
-import { Button } from "antd";
+import { Button, Spin } from "antd"; // Import Spin for loading
 import { MdOutlineFileDownload } from "react-icons/md";
 import { GoChevronDown } from "react-icons/go";
 import { CiSearch } from "react-icons/ci";
@@ -10,111 +10,12 @@ import { Link } from "react-router-dom";
 const UserTable = () => {
   const [activeButton, setActiveButton] = useState("All Project");
   const [tData, setTData] = useState([]);
-  // const tData = [
-  //   {
-  //     name: "Product A",
-  //     description:
-  //       "High-quality smartphone with a 6.5-inch display and 128GB storage",
-  //     country: "USA",
-  //     posting_date: "2024-09-15",
-  //     cost: 699.99,
-  //     dateline: "2024-09-30",
-  //     summary:
-  //       "This smartphone offers fast performance with the latest processor, high-resolution camera, and long battery life.",
-  //     product_classification: "Electronics",
-  //   },
-  //   {
-  //     name: "Running Shoes",
-  //     description:
-  //       "Lightweight running shoes with breathable mesh and cushioned sole",
-  //     country: "Germany",
-  //     posting_date: "2024-09-10",
-  //     cost: 129.99,
-  //     dateline: "2024-09-20",
-  //     summary:
-  //       "Perfect for long-distance runners, offering comfort and durability for all terrains.",
-  //     product_classification: "Footwear",
-  //   },
-  //   {
-  //     name: "Office Chair",
-  //     description:
-  //       "Ergonomic office chair with adjustable height and lumbar support",
-  //     country: "Canada",
-  //     posting_date: "2024-08-25",
-  //     cost: 199.99,
-  //     dateline: "2024-09-05",
-  //     summary:
-  //       "Designed for long hours of comfort, this chair improves posture and reduces back strain.",
-  //     product_classification: "Furniture",
-  //   },
-  //   {
-  //     name: "Wireless Earbuds",
-  //     description:
-  //       "Noise-cancelling wireless earbuds with up to 24 hours battery life",
-  //     country: "Japan",
-  //     posting_date: "2024-09-12",
-  //     cost: 149.99,
-  //     dateline: "2024-09-25",
-  //     summary:
-  //       "These earbuds offer superior sound quality and noise-cancelling technology, perfect for music lovers.",
-  //     product_classification: "Accessories",
-  //   },
-  //   {
-  //     name: "Product A",
-  //     description:
-  //       "High-quality smartphone with a 6.5-inch display and 128GB storage",
-  //     country: "USA",
-  //     posting_date: "2024-09-15",
-  //     cost: 699.99,
-  //     dateline: "2024-09-30",
-  //     summary:
-  //       "This smartphone offers fast performance with the latest processor, high-resolution camera, and long battery life.",
-  //     product_classification: "Electronics",
-  //   },
-  //   {
-  //     name: "Running Shoes",
-  //     description:
-  //       "Lightweight running shoes with breathable mesh and cushioned sole",
-  //     country: "Germany",
-  //     posting_date: "2024-09-10",
-  //     cost: 129.99,
-  //     dateline: "2024-09-20",
-  //     summary:
-  //       "Perfect for long-distance runners, offering comfort and durability for all terrains.",
-  //     product_classification: "Footwear",
-  //   },
-  //   {
-  //     name: "Office Chair",
-  //     description:
-  //       "Ergonomic office chair with adjustable height and lumbar support",
-  //     country: "Canada",
-  //     posting_date: "2024-08-25",
-  //     cost: 199.99,
-  //     dateline: "2024-09-05",
-  //     summary:
-  //       "Designed for long hours of comfort, this chair improves posture and reduces back strain.",
-  //     product_classification: "Furniture",
-  //   },
-  //   {
-  //     name: "Wireless Earbuds",
-  //     description:
-  //       "Noise-cancelling wireless earbuds with up to 24 hours battery life",
-  //     country: "Japan",
-  //     posting_date: "2024-09-12",
-  //     cost: 149.99,
-  //     dateline: "2024-09-25",
-  //     summary:
-  //       "These earbuds offer superior sound quality and noise-cancelling technology, perfect for music lovers.",
-  //     product_classification: "Accessories",
-  //   },
-  // ];
-
-  console.log(tData);
-
+  const [loading, setLoading] = useState(true); // Loading state
   const axoisSecure = useAxiosSecure();
   const url = "/get-projects";
 
   useEffect(() => {
+    setLoading(true);
     axoisSecure
       .get(url)
       .then((res) => {
@@ -126,18 +27,21 @@ const UserTable = () => {
       .catch((err) => {
         console.log(err);
         alert(err.message || err);
+      })
+      .finally(() => {
+        setLoading(false); // End loading after data is fetched
       });
   }, [axoisSecure, url]);
 
   return (
     <div className="min-h-screen">
-      <div className="w-fit mx-auto gap-2  md:flex lg:w-full md:flex-row lg:flex-row  md:justify-between lg:justify-between my-6">
-        <div className="w-fit  mx-auto md:mx-0 lg:mx-0 my-2">
+      <div className="w-fit mx-auto gap-2 md:flex lg:w-full md:justify-between lg:justify-between my-6">
+        <div className="w-fit mx-auto md:mx-0 lg:mx-0 my-2">
           <div className="relative">
             <CiSearch className="absolute top-[11px] left-2" />
             <input
               type="text"
-              className="pl-10 h-9 rounded-md placeholder:text-medium "
+              className="pl-10 h-9 rounded-md placeholder:text-medium"
               placeholder="Search"
             />
           </div>
@@ -165,26 +69,32 @@ const UserTable = () => {
           </button>
         </div>
       </div>
-      <div className="overflow-x-auto bg-white p-4 rounded-md ">
-        <table className="w-full min-w-[600px]">
-          <thead>
-            <tr className="text-left h-10 bg-primary-10 text-medium ">
-              <td className="pl-2">
-                <span className="flex">
-                  Project Name <GoChevronDown />
-                </span>
-              </td>
-              <td>Country</td>
-              <td>Posting date</td>
-              <td>Cost</td>
-              <td>Dateline</td>
-              <td>Action</td>
-            </tr>
-          </thead>
-          <tbody>
-            {tData?.map((data) => (
-              <>
-                <tr className="border-t-[1px] text-semiBold">
+      <div className="overflow-x-auto bg-white p-4 rounded-md">
+        {loading ? (
+          <div className="text-center">
+            <Spin size="large" /> {/* Display loader when loading */}
+          </div>
+        ) : (
+          <table className="w-full min-w-[600px]">
+            <thead>
+              <tr className="text-left h-10 bg-primary-10 text-medium">
+                <td className="pl-2">
+                  <span className="flex">
+                    Project Name <GoChevronDown />
+                  </span>
+                </td>
+                <td>Country</td>
+                <td>Posting date</td>
+                <td>Cost</td>
+                <td>Dateline</td>
+                <td>Action</td>
+              </tr>
+            </thead>
+            <tbody>
+              {tData?.map((data) => (
+                <tr key={data._id} className="border-t-[1px] text-semiBold">
+                  {" "}
+                  {/* Add unique key here */}
                   <td className="pl-2 py-2">
                     <span className="font-semibold">{data.name}</span>
                     <br />
@@ -194,9 +104,8 @@ const UserTable = () => {
                   <td>{data.posting_date}</td>
                   <td>${data?.subTotal + data?.gst}</td>
                   <td>{data.dateline}</td>
-                  <td className=" text-primary my-2">
+                  <td className="text-primary my-2">
                     <div className="flex gap-2">
-                      {/* <Details type={"uploadProject"} data={data}></Details> */}
                       <Button>
                         <Link to={`/project/${data?._id}`}>View</Link>
                       </Button>
@@ -208,12 +117,10 @@ const UserTable = () => {
                     </div>
                   </td>
                 </tr>
-              </>
-            ))}
-
-            {/* Add more rows as needed */}
-          </tbody>
-        </table>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );

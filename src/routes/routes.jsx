@@ -9,6 +9,8 @@ import PrivateRoutes from "./PrivateRoutes";
 import AddNewProjects from "../pages/AddNewProjects";
 import ProjectsView from "../pages/ProjectsView";
 import UsersTabaleDetaile from "../Components/UsersTabaleDetaile";
+import AdminRoutes from "./AdminRoutes";
+import AsignsdProjects from "../pages/AsignsdProjects";
 // import PrivateRoutes from "./PrivateRoutes";
 
 export const router = createBrowserRouter([
@@ -26,7 +28,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/users",
-        element: <AllUsersTable />,
+        element: (
+          <AdminRoutes>
+            <AllUsersTable />
+          </AdminRoutes>
+        ),
       },
       {
         path: "/projects",
@@ -43,6 +49,10 @@ export const router = createBrowserRouter([
       {
         path: "/userProjects/:id",
         element: <UsersTabaleDetaile />,
+      },
+      {
+        path: "/asignedProjects/:id",
+        element: <AsignsdProjects />,
       },
     ],
   },

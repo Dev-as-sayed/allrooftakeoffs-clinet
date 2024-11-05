@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import UsersTabaleDetaile from "../Components/UsersTabaleDetaile";
 import { CiSearch } from "react-icons/ci";
 import useAxiosSecure from "../hooks/AxoisSecure/useAxiosSecure";
+import { Button } from "antd";
+import { Link } from "react-router-dom";
 
 export default function AllUsersTable() {
   const [activeButton, setActiveButton] = useState("All Users");
@@ -138,11 +140,6 @@ export default function AllUsersTable() {
                               </h1>
                             </div>
                           )}
-                          {/* <img
-                            className="rounded-full w-full h-full"
-                            src={data.image}
-                            alt=""
-                          /> */}
                         </figure>
                         <span className="font-semibold">{data.name}</span>
                       </div>
@@ -153,7 +150,14 @@ export default function AllUsersTable() {
                     <td>{data.projectAssign}</td>
                     <td className=" text-primary">
                       <div className="">
-                        <UsersTabaleDetaile id={data._id} />
+                        <Link to={`/asignedProjects/${data._id}`}>
+                          <Button
+                            type="primary"
+                            className="text-primary bg-white border-stoke shadow-none hover:text-white hover:bg-primary"
+                          >
+                            View Projects
+                          </Button>
+                        </Link>
                       </div>
                     </td>
                   </tr>

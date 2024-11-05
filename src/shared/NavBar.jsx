@@ -6,40 +6,29 @@ import ProfileDroyer from "../Components/ProfileDroyer";
 import { IoIosMenu } from "react-icons/io";
 
 import { Button, Drawer } from "antd";
-import isAdmin from "../hooks/isAdmin/isAdmin";
+import useIsAdmin from "../hooks/isAdmin/useIsAdmin"; // Adjust the hook import
 import { useState } from "react";
 
 const NavBar = () => {
   const [activeLink, setActiveLink] = useState("users");
-
-  const handleLinkClick = (link) => {
-    setActiveLink(link);
-  };
-
   const [open, setOpen] = useState(false);
   const [placement, setPlacement] = useState("right");
-  const showDrawer = () => {
-    setOpen(true);
-  };
-  // eslint-disable-next-line no-unused-vars
-  const onChange = (e) => {
-    setPlacement(e.target.value);
-  };
-  const onClose = () => {
-    setOpen(false);
-  };
+  const isAdmin = useIsAdmin(); // Assuming useIsAdmin hook returns a boolean for admin status
 
-  isAdmin();
+  const handleLinkClick = (link) => setActiveLink(link);
+  const showDrawer = () => setOpen(true);
+  const onClose = () => setOpen(false);
 
   return (
     <div>
-      {/* Learge and medualm device */}
-      <nav className=" hidden md:flex lg:flex justify-between py-2  ">
-        <div className="">
-          <img src={logo} alt="" className="w-36" />
+      {/* Large and medium devices */}
+      <nav className="hidden md:flex lg:flex justify-between py-2">
+        <div>
+          <img src={logo} alt="Logo" className="w-36" />
         </div>
+
         {isAdmin && (
-          <div className="h-fit flex my-auto text-textGray">
+          <div className="flex my-auto text-textGray">
             <ul className="flex gap-4 text-semiBold">
               <li>
                 <Link
@@ -70,31 +59,26 @@ const NavBar = () => {
             </ul>
           </div>
         )}
+
         <div className="flex gap-3 h-fit items-center">
           {isAdmin && (
-            <Button
-              className="text-white bg-primary py-5"
-              // onClick={showDrawer}
-            >
+            <Button className="text-white bg-primary py-5">
               <Link to="/addNewProject">Upload Project</Link>
             </Button>
-            // <div>
-            //   <UploadeProjects />
-            // </div>
           )}
           <button>
             <CiBellOn className="w-10 h-10 p-2 border-2 border-gray-400 rounded-full" />
           </button>
           <ProfileDroyer />
-          {/* <img src={profileImg} className=" w-11 h-11" alt="" /> */}
-          <div className="">
-            <h3 className="">A M Sayed</h3>
+          <div>
+            <h3>A M Sayed</h3>
             <p className="text-textGray">Web developer</p>
           </div>
           <BsThreeDotsVertical />
         </div>
       </nav>
-      {/* Learge and medualm device */}
+
+      {/* Small devices */}
       <nav className="flex justify-between items-center p-2 md:hidden lg:hidden">
         {isAdmin && (
           <div>
@@ -105,13 +89,9 @@ const NavBar = () => {
               width={300}
               onClose={onClose}
               open={open}
-              className=""
             >
-              <div
-                className="h-fit text-center  gap-6  text-textGray"
-                onClick={showDrawer}
-              >
-                <ul className=" text-semiBold">
+              <div className="h-fit text-center gap-6 text-textGray">
+                <ul className="text-semiBold">
                   <li>
                     <Link
                       to="/users"
@@ -139,22 +119,18 @@ const NavBar = () => {
                     </Link>
                   </li>
                 </ul>
-                {/* <button onClick={showDrawer}>
-                  <UploadeProjects />
-                </button> */}
-                <Button
-                  className="text-white bg-primary py-5"
-                  onClick={showDrawer}
-                >
+                <Button className="text-white bg-primary py-5">
                   <Link to="/addNewProject">Upload Project</Link>
                 </Button>
               </div>
             </Drawer>
           </div>
         )}
-        <div className="">
-          <img src={logo} alt="" className="w-32" />
+
+        <div>
+          <img src={logo} alt="Logo" className="w-32" />
         </div>
+
         <div className="flex gap-3 h-fit items-center">
           <button>
             <CiBellOn className="w-10 h-10 p-2 border-2 border-gray-400 rounded-full" />

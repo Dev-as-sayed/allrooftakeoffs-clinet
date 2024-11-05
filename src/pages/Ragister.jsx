@@ -48,6 +48,7 @@ const Ragister = () => {
           return;
         }
         form.reset();
+        alert("Ragister successfull, Login pleace");
       })
       .catch((err) => {
         console.log(err);
@@ -85,15 +86,13 @@ const Ragister = () => {
           action=""
           className="w-full max-w-xs mx-auto"
           onSubmit={handelRagister}
-          onChange={() => {
-            setResError({});
-          }}
         >
           {resError && alert(resError.message)}
           <div className="flex flex-col mb-4">
             <label className="mb-2 text-semiBold">Name</label>
             <Input
               name="name"
+              required
               placeholder="Enter your name"
               className="w-full"
               variant="filled"
@@ -106,6 +105,7 @@ const Ragister = () => {
               placeholder="Enter your Email"
               className="w-full"
               variant="filled"
+              required
             />
           </div>
           <div className="flex flex-col mb-4">
@@ -115,6 +115,7 @@ const Ragister = () => {
               placeholder="Enter your address"
               className="w-full"
               variant="filled"
+              required
             />
           </div>
           <div className="flex gap-3">
@@ -125,6 +126,7 @@ const Ragister = () => {
                 placeholder="Type here"
                 className="w-full"
                 variant="filled"
+                required
               />
             </div>
             <div className="flex flex-col mb-4">
@@ -134,6 +136,7 @@ const Ragister = () => {
                 placeholder="Enter your Org"
                 className="w-full"
                 variant="filled"
+                required
               />
             </div>
           </div>
@@ -145,6 +148,7 @@ const Ragister = () => {
                 placeholder="Enter your password"
                 className="w-full"
                 variant="filled"
+                required
               />
             </div>
             <div className="flex flex-col mb-4">
@@ -154,6 +158,7 @@ const Ragister = () => {
                 placeholder="Enter your password"
                 className="w-full"
                 variant="filled"
+                required
                 onChange={() => setPassErr("")}
               />
             </div>

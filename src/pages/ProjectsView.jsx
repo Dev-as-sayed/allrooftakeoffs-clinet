@@ -4,12 +4,12 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import { Link, useParams } from "react-router-dom";
 import useAxiosSecure from "../hooks/AxoisSecure/useAxiosSecure";
 import FileUpload from "../Components/FileUpload";
-import isAdmin from "../hooks/isAdmin/isAdmin";
+import useIsAdmin from "../hooks/isAdmin/useIsAdmin";
 
 const ProjectsView = () => {
   const [project, setProjet] = useState({});
 
-  isAdmin();
+  const isAdmin = useIsAdmin();
   const { id } = useParams();
 
   const axiouSecure = useAxiosSecure();

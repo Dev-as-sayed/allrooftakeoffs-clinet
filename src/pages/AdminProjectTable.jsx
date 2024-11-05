@@ -127,14 +127,14 @@ const AdminProjectTable = () => {
                   </td>
                   <td className="items-center">
                     <div className="flex gap-2">
-                      {data.user ? (
+                      {data.assignedOn ? (
                         <>
                           <img
-                            src={data.user?.image}
+                            src={data.assignedOn?.image}
                             alt=""
                             className="w-10 rounded-full"
                           />
-                          <p className="my-2">{data.user?.name}</p>
+                          <p className="my-2">{data.assignedOn?.name}</p>
                         </>
                       ) : (
                         <>
@@ -162,13 +162,9 @@ const AdminProjectTable = () => {
                   <td>{data.dateline}</td>
                   <td className=" text-primary items-center ">
                     <div className="flex gap-2">
-                      {/* <Details type={"uploadProject"} data={data}>
-                        View
-                      </Details> */}
                       <Button>
                         <Link to={`/project/${data?._id}`}>View</Link>
                       </Button>
-                      {/* <UploadeFile id={data?._id} /> */}
                     </div>
                   </td>
                 </tr>

@@ -62,6 +62,21 @@ const ProfileDroyer = () => {
         open={open}
       >
         <div className="text-center">
+          <div>
+            {user?.image ? (
+              <img
+                src={user?.image}
+                className="w-44 rounded-full mx-auto"
+                alt=""
+              />
+            ) : (
+              <div className="rounded-full mx-auto w-40 h-40 flex justify-center align-middle bg-secondary">
+                <h1 className="h-fit my-auto text-7xl text-textBlack font-serif font-medium">
+                  {user?.name.slice(0, 2)}
+                </h1>
+              </div>
+            )}
+          </div>
           <img src={user?.image} className="w-44 rounded-full mx-auto" alt="" />
           <h1 className="text-textBlack text-xl font-serif my-3">
             {user?.name}
