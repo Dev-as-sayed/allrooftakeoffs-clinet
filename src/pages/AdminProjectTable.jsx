@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { GoChevronDown } from "react-icons/go";
 import AsignUser from "../Components/AsignUser";
 import { CiSearch } from "react-icons/ci";
-import UploadeFile from "../Components/UploadeFile";
 import useAxiosSecure from "../hooks/AxoisSecure/useAxiosSecure";
 import { Button } from "antd";
 import { Link } from "react-router-dom";
@@ -15,6 +14,8 @@ const AdminProjectTable = () => {
   // const [debouncedSearch, setDebouncedSearch] = useState(search);
   const axiosSecure = useAxiosSecure();
   const url = "/get-projects";
+
+  console.log(projects);
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
@@ -51,6 +52,15 @@ const AdminProjectTable = () => {
       })
       .catch((err) => console.log(err));
   };
+
+  useEffect(() => {
+    axiosSecure
+      .get("/get-userData")
+      .then((res) => {
+        setUsers(res.data.data);
+      })
+      .catch((err) => console.log(err));
+  }, [axiosSecure]);
   return (
     <div className="min-h-screen">
       <div className="w-fit mx-auto gap-2  md:flex lg:w-full md:flex-row lg:flex-row  md:justify-between lg:justify-between my-6">

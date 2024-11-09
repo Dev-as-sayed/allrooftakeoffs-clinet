@@ -1,15 +1,16 @@
 import { Button } from "antd";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { Link, useParams } from "react-router-dom";
 import useAxiosSecure from "../hooks/AxoisSecure/useAxiosSecure";
 import FileUpload from "../Components/FileUpload";
-import useIsAdmin from "../hooks/isAdmin/useIsAdmin";
+import { AuthContext } from "../auth/AuthProvider";
 
 const ProjectsView = () => {
   const [project, setProjet] = useState({});
 
-  const isAdmin = useIsAdmin();
+  const { user } = useContext(AuthContext);
+  const isAdmin = user?.role === "Admin";
   const { id } = useParams();
 
   const axiouSecure = useAxiosSecure();
@@ -25,8 +26,20 @@ const ProjectsView = () => {
         console.log(err);
       });
   }, [axiouSecure, url]);
+
+  // Function to download all files
+  const handleDownloadAll = () => {
+    project?.files?.forEach((file) => {
+      if (file?.downloadableLink) {
+        const link = document.createElement("a");
+        link.href = file.downloadableLink;
+        link.download = file.fileName || "downloaded-file";
+        link.click();
+      }
+    });
+  };
   return (
-    <div className="min-h-screen font-serif ">
+    <div className="min-h-screen pb-4">
       <div>
         <p className="flex gap-3 my-3 ">
           <Link to="/projects">
@@ -38,7 +51,7 @@ const ProjectsView = () => {
       <div className="">
         {/* 1st row  */}
         <div className="w-full p-4 bg-white rounded-lg">
-          <h2 className="text-xl font-semibold">{project?.name}</h2>
+          <h2 className="text-xl font-medium">{project?.name}</h2>
           <p className="my-1">Project name</p>
         </div>
         {/* 2nd row  */}
@@ -88,15 +101,25 @@ const ProjectsView = () => {
               <>
                 <div className="flex justify-between mb-4">
                   <p className="text-textGray">File and attachment</p>
-                  <Button className="bg-transparent border-primary text-primary">
+                  <Button
+                    className="bg-transparent border-primary text-primary"
+                    onClick={handleDownloadAll}
+                  >
                     Download all
                   </Button>
                 </div>
                 {project?.files?.map((file, index) => (
                   <div key={index} className="flex h-fit justify-between pb-1 ">
-                    <p className="text-textGray my-auto">{file.name}</p>
+                    <p className="text-textGray my-auto">
+                      {file?.fileName ? <>{file.fileName}</> : "attached fiel"}
+                    </p>
                     <Button className="bg-transparent border-primary text-primary">
-                      Download
+                      <a
+                        href={`${file?.downloadableLink}`}
+                        rel="noopener noreferrer"
+                      >
+                        Download
+                      </a>
                     </Button>
                   </div>
                 ))}

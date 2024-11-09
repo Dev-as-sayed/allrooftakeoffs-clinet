@@ -1,22 +1,38 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Details from "./Details";
-import { Button, Spin } from "antd"; // Import Spin for loading
+import { Button, Spin } from "antd";
 import { MdOutlineFileDownload } from "react-icons/md";
 import { GoChevronDown } from "react-icons/go";
 import { CiSearch } from "react-icons/ci";
 import useAxiosSecure from "../hooks/AxoisSecure/useAxiosSecure";
 import { Link } from "react-router-dom";
+import ProjectPDFView from "../Components/ProjectsPDFView";
 
 const UserTable = () => {
   const [activeButton, setActiveButton] = useState("All Project");
   const [tData, setTData] = useState([]);
-  const [loading, setLoading] = useState(true); // Loading state
-  const axoisSecure = useAxiosSecure();
+  const [loading, setLoading] = useState(true);
+  const [serch, setSearch] = useState("");
+
+  const axiosSecure = useAxiosSecure();
   const url = "/get-projects";
+  const pdfRefs = useRef({}); // Store references to ProjectPDFView for each project
+
+  const handleSearchChange = (e) => {
+    setSearch(e.target.value);
+  };
+
+  useEffect(() => {
+    const handler = setTimeout(() => {}, 500);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [serch]);
 
   useEffect(() => {
     setLoading(true);
-    axoisSecure
+    axiosSecure
       .get(url)
       .then((res) => {
         if (!res.data.success) {
@@ -29,20 +45,27 @@ const UserTable = () => {
         alert(err.message || err);
       })
       .finally(() => {
-        setLoading(false); // End loading after data is fetched
+        setLoading(false);
       });
-  }, [axoisSecure, url]);
+  }, [axiosSecure, url]);
+
+  // Function to handle PDF download for a specific project
+  const handleDownload = (projectId) => {
+    pdfRefs.current[projectId]?.downloadPDF();
+  };
 
   return (
     <div className="min-h-screen">
-      <div className="w-fit mx-auto gap-2 md:flex lg:w-full md:justify-between lg:justify-between my-6">
-        <div className="w-fit mx-auto md:mx-0 lg:mx-0 my-2">
+      <div className="w-fit mx-auto gap-2  md:flex lg:w-full md:flex-row lg:flex-row  md:justify-between lg:justify-between my-6">
+        <div className="w-fit  mx-auto md:mx-0 lg:mx-0 my-2">
           <div className="relative">
             <CiSearch className="absolute top-[11px] left-2" />
             <input
               type="text"
-              className="pl-10 h-9 rounded-md placeholder:text-medium"
+              name="search"
+              className="pl-10 h-9 rounded-md placeholder:text-medium "
               placeholder="Search"
+              onChange={handleSearchChange}
             />
           </div>
         </div>
@@ -55,7 +78,7 @@ const UserTable = () => {
             }`}
             onClick={() => setActiveButton("All Project")}
           >
-            All Project
+            All Projects
           </button>
           <button
             className={`px-4 py-1 rounded-full transition-colors duration-300 ${
@@ -65,14 +88,25 @@ const UserTable = () => {
             }`}
             onClick={() => setActiveButton("Last Update")}
           >
-            Last Update
+            New Projects
+          </button>
+          <button
+            className={`px-4 py-1 rounded-full transition-colors duration-300 ${
+              activeButton === "Unassigns Projects"
+                ? "bg-secondary text-white"
+                : "bg-transparent text-textGray"
+            }`}
+            onClick={() => setActiveButton("Unassigns Projects")}
+          >
+            Last Updated
           </button>
         </div>
       </div>
+      {/* Search and Filter UI */}
       <div className="overflow-x-auto bg-white p-4 rounded-md">
         {loading ? (
           <div className="text-center">
-            <Spin size="large" /> {/* Display loader when loading */}
+            <Spin size="large" />
           </div>
         ) : (
           <table className="w-full min-w-[600px]">
@@ -93,8 +127,6 @@ const UserTable = () => {
             <tbody>
               {tData?.map((data) => (
                 <tr key={data._id} className="border-t-[1px] text-semiBold">
-                  {" "}
-                  {/* Add unique key here */}
                   <td className="pl-2 py-2">
                     <span className="font-semibold">{data.name}</span>
                     <br />
@@ -109,11 +141,19 @@ const UserTable = () => {
                       <Button>
                         <Link to={`/project/${data?._id}`}>View</Link>
                       </Button>
-                      <button className="px-2 py-1 rounded-md border-2 border-primary">
+                      <button
+                        className="px-2 py-1 rounded-md border-2 border-primary"
+                        onClick={() => handleDownload(data._id)}
+                      >
                         <span className="flex gap-2">
                           <MdOutlineFileDownload className="mt-1" /> Download
                         </span>
                       </button>
+                      {/* Render ProjectPDFView for each project */}
+                      <ProjectPDFView
+                        ref={(el) => (pdfRefs.current[data._id] = el)}
+                        project={data}
+                      />
                     </div>
                   </td>
                 </tr>
