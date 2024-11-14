@@ -1,16 +1,13 @@
 import { Button } from "antd";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { Link, useParams } from "react-router-dom";
 import useAxiosSecure from "../hooks/AxoisSecure/useAxiosSecure";
-import FileUpload from "../Components/FileUpload";
-import { AuthContext } from "../auth/AuthProvider";
+import UploadeFile from "../Components/UploadeFile";
 
 const ProjectsView = () => {
   const [project, setProjet] = useState({});
 
-  const { user } = useContext(AuthContext);
-  const isAdmin = user?.role === "Admin";
   const { id } = useParams();
 
   const axiouSecure = useAxiosSecure();
@@ -19,7 +16,6 @@ const ProjectsView = () => {
     axiouSecure
       .get(url)
       .then((res) => {
-        console.log(res.data);
         setProjet(res.data.data);
       })
       .catch((err) => {
@@ -95,7 +91,34 @@ const ProjectsView = () => {
         {/* 3rd row  */}
         <div className="flex flex-col h-fit gap-y-4 gap-x-4 md:flex-row">
           <div className="flex-1 bg-white p-4 rounded-md">
-            {isAdmin ? (
+            <>
+              <div className="flex justify-between mb-4">
+                <p className="text-textGray">File and attachment</p>
+                <Button
+                  className="bg-transparent border-primary text-primary"
+                  onClick={handleDownloadAll}
+                >
+                  Download all
+                </Button>
+              </div>
+              {project?.files?.map((file, index) => (
+                <div key={index} className="flex h-fit justify-between pb-1 ">
+                  <p className="text-textGray my-auto">
+                    {file?.fileName ? <>{file.fileName}</> : "attached fiel"}
+                  </p>
+                  <Button className="bg-transparent border-primary text-primary">
+                    <a
+                      href={`${file?.downloadableLink}`}
+                      rel="noopener noreferrer"
+                    >
+                      Download
+                    </a>
+                  </Button>
+                </div>
+              ))}
+            </>
+            <UploadeFile projectId={id} />
+            {/* {isAdmin ? (
               <FileUpload projectId={id} />
             ) : (
               <>
@@ -124,7 +147,7 @@ const ProjectsView = () => {
                   </div>
                 ))}
               </>
-            )}
+            )} */}
           </div>
           <div className="flex-1 space-y-4">
             <div className="bg-white p-4 rounded-md">

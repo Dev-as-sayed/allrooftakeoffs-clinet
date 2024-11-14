@@ -5,8 +5,6 @@ import html2canvas from "html2canvas";
 const ProjectPDFView = React.forwardRef(({ project }, ref) => {
   const contentRef = useRef();
 
-  console.log(project);
-
   // Function to download the project details as a PDF
   const downloadPDF = () => {
     const input = contentRef.current;

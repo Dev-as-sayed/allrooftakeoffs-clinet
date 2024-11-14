@@ -7,181 +7,164 @@ import { Button } from "antd";
 import { Link } from "react-router-dom";
 
 const AdminProjectTable = () => {
-  const [activeButton, setActiveButton] = useState("All Project");
+  const [activeButton, setActiveButton] = useState("All Projects");
   const [projects, setProjects] = useState([]);
-  const [serch, setSearch] = useState("");
+  const [search, setSearch] = useState("");
   const [users, setUsers] = useState([]);
-  // const [debouncedSearch, setDebouncedSearch] = useState(search);
   const axiosSecure = useAxiosSecure();
-  const url = "/get-projects";
-
-  console.log(projects);
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
   };
 
-  useEffect(() => {
-    const handler = setTimeout(() => {}, 500);
+  // Determine start date based on selected filter
+  const getStartDate = () => {
+    const today = new Date();
+    if (activeButton === "New Projects") {
+      today.setDate(today.getDate() - 7); // Last week
+    } else if (activeButton === "Last Updated") {
+      today.setDate(today.getDate() - 3); // Last 3 days
+    }
+    return activeButton === "All Projects" ? null : today.toISOString();
+  };
 
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [serch]);
-
+  // Fetch projects based on search, active button, and date filter
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const res = await axiosSecure.get(url, {
-          params: { serch },
+        const response = await axiosSecure.get("/get-projects", {
+          params: {
+            search,
+            startDate: getStartDate(),
+          },
         });
-        setProjects(res.data.data);
-      } catch (err) {
-        console.log(err);
+        setProjects(response.data.data || []);
+      } catch (error) {
+        console.error("Error fetching projects:", error);
       }
     };
 
-    fetchProjects();
-  }, [axiosSecure, serch]);
+    const debounceFetch = setTimeout(fetchProjects, 500);
 
-  const handelGetUser = () => {
-    axiosSecure
-      .get("/get-userData")
-      .then((res) => {
-        setUsers(res.data.data);
-      })
-      .catch((err) => console.log(err));
-  };
+    return () => clearTimeout(debounceFetch);
+  }, [axiosSecure, search, activeButton]);
 
+  // Fetch users for assignment options
   useEffect(() => {
-    axiosSecure
-      .get("/get-userData")
-      .then((res) => {
-        setUsers(res.data.data);
-      })
-      .catch((err) => console.log(err));
+    const fetchUsers = async () => {
+      try {
+        const response = await axiosSecure.get("/get-userData");
+        setUsers(response.data.data || []);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+
+    fetchUsers();
   }, [axiosSecure]);
+
   return (
     <div className="min-h-screen">
-      <div className="w-fit mx-auto gap-2  md:flex lg:w-full md:flex-row lg:flex-row  md:justify-between lg:justify-between my-6">
-        <div className="w-fit  mx-auto md:mx-0 lg:mx-0 my-2">
-          <div className="relative">
-            <CiSearch className="absolute top-[11px] left-2" />
-            <input
-              type="text"
-              name="search"
-              className="pl-10 h-9 rounded-md placeholder:text-medium "
-              placeholder="Search"
-              onChange={handleSearchChange}
-            />
-          </div>
+      <div className="w-full mx-auto my-6 flex flex-col md:flex-row md:justify-between items-center gap-4">
+        <div className="relative">
+          <CiSearch className="absolute top-[11px] left-2" />
+          <input
+            type="text"
+            placeholder="Search"
+            className="pl-10 h-9 rounded-md placeholder:text-medium"
+            onChange={handleSearchChange}
+          />
         </div>
-        <div className="flex gap-4 md:gap-6 lg:gap-6 py-1 px-1 text-medium text-textGray rounded-full bg-white w-fit">
-          <button
-            className={`px-4 py-1 rounded-full transition-colors duration-300 ${
-              activeButton === "All Project"
-                ? "bg-secondary text-white"
-                : "bg-transparent text-textGray"
-            }`}
-            onClick={() => setActiveButton("All Project")}
-          >
-            All Projects
-          </button>
-          <button
-            className={`px-4 py-1 rounded-full transition-colors duration-300 ${
-              activeButton === "Last Update"
-                ? "bg-secondary text-white"
-                : "bg-transparent text-textGray"
-            }`}
-            onClick={() => setActiveButton("Last Update")}
-          >
-            New Projects
-          </button>
-          <button
-            className={`px-4 py-1 rounded-full transition-colors duration-300 ${
-              activeButton === "Unassigns Projects"
-                ? "bg-secondary text-white"
-                : "bg-transparent text-textGray"
-            }`}
-            onClick={() => setActiveButton("Unassigns Projects")}
-          >
-            Last Updated
-          </button>
+        <div className="flex gap-4 py-1 px-1 text-medium text-textGray rounded-full bg-white">
+          {["All Projects", "New Projects", "Last Updated"].map((label) => (
+            <button
+              key={label}
+              className={`px-4 py-1 rounded-full transition-colors duration-300 ${
+                activeButton === label
+                  ? "bg-secondary text-white"
+                  : "bg-transparent text-textGray"
+              }`}
+              onClick={() => setActiveButton(label)}
+            >
+              {label}
+            </button>
+          ))}
         </div>
       </div>
-      <div className="overflow-x-auto bg-white p-4 rounded-md ">
+
+      <div className="overflow-x-auto bg-white p-4 rounded-md">
         <table className="w-full min-w-[600px]">
           <thead>
-            <tr className="text-left h-10 bg-primary-10 text-medium ">
+            <tr className="text-left h-10 bg-primary-10 text-medium">
               <td className="pl-2 max-w-52">
-                <span className="flex">
+                <span className="flex items-center">
                   Project Name <GoChevronDown />
                 </span>
               </td>
               <td>Assign With</td>
               <td>Country</td>
-              <td>Posting date</td>
+              <td>Posting Date</td>
               <td>Cost</td>
-              <td>Dateline</td>
+              <td>Deadline</td>
               <td>Action</td>
             </tr>
           </thead>
           <tbody>
-            {projects.map((data) => (
-              <>
-                <tr className="border-t-[1px] text-semiBold">
+            {projects.length > 0 ? (
+              projects.map((project) => (
+                <tr key={project._id} className="border-t-[1px] text-semiBold">
                   <td className="pl-2 py-2 max-w-52">
-                    <span className="font-semibold">{data.name}</span>
+                    <span className="font-semibold">{project.name}</span>
                     <br />
-                    <span>{data.description}</span>
+                    <span>{project.description}</span>
                   </td>
-                  <td className="items-center">
+                  <td>
                     <div className="flex gap-2">
-                      {data.assignedOn ? (
+                      {project.assignedOn ? (
                         <>
-                          <img
-                            src={data.assignedOn?.image}
+                          {/* <img
+                            src={project.assignedOn?.image}
                             alt=""
                             className="w-10 rounded-full"
-                          />
-                          <p className="my-2">{data.assignedOn?.name}</p>
+                          /> */}
+                          {project.assignedOn?.image ? (
+                            <img
+                              className="rounded-full w-10 h-10 my-1"
+                              src={project.assignedOn?.image}
+                              alt=""
+                            />
+                          ) : (
+                            <div className="rounded-full w-10 h-10 flex justify-center align-middle bg-bgGray">
+                              <h1 className="h-fit my-auto text-xl text-textBlack font-serif font-medium">
+                                {project.name.slice(0, 2)}
+                              </h1>
+                            </div>
+                          )}
+                          <p className="my-2">{project.assignedOn?.name}</p>
                         </>
                       ) : (
-                        <>
-                          <div className="h-full">
-                            <button onClick={handelGetUser}>
-                              {users ? (
-                                <AsignUser users={users} projectId={data._id} />
-                              ) : (
-                                <Button
-                                  type="primary"
-                                  className="bg-white text-textBlack border-secondary shadow-none "
-                                >
-                                  Assign user
-                                </Button>
-                              )}
-                            </button>
-                          </div>
-                        </>
+                        <AsignUser users={users} projectId={project._id} />
                       )}
                     </div>
                   </td>
-                  <td>{data.location}</td>
-                  <td>{data.posting_date}</td>
-                  <td>${data.total}</td>
-                  <td>{data.dateline}</td>
-                  <td className=" text-primary items-center ">
-                    <div className="flex gap-2">
-                      <Button>
-                        <Link to={`/project/${data?._id}`}>View</Link>
-                      </Button>
-                    </div>
+                  <td>{project.location}</td>
+                  <td>{project.posting_date}</td>
+                  <td>${project.total}</td>
+                  <td>{project.dateline}</td>
+                  <td className="text-primary">
+                    <Button>
+                      <Link to={`/project/${project._id}`}>View</Link>
+                    </Button>
                   </td>
                 </tr>
-              </>
-            ))}
-
-            {/* Add more rows as needed */}
+              ))
+            ) : (
+              <tr>
+                <td colSpan="7" className="text-center py-4">
+                  No projects found
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

@@ -1,5 +1,4 @@
 import { useEffect, useState, useRef } from "react";
-import Details from "./Details";
 import { Button, Spin } from "antd";
 import { MdOutlineFileDownload } from "react-icons/md";
 import { GoChevronDown } from "react-icons/go";
@@ -7,49 +6,41 @@ import { CiSearch } from "react-icons/ci";
 import useAxiosSecure from "../hooks/AxoisSecure/useAxiosSecure";
 import { Link } from "react-router-dom";
 import ProjectPDFView from "../Components/ProjectsPDFView";
+import dayjs from "dayjs";
 
 const UserTable = () => {
   const [activeButton, setActiveButton] = useState("All Project");
   const [tData, setTData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [serch, setSearch] = useState("");
-
+  const [search, setSearch] = useState("");
   const axiosSecure = useAxiosSecure();
   const url = "/get-projects";
-  const pdfRefs = useRef({}); // Store references to ProjectPDFView for each project
+  const pdfRefs = useRef({});
 
-  const handleSearchChange = (e) => {
-    setSearch(e.target.value);
+  const fetchData = (query) => {
+    setLoading(true);
+    axiosSecure
+      .get(url, { params: query })
+      .then((res) => {
+        if (!res.data.success) alert(res.data.message);
+        setTData(res.data.data);
+      })
+      .catch((err) => console.error(err.message))
+      .finally(() => setLoading(false));
   };
 
   useEffect(() => {
-    const handler = setTimeout(() => {}, 500);
+    let query = {};
+    if (search) query.search = search;
+    if (activeButton === "New Projects") {
+      query.startDate = dayjs().subtract(7, "days").format("YYYY-MM-DD");
+    } else if (activeButton === "Last Update") {
+      query.startDate = dayjs().subtract(3, "days").format("YYYY-MM-DD");
+    }
+    fetchData(query);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [axiosSecure, activeButton, search]);
 
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [serch]);
-
-  useEffect(() => {
-    setLoading(true);
-    axiosSecure
-      .get(url)
-      .then((res) => {
-        if (!res.data.success) {
-          alert(res.data.message);
-        }
-        setTData(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-        alert(err.message || err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [axiosSecure, url]);
-
-  // Function to handle PDF download for a specific project
   const handleDownload = (projectId) => {
     pdfRefs.current[projectId]?.downloadPDF();
   };
@@ -57,52 +48,47 @@ const UserTable = () => {
   return (
     <div className="min-h-screen">
       <div className="w-fit mx-auto gap-2  md:flex lg:w-full md:flex-row lg:flex-row  md:justify-between lg:justify-between my-6">
+        {/* Search and Filter UI */}
+
         <div className="w-fit  mx-auto md:mx-0 lg:mx-0 my-2">
           <div className="relative">
             <CiSearch className="absolute top-[11px] left-2" />
             <input
               type="text"
               name="search"
-              className="pl-10 h-9 rounded-md placeholder:text-medium "
+              className="pl-10 h-9 rounded-md placeholder:text-medium"
               placeholder="Search"
-              onChange={handleSearchChange}
+              onChange={(e) => setSearch(e.target.value)}
             />
           </div>
         </div>
-        <div className="flex gap-4 md:gap-6 lg:gap-6 py-1 px-1 text-medium text-textGray rounded-full bg-white w-fit">
+        <div className="flex gap-4 py-1 px-1 text-medium text-textGray rounded-full bg-white w-fit">
           <button
-            className={`px-4 py-1 rounded-full transition-colors duration-300 ${
-              activeButton === "All Project"
-                ? "bg-secondary text-white"
-                : "bg-transparent text-textGray"
+            className={`px-4 py-1 rounded-full transition-colors ${
+              activeButton === "All Project" ? "bg-secondary text-white" : ""
             }`}
             onClick={() => setActiveButton("All Project")}
           >
             All Projects
           </button>
           <button
-            className={`px-4 py-1 rounded-full transition-colors duration-300 ${
-              activeButton === "Last Update"
-                ? "bg-secondary text-white"
-                : "bg-transparent text-textGray"
+            className={`px-4 py-1 rounded-full transition-colors ${
+              activeButton === "New Projects" ? "bg-secondary text-white" : ""
             }`}
-            onClick={() => setActiveButton("Last Update")}
+            onClick={() => setActiveButton("New Projects")}
           >
             New Projects
           </button>
           <button
-            className={`px-4 py-1 rounded-full transition-colors duration-300 ${
-              activeButton === "Unassigns Projects"
-                ? "bg-secondary text-white"
-                : "bg-transparent text-textGray"
+            className={`px-4 py-1 rounded-full transition-colors ${
+              activeButton === "Last Update" ? "bg-secondary text-white" : ""
             }`}
-            onClick={() => setActiveButton("Unassigns Projects")}
+            onClick={() => setActiveButton("Last Update")}
           >
             Last Updated
           </button>
         </div>
       </div>
-      {/* Search and Filter UI */}
       <div className="overflow-x-auto bg-white p-4 rounded-md">
         {loading ? (
           <div className="text-center">

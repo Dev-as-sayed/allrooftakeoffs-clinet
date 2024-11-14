@@ -77,7 +77,7 @@ const AddNewProjects = () => {
   return (
     <div className="min-h-screen py-4">
       {/* header and button */}
-      <div className="flex h-fit my-3 items-center justify-between">
+      <div className=" h-fit my-3 items-center ">
         <div>
           <p className="flex gap-3 ">
             <Link to="/users">
@@ -85,15 +85,6 @@ const AddNewProjects = () => {
             </Link>
             Create new Project
           </p>
-        </div>
-        <div className="flex gap-2">
-          <Button
-            className="bg-transparent text-textGray py-5"
-            onClick={handelResetForm}
-          >
-            Reset all fields
-          </Button>
-          <Button className="text-white bg-primary py-5">Save Project</Button>
         </div>
       </div>
 
@@ -107,7 +98,7 @@ const AddNewProjects = () => {
                 type="text"
                 name="name"
                 placeholder="Type here"
-                className="w-full bg-bgGray h-8 border-2 rounded-md"
+                className="w-full pl-2 bg-bgGray h-8 border-2 rounded-md"
               />
             </div>
           </div>
@@ -121,7 +112,8 @@ const AddNewProjects = () => {
                   <input
                     type="text"
                     name="location"
-                    className="w-full bg-bgGray h-8 border-2 rounded-md"
+                    placeholder="Type here"
+                    className="w-full pl-2 bg-bgGray h-8 border-2 rounded-md"
                   />
                 </div>
               </div>
@@ -132,7 +124,8 @@ const AddNewProjects = () => {
                   <input
                     type="text"
                     name="dateline"
-                    className="w-full bg-bgGray h-8 border-2 rounded-md"
+                    placeholder="Type here"
+                    className="w-full pl-2 bg-bgGray h-8 border-2 rounded-md"
                   />
                 </div>
               </div>
@@ -146,7 +139,8 @@ const AddNewProjects = () => {
                   <input
                     type="text"
                     name="userName"
-                    className="w-full bg-bgGray h-8 border-2 rounded-md"
+                    placeholder="Type here"
+                    className="w-full pl-2 bg-bgGray h-8 border-2 rounded-md"
                   />
                 </div>
                 <div className="flex flex-col">
@@ -154,7 +148,8 @@ const AddNewProjects = () => {
                   <input
                     type="text"
                     name="userAddress"
-                    className="w-full bg-bgGray h-8 border-2 rounded-md"
+                    placeholder="Type here"
+                    className="w-full pl-2 bg-bgGray h-8 border-2 rounded-md"
                   />
                 </div>
                 <div className="flex flex-col md:flex-row gap-4">
@@ -163,7 +158,8 @@ const AddNewProjects = () => {
                     <input
                       type="text"
                       name="userEmail"
-                      className="w-full bg-bgGray h-8 border-2 rounded-md"
+                      placeholder="Type here"
+                      className="w-full pl-2 bg-bgGray h-8 border-2 rounded-md"
                     />
                   </div>
                   <div className="flex flex-col w-full md:w-1/2">
@@ -171,7 +167,8 @@ const AddNewProjects = () => {
                     <input
                       type="text"
                       name="userPhone"
-                      className="w-full bg-bgGray h-8 border-2 rounded-md"
+                      placeholder="Type here"
+                      className="w-full pl-2 bg-bgGray h-8 border-2 rounded-md"
                     />
                   </div>
                 </div>
@@ -185,7 +182,7 @@ const AddNewProjects = () => {
               id="message"
               rows="4"
               name="description"
-              className="w-full px-4 py-2 text-gray-700 bg-bgGray border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full pl-2 px-4 py-2 text-gray-700 bg-bgGray border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="Write your message here..."
             />
           </div>

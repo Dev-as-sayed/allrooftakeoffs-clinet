@@ -77,7 +77,6 @@ const ProfileDroyer = () => {
               </div>
             )}
           </div>
-          <img src={user?.image} className="w-44 rounded-full mx-auto" alt="" />
           <h1 className="text-textBlack text-xl font-serif my-3">
             {user?.name}
           </h1>

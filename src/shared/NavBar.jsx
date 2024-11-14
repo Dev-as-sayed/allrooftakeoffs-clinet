@@ -23,8 +23,6 @@ const NavBar = () => {
 
   const isAdmin = user?.role === "Admin";
 
-  console.log(isAdmin);
-
   return (
     <div>
       {/* Large and medium devices */}

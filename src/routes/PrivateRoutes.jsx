@@ -5,7 +5,6 @@ import { AuthContext } from "../auth/AuthProvider";
 // eslint-disable-next-line react/prop-types
 const PrivateRoutes = ({ children }) => {
   const { loading, user } = useContext(AuthContext);
-  console.log(user);
 
   const location = useLocation(); // Get the current location for redirection after login
 

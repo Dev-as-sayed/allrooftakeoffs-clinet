@@ -1,13 +1,17 @@
-import { Drawer, message, Upload } from "antd";
+import { Button, Drawer, message, Spin } from "antd";
 import { useState } from "react";
 import { FaArrowLeftLong, FaFileArrowUp } from "react-icons/fa6";
-import { MdOutlineFileDownload, MdUploadFile } from "react-icons/md";
 import useAxiosSecure from "../hooks/AxoisSecure/useAxiosSecure";
+import Dragger from "antd/es/upload/Dragger";
+import { InboxOutlined } from "@ant-design/icons";
 
-const UploadeFile = ({ id }) => {
+const UploadeFile = ({ projectId }) => {
   const [open, setOpen] = useState(false);
   const [file, setFile] = useState(null); // Single file state
-  const axoisSecure = useAxiosSecure();
+  const [uploadStatus, setUploadStatus] = useState("");
+  const [uploading, setUploading] = useState(false);
+  const axiosSecure = useAxiosSecure();
+  const url = `/upload-file/${projectId}`;
 
   const showDrawer = () => {
     setOpen(true);
@@ -17,63 +21,41 @@ const UploadeFile = ({ id }) => {
     setOpen(false);
   };
 
-  const handleFileChange = (file) => {
-    setFile(file); // Directly store the file
-    console.log("Selected file:", file); // Log the selected file
-  };
-
   // Handle file upload to server
-  const handleUploadFile = async () => {
-    if (!file) {
-      message.error("No file selected for upload.");
-      return;
-    }
 
+  const handleUpload = async () => {
+    if (!file) return;
     const formData = new FormData();
-    formData.append("file", file); // Append the file to FormData
-    formData.append("fileName", file.name); // Add any additional info if needed
+    formData.append("file", file); // `file` is the file you want to upload
+
+    setUploading(true); // Start loading
+    setUploadStatus(""); // Clear any previous messages
 
     try {
-      // Send the POST request to the server
-      const response = await axoisSecure.patch(`/upload-file/${id}`, formData, {
+      const response = await axiosSecure.post(url, formData, {
         headers: {
-          "Content-Type": "multipart/form-data", // Set correct headers for file upload
+          "Content-Type": "multipart/form-data",
         },
       });
-
-      if (response.status === 200) {
-        message.success("File uploaded and link saved successfully.");
-        console.log("Server response:", response.data);
-        setOpen(false); // Close the drawer upon successful upload
-      } else {
-        message.error("Failed to upload the file.");
-      }
+      console.log(response.data);
+      setUploadStatus("File uploaded successfully!");
+      message.success("File uploaded successfully!");
     } catch (error) {
-      console.error("Error uploading the file:", error);
-      message.error("Error occurred during the upload.");
+      console.error("Upload failed:", error);
+      setUploadStatus("File upload failed. Please try again.");
+      alert("File upload failed. Please try again.");
+    } finally {
+      setUploading(false); // End loading
     }
   };
-
-  const { Dragger } = Upload;
-  const uploadProps = {
-    name: "file",
-    multiple: false, // Single file
-    beforeUpload: (file) => {
-      console.log(file);
-
-      handleFileChange(file); // Directly store the file
-      return false; // Prevent auto upload
-    },
-  };
-
   return (
     <div>
       <button
-        className="px-2 py-1 rounded-md border-2 border-primary"
+        className="px-2 py-1 w-full rounded-md border-2 border-secondary"
         onClick={showDrawer}
       >
-        <span className="flex gap-2">
-          <FaFileArrowUp className="mt-1" /> Upload File
+        <span className="flex justify-center gap-2">
+          <FaFileArrowUp className="mt-1 " /> Upload File
         </span>
       </button>
       <Drawer
@@ -93,27 +75,36 @@ const UploadeFile = ({ id }) => {
         onClose={onClose}
         open={open}
       >
-        <div className="min-h-[80vh] flex flex-col justify-between">
-          <div className="h-44 bg-blue-50 border-dotted border-blue-600 rounded-md">
-            <Dragger {...uploadProps} className="bg-secondary">
-              <p className="flex justify-center my-2">
-                <MdUploadFile className="text-2xl text-textGray" />
-              </p>
-              <p className="ant-upload-text">
-                Click or drag file to this area to upload
-              </p>
-            </Dragger>
-          </div>
-          <div>
-            <button
-              className="px-2 py-2 rounded-md w-full bg-primary"
-              onClick={handleUploadFile}
-            >
-              <span className="flex justify-center gap-2">
-                <MdOutlineFileDownload className="mt-1" /> Upload
-              </span>
-            </button>
-          </div>
+        <div>
+          <Dragger
+            name="file"
+            multiple={false}
+            beforeUpload={(file) => {
+              setFile(file);
+              message.success(`${file.name} file selected.`);
+              return false; // Prevents automatic upload
+            }}
+            onRemove={() => setFile(null)} // Optional: clear file on remove
+          >
+            <p className="ant-upload-drag-icon">
+              <InboxOutlined />
+            </p>
+            <p className="ant-upload-text">
+              Click or drag file to this area to upload
+            </p>
+            <p className="ant-upload-hint">
+              Support for a single or bulk upload. Strictly prohibited from
+              uploading company data or other banned files.
+            </p>
+          </Dragger>
+          <Button
+            onClick={handleUpload}
+            disabled={!file || uploading}
+            className="mt-4 bg-secondary text-white w-full"
+          >
+            {uploading ? <Spin size="small" /> : "Upload"}
+          </Button>
+          {uploadStatus && <p className="mt-2 text-center">{uploadStatus}</p>}
         </div>
       </Drawer>
     </div>
