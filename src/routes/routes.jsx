@@ -36,23 +36,43 @@ export const router = createBrowserRouter([
       },
       {
         path: "/projects",
-        element: <AdminProjectTable />,
+        element: (
+          <AdminRoutes>
+            <AdminProjectTable />
+          </AdminRoutes>
+        ),
       },
       {
         path: "/addNewProject",
-        element: <AddNewProjects />,
+        element: (
+          <PrivateRoutes>
+            <AddNewProjects />
+          </PrivateRoutes>
+        ),
       },
       {
         path: "/project/:id",
-        element: <ProjectsView />,
+        element: (
+          <PrivateRoutes>
+            <ProjectsView />
+          </PrivateRoutes>
+        ),
       },
       {
         path: "/userProjects/:id",
-        element: <UsersTabaleDetaile />,
+        element: (
+          <PrivateRoutes>
+            <UsersTabaleDetaile />
+          </PrivateRoutes>
+        ),
       },
       {
         path: "/asignedProjects/:id",
-        element: <AsignsdProjects />,
+        element: (
+          <AdminRoutes>
+            <AsignsdProjects />
+          </AdminRoutes>
+        ),
       },
     ],
   },

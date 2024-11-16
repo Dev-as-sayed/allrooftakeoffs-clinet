@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const axiosSecure = axios.create({
-  baseURL: "http://localhost:5000", // Replace with your actual backend URL
+  baseURL: "http://145.223.23.243:5000",
+  // baseURL: "http://localhost:5000", // Replace with your actual backend URL
   // baseURL: "https://allrooftakeoffs-server.vercel.app", // Replace with your actual backend URL
 });
 
