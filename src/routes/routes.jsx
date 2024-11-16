@@ -11,7 +11,6 @@ import ProjectsView from "../pages/ProjectsView";
 import UsersTabaleDetaile from "../Components/UsersTabaleDetaile";
 import AdminRoutes from "./AdminRoutes";
 import AsignsdProjects from "../pages/AsignsdProjects";
-// import PrivateRoutes from "./PrivateRoutes";
 
 export const router = createBrowserRouter([
   {

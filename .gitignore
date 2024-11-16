@@ -8,14 +8,16 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
-dist
 dist-ssr
+vercel.json
 *.local
 
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
 .idea
+.vercel
+
 .DS_Store
 *.suo
 *.ntvs*
