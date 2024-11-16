@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router-dom";
-import User from "../Layout/user";
 import UserTable from "../pages/userTable";
 import Login from "../pages/Login";
 import Ragister from "../pages/Ragister";
@@ -11,6 +10,7 @@ import ProjectsView from "../pages/ProjectsView";
 import UsersTabaleDetaile from "../Components/UsersTabaleDetaile";
 import AdminRoutes from "./AdminRoutes";
 import AsignsdProjects from "../pages/AsignsdProjects";
+import User from "../Layout/user";
 
 export const router = createBrowserRouter([
   {
