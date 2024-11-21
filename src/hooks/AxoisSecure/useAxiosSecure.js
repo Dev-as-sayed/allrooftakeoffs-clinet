@@ -30,8 +30,8 @@
 import axios from "axios";
 
 const axiosSecure = axios.create({
-  // baseURL: "https://api.allrooftakeoffs.com.au",
-  baseURL: "http://localhost:5000",
+  baseURL: "https://api.allrooftakeoffs.com.au",
+  // baseURL: "http://localhost:5000",
   withCredentials: true,
 });
 
@@ -46,8 +46,8 @@ axiosSecure.interceptors.request.use(
       config.headers = {
         "Content-Type": "application/json", // Ensuring JSON content type
         Authorization: `Bearer ${token}`,
-        // Origin: "https://api.allrooftakeoffs.com.au", // Dynamically set the origin from environment variable
-        Origin: "http://localhost:5000", // Dynamically set the origin from environment variable
+        Origin: "https://api.allrooftakeoffs.com.au", // Dynamically set the origin from environment variable
+        // Origin: "http://localhost:5000", // Dynamically set the origin from environment variable
         "Access-Control-Allow-Credentials": "true", // Allow credentials to be included in the request
         credentials: "include",
       };

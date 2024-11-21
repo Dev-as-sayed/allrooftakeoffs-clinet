@@ -23,8 +23,8 @@ axiosPublic.interceptors.request.use(
     // Add headers dynamically here
     config.headers = {
       "Content-Type": "application/json", // Ensuring JSON content type
-      // Origin: "https://api.allrooftakeoffs.com.au", // Dynamically set the origin from environment variable
-      Origin: "http://localhost:5000", // Dynamically set the origin from environment variable
+      Origin: "https://api.allrooftakeoffs.com.au", // Dynamically set the origin from environment variable
+      // Origin: "http://localhost:5000", // Dynamically set the origin from environment variable
       "Access-Control-Allow-Credentials": "true", // Allow credentials to be included in the request
       credentials: "include",
     };
