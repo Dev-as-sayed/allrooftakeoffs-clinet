@@ -32,7 +32,6 @@ import axios from "axios";
 const axiosSecure = axios.create({
   baseURL: "https://api.allrooftakeoffs.com.au",
   withCredentials: true,
-  "Access-Control-Allow-Credentials": "true", // Allow credentials to be included in the request
 });
 
 // Request interceptor to add the token to headers
@@ -44,10 +43,11 @@ axiosSecure.interceptors.request.use(
       // Attach token to Authorization header in the format 'Bearer <token>'
       // config.headers.Authorization = `Bearer ${token}`;
       config.headers = {
-        ...config.headers,
         "Content-Type": "application/json", // Ensuring JSON content type
         Authorization: `Bearer ${token}`,
         Origin: "https://api.allrooftakeoffs.com.au", // Dynamically set the origin from environment variable
+        "Access-Control-Allow-Credentials": "true", // Allow credentials to be included in the request
+        credentials: "include",
       };
     }
     return config;
