@@ -32,6 +32,7 @@ import axios from "axios";
 const axiosSecure = axios.create({
   baseURL: "https://api.allrooftakeoffs.com.au",
   withCredentials: true,
+  "Access-Control-Allow-Credentials": "true", // Allow credentials to be included in the request
 });
 
 // Request interceptor to add the token to headers
@@ -41,7 +42,13 @@ axiosSecure.interceptors.request.use(
 
     if (token) {
       // Attach token to Authorization header in the format 'Bearer <token>'
-      config.headers.Authorization = `Bearer ${token}`;
+      // config.headers.Authorization = `Bearer ${token}`;
+      config.headers = {
+        ...config.headers,
+        "Content-Type": "application/json", // Ensuring JSON content type
+        Authorization: `Bearer ${token}`,
+        Origin: "https://api.allrooftakeoffs.com.au", // Dynamically set the origin from environment variable
+      };
     }
     return config;
   },
@@ -55,16 +62,16 @@ const useAxiosSecure = () => {
 };
 
 // Adding the headers and additional properties in fetchOpt
-const fetchOpt = {
-  ...fetchOpt,
-  headers: {
-    ...fetchOpt.headers,
-    "Content-Type": "application/json",
-    Origin: "https://api.allrooftakeoffs.com.au", // Setting the Origin header dynamically
-    Authorization: `Bearer ${localStorage.getItem("authToken")}`, // Adding the Authorization header dynamically from localStorage
-  },
-  "access-control-allow-credentials": "true", // Ensuring credentials are sent with the request
-  credentials: "include", // Ensuring cookies are included in the request
-};
+// const fetchOpt = {
+//   ...fetchOpt,
+//   headers: {
+//     ...fetchOpt.headers,
+//     "Content-Type": "application/json",
+//     Origin: "https://api.allrooftakeoffs.com.au", // Setting the Origin header dynamically
+//     Authorization: `Bearer ${localStorage.getItem("authToken")}`, // Adding the Authorization header dynamically from localStorage
+//   },
+//   "access-control-allow-credentials": "true", // Ensuring credentials are sent with the request
+//   credentials: "include", // Ensuring cookies are included in the request
+// };
 
 export default useAxiosSecure;
