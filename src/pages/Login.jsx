@@ -59,7 +59,7 @@ const Login = () => {
           </div>
           <div className="flex flex-col mb-4">
             <label className="mb-2 text-semiBold">Password</label>
-            <Input
+            <Input.Password
               name="password"
               placeholder="Enter your password"
               className="w-full"
