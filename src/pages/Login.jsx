@@ -37,7 +37,7 @@ const Login = () => {
           <div className="my-4 ">
             <h2 className="text-smallBold text-textBlack">Welcome Back!</h2>
             <p className="text-textGray text-semiBold">
-              Enter your email and password to login..
+              Enter your email and password to login.
             </p>
           </div>
         </div>
