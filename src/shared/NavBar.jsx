@@ -1,18 +1,17 @@
 import { CiBellOn } from "react-icons/ci";
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
-import { BsThreeDotsVertical } from "react-icons/bs";
 import ProfileDroyer from "../Components/ProfileDroyer";
 import { IoIosMenu } from "react-icons/io";
 
 import { Button, Drawer } from "antd";
 import { useContext, useState } from "react";
 import { AuthContext } from "../auth/AuthProvider";
-import useIsAdmin from "../hooks/isAdmin/useIsAdmin";
 
 const NavBar = () => {
   const [activeLink, setActiveLink] = useState("users");
   const [open, setOpen] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [placement, setPlacement] = useState("right");
 
   const handleLinkClick = (link) => setActiveLink(link);
@@ -78,13 +77,6 @@ const NavBar = () => {
             <CiBellOn className="w-10 h-10 p-2 border-2 border-gray-400 rounded-full" />
           </button>
           <ProfileDroyer />
-          <div>
-            {/* <h3>A M Sayed</h3>
-            <p className="text-textGray">Web developer</p> */}
-            {/* <h3>{user?.name}</h3>
-            <p className="text-textGray">{user?.org}</p> */}
-          </div>
-          {/* <BsThreeDotsVertical /> */}
         </div>
       </nav>
 
