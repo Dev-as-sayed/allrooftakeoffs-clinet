@@ -2,13 +2,17 @@ import { Button } from "antd";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import useAxiosSecure from "../hooks/AxoisSecure/useAxiosSecure";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../auth/AuthProvider";
 
 const AddNewProjects = () => {
   const [subTotal, setSubTotal] = useState(0);
   const [gst, setGst] = useState(0);
   const [total, setTotal] = useState(0);
+  const [users, setUsers] = useState([]);
 
+  const { user } = useContext(AuthContext);
+  const isAdmin = user?.role === "Admin";
   useEffect(() => {
     // Calculate total whenever subTotal or gst changes
     setTotal(parseFloat(subTotal) + parseFloat(gst));
@@ -24,6 +28,9 @@ const AddNewProjects = () => {
   const url = "/addProject";
   const axiouSecure = useAxiosSecure();
 
+  useEffect(() => {
+    axiouSecure.get("/get-userData").then((res) => setUsers(res.data.data));
+  }, [axiouSecure]);
   const handelAddNewProject = (e) => {
     e.preventDefault();
 
@@ -40,10 +47,17 @@ const AddNewProjects = () => {
     const userAddress = form.userAddress.value;
     const userPhone = form.userPhone.value;
     const userEmail = form.userEmail.value;
+    const client = form.client.value;
 
     const today = new Date();
     const posting_date = formatDate(today);
     const onarDetail = { userName, userAddress, userPhone, userEmail };
+
+    const assignedOn = {
+      _id: client._id,
+      name: client.name,
+      image: client.image,
+    };
     const project = {
       name,
       location,
@@ -52,6 +66,7 @@ const AddNewProjects = () => {
       onarDetail,
       description,
       subTotal,
+      assignedOn,
       total,
       gst,
     };
@@ -101,6 +116,28 @@ const AddNewProjects = () => {
                 className="w-full pl-2 bg-bgGray h-8 border-2 rounded-md"
               />
             </div>
+            {isAdmin && (
+              <div className="w-full flex flex-col">
+                <label>Select Client</label>
+                {/* <input
+                  type="text"
+                  name="name"
+                  placeholder="Type here"
+                  className="w-full pl-2 bg-bgGray h-8 border-2 rounded-md"
+                /> */}
+                <select
+                  name="client"
+                  className="w-full pl-2 bg-bgGray h-8 border-2 rounded-md"
+                >
+                  <option value={""}>Select a client</option>
+                  {users.map((user) => (
+                    <>
+                      <option value={user}>{user?.name}</option>
+                    </>
+                  ))}
+                </select>
+              </div>
+            )}
           </div>
 
           <div className="flex flex-col md:flex-row gap-4 w-full h-fit my-4">
