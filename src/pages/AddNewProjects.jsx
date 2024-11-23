@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import useAxiosSecure from "../hooks/AxoisSecure/useAxiosSecure";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../auth/AuthProvider";
+import Swal from "sweetalert2";
 
 const AddNewProjects = () => {
   const [subTotal, setSubTotal] = useState(0);
@@ -77,9 +78,22 @@ const AddNewProjects = () => {
       .post(url, project)
       .then((res) => {
         console.log(res.data);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Project added successful...!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        form.reset();
       })
       .catch((err) => {
         console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Faild to add new project",
+        });
       });
   };
 

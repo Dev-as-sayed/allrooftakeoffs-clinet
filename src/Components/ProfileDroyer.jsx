@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { AuthContext } from "../auth/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 const ProfileDroyer = () => {
   const [open, setOpen] = useState(false);
@@ -22,7 +23,7 @@ const ProfileDroyer = () => {
   };
   return (
     <>
-      <div onClick={showDrawer} className="">
+      <div onClick={showDrawer} className="flex items-center gap-1">
         {user?.image ? (
           <img src={user?.image} className=" w-11 h-11 rounded-full" alt="" />
         ) : (
@@ -32,6 +33,13 @@ const ProfileDroyer = () => {
             </h1>
           </div>
         )}
+        <div>
+          <h3 className="font-bold hidden md:block lg:block">{user?.name}</h3>
+          <p className="text-textGray hidden md:block lg:block">
+            {user?.email}
+          </p>
+        </div>
+        <BsThreeDotsVertical />
       </div>
       <Drawer
         extra={<Space></Space>}

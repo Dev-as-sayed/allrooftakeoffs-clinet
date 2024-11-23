@@ -81,10 +81,10 @@ const NavBar = () => {
           <div>
             {/* <h3>A M Sayed</h3>
             <p className="text-textGray">Web developer</p> */}
-            <h3>{user?.name}</h3>
-            <p className="text-textGray">{user?.org}</p>
+            {/* <h3>{user?.name}</h3>
+            <p className="text-textGray">{user?.org}</p> */}
           </div>
-          <BsThreeDotsVertical />
+          {/* <BsThreeDotsVertical /> */}
         </div>
       </nav>
 
@@ -146,7 +146,7 @@ const NavBar = () => {
             <CiBellOn className="w-10 h-10 p-2 border-2 border-gray-400 rounded-full" />
           </button>
           <ProfileDroyer />
-          <BsThreeDotsVertical />
+          {/* <BsThreeDotsVertical /> */}
         </div>
       </nav>
     </div>
