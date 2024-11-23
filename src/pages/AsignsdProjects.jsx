@@ -29,7 +29,7 @@ const AsignsdProjects = () => {
     pdfRefs.current[projectId]?.downloadPDF();
   };
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen my-4">
       <div className="overflow-x-auto bg-white p-4 rounded-md">
         {loading ? (
           <div className="text-center">
