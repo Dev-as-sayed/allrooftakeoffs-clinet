@@ -69,10 +69,13 @@ const Login = () => {
           <button className="w-full bg-primary text-white font-semibold py-2 rounded-md">
             Login
           </button>
-          <p className="text-blue-400 underline text-center m-4">
-            <Link to="/ragister">Create account</Link>
-          </p>
         </form>
+        <Link
+          to="/ragister"
+          className="text-blue-400 underline mt-4 text-center"
+        >
+          Create account
+        </Link>
       </div>
     </div>
   );

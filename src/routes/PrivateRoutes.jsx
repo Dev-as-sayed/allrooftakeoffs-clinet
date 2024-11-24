@@ -25,7 +25,7 @@ const PrivateRoutes = ({ children }) => {
   }
 
   // If no user is logged in, redirect to the login page
-  return <Navigate to="/login" state={{ from: location }} />;
+  return <Navigate to="/ragister" state={{ from: location }} />;
 };
 
 export default PrivateRoutes;

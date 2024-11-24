@@ -1,13 +1,14 @@
-import { Checkbox, Input } from "antd";
 import authImg from "../assets/auth.png";
 import logo from "../assets/logo.png";
+import { Input, Checkbox } from "antd";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import useAxiosPublic from "../hooks/AxiosPublic/useAxiosPublic";
-import { useState } from "react";
 
 const Ragister = () => {
   const [passErr, setPassErr] = useState("");
   const [resError, setResError] = useState({});
+  const [isAgreed, setIsAgreed] = useState(false);
   const axiosPublic = useAxiosPublic();
   const url = "/register";
 
@@ -23,7 +24,10 @@ const Ragister = () => {
     const password = form.password.value;
     const reTypePassword = form.reTypePassword.value;
 
-    console.log({ name, email, address, phone, org, password, reTypePassword });
+    if (password !== reTypePassword) {
+      setPassErr("Re-type correct password");
+      return;
+    }
 
     const userData = {
       name,
@@ -35,43 +39,35 @@ const Ragister = () => {
       reTypePassword,
     };
 
-    if (password !== reTypePassword) {
-      setPassErr("re-type corract password");
-      return;
-    }
     axiosPublic
       .post(url, userData)
       .then((res) => {
-        console.log(res.data);
         if (res.data.success === false) {
-          setResError(res.data);
+          setResError({ message: res.data.message });
           return;
         }
         form.reset();
-        alert("Ragister successfull, Login pleace");
+        alert("Register successful, Login please");
       })
       .catch((err) => {
-        console.log(err);
-        setResError(err);
-        alert(err.message);
+        console.error(err);
+        setResError({ message: err.message });
       });
   };
+
   const onChange = (e) => {
-    console.log(`checked = ${e.target.checked}`);
+    setIsAgreed(e.target.checked);
   };
+
   return (
     <div className="h-fit flex flex-col-reverse md:flex-row ">
-      {/* Left side: Image */}
-      <div className=" flex items-center justify-center">
-        <img src={authImg} className=" h-full " alt="Auth image" />
+      <div className="flex items-center justify-center">
+        <img src={authImg} className="h-full" alt="Auth image" />
       </div>
-      {/* Right side: Form and logo */}
-
-      {/* Right side: Form and logo */}
       <div className="w-full md:w-1/2 flex flex-col items-center justify-center p-6">
         <div className="w-full max-w-xs mx-auto">
-          <img src={logo} className="w-32 " alt="Logo" />
-          <div className="my-3 ">
+          <img src={logo} className="w-32" alt="Logo" />
+          <div className="my-3">
             <h2 className="text-smallBold text-textBlack">
               Create an account!
             </h2>
@@ -80,63 +76,31 @@ const Ragister = () => {
             </p>
           </div>
         </div>
-
-        {/* Login form */}
-        <form
-          action=""
-          className="w-full max-w-xs mx-auto"
-          onSubmit={handelRagister}
-        >
-          {resError && alert(resError.message)}
+        <form className="w-full max-w-xs mx-auto" onSubmit={handelRagister}>
+          {resError?.message && alert(resError.message)}
           <div className="flex flex-col mb-4">
             <label className="mb-2 text-semiBold">Name</label>
-            <Input
-              name="name"
-              required
-              placeholder="Enter your name"
-              className="w-full"
-              variant="filled"
-            />
+            <Input name="name" required placeholder="Enter your name" />
           </div>
           <div className="flex flex-col mb-4">
             <label className="mb-2 text-semiBold">Email</label>
-            <Input
-              name="email"
-              placeholder="Enter your Email"
-              className="w-full"
-              variant="filled"
-              required
-            />
+            <Input name="email" required placeholder="Enter your email" />
           </div>
           <div className="flex flex-col mb-4">
             <label className="mb-2 text-semiBold">Address</label>
-            <Input
-              name="address"
-              placeholder="Enter your address"
-              className="w-full"
-              variant="filled"
-              required
-            />
+            <Input name="address" required placeholder="Enter your address" />
           </div>
           <div className="flex gap-3">
             <div className="flex flex-col mb-4">
               <label className="mb-2 text-semiBold">Phone</label>
-              <Input
-                name="phone"
-                placeholder="Type here"
-                className="w-full"
-                variant="filled"
-                required
-              />
+              <Input name="phone" required placeholder="Enter your phone" />
             </div>
             <div className="flex flex-col mb-4">
               <label className="mb-2 text-semiBold">Org</label>
               <Input
                 name="org"
-                placeholder="Enter your Org"
-                className="w-full"
-                variant="filled"
                 required
+                placeholder="Enter your organization"
               />
             </div>
           </div>
@@ -145,20 +109,16 @@ const Ragister = () => {
               <label className="mb-2 text-semiBold">Password</label>
               <Input.Password
                 name="password"
-                placeholder="Enter your password"
-                className="w-full"
-                variant="filled"
                 required
+                placeholder="Enter your password"
               />
             </div>
             <div className="flex flex-col mb-4">
               <label className="mb-2 text-semiBold">Retype Password</label>
               <Input.Password
                 name="reTypePassword"
-                placeholder="Enter your password"
-                className="w-full"
-                variant="filled"
                 required
+                placeholder="Re-enter your password"
                 onChange={() => setPassErr("")}
               />
             </div>
@@ -166,7 +126,7 @@ const Ragister = () => {
           {passErr && <p className="text-red-500">{passErr}</p>}
           <div>
             <Checkbox onChange={onChange}>
-              By clicking create account button you will be agree with our{" "}
+              By clicking create account button, you agree to our{" "}
               <span className="text-semiBold">
                 <a href="#">Terms and Conditions</a>
               </span>{" "}
@@ -177,7 +137,12 @@ const Ragister = () => {
               .
             </Checkbox>
           </div>
-          <button className="w-full bg-primary text-white font-semibold py-2 rounded-md">
+          <button
+            disabled={!isAgreed}
+            className={`w-full bg-primary text-white font-semibold py-2 rounded-md ${
+              !isAgreed ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+          >
             Create account
           </button>
         </form>

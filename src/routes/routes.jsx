@@ -76,11 +76,11 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: "/login",
-    element: <Login />,
-  },
-  {
     path: "/ragister",
     element: <Ragister />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
   },
 ]);
