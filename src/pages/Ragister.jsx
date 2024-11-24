@@ -4,6 +4,7 @@ import { Input, Checkbox } from "antd";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import useAxiosPublic from "../hooks/AxiosPublic/useAxiosPublic";
+import Swal from "sweetalert2";
 
 const Ragister = () => {
   const [passErr, setPassErr] = useState("");
@@ -47,11 +48,22 @@ const Ragister = () => {
           return;
         }
         form.reset();
-        alert("Register successful, Login please");
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Register successful, Login please",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       })
       .catch((err) => {
         console.error(err);
         setResError({ message: err.message });
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.message || "Something went wrong!",
+        });
       });
   };
 
