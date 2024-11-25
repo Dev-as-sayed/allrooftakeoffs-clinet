@@ -37,7 +37,6 @@ const Ragister = () => {
       phone,
       org,
       password,
-      reTypePassword,
     };
 
     axiosPublic
