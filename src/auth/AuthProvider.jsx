@@ -21,34 +21,56 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   // Login function with backend integration
+  // const login = async ({ email, password }) => {
+  //   try {
+  //     const response = await axiosPublic
+  //       .post("/login", { email, password })
+  //       .then((res) => {
+  //         // navigate("/users");
+  //         console.log(res.data);
+  //         if (res.data.success) {
+  //           const { user, token } = res.data.data;
+
+  //           // Store the user and token in localStorage
+  //           localStorage.setItem("authUser", JSON.stringify(user));
+  //           localStorage.setItem("authToken", token);
+
+  //           // Update state with user data
+  //           setUser(user);
+  //         } else {
+  //           // Show alert if login fails
+  //           alert(`Login failed: ${response.data.message}`);
+  //           console.error("Login failed:", response.data.message);
+  //         }
+  //       });
+  //     console.log(response);
+  //   } catch (error) {
+  //     // Show alert for other errors
+  //     console.error("Error during login:", error.message);
+  //   }
+  // };
+
+  // Login function with backend integration
   const login = async ({ email, password }) => {
-    try {
-      const response = await axiosPublic
-        .post("/login", { email, password })
-        .then((res) => {
-          // navigate("/users");
-          console.log(res.data);
-          if (res.data.success) {
-            const { user, token } = res.data.data;
+    const response = await axiosPublic
+      .post("/login", { email, password })
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.success) {
+          const { user, token } = res.data.data;
 
-            // Store the user and token in localStorage
-            localStorage.setItem("authUser", JSON.stringify(user));
-            localStorage.setItem("authToken", token);
+          // Store the user and token in localStorage
+          localStorage.setItem("authUser", JSON.stringify(user));
+          localStorage.setItem("authToken", token);
 
-            // Update state with user data
-            setUser(user);
-          } else {
-            // Show alert if login fails
-            alert(`Login failed: ${response.data.message}`);
-            console.error("Login failed:", response.data.message);
-          }
-        });
-      console.log(response);
-    } catch (error) {
-      // Show alert for other errors
-      alert(`Error during login: ${error.message}`);
-      console.error("Error during login:", error.message);
-    }
+          // Update state with user data
+          setUser(user);
+        } else {
+          // Show alert if login fails
+          alert(`Login failed: ${response.data.message}`);
+          console.error("Login failed:", response.data.message);
+        }
+      });
   };
 
   // Logout function
