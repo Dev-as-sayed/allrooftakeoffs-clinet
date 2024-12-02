@@ -47,7 +47,7 @@ const UserTable = () => {
 
   return (
     <div className="min-h-screen">
-      <div className="w-fit mx-auto gap-2 md:mx-0 lg:mx-0  md:flex lg:w-full md:flex-row lg:flex-row  md:justify-between lg:justify-between my-6">
+      <div className="w-fit mx-auto gap-2 md:mx-0 lg:mx-0  md:flex md:w-full lg:w-full md:flex-row lg:flex-row  md:justify-between lg:justify-between my-6">
         {/* Search and Filter UI */}
 
         <div className="w-fit  mx-auto md:mx-0 lg:mx-0 my-2">
@@ -116,7 +116,9 @@ const UserTable = () => {
                   <td className="pl-2 py-2">
                     <span className="font-semibold">{data.name}</span>
                     <br />
-                    <span>{data.description}</span>
+                    {data.description && (
+                      <span>{data.description.substring(0, 30)}...</span>
+                    )}
                   </td>
                   <td>{data.location}</td>
                   <td>{data.posting_date}</td>

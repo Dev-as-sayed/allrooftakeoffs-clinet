@@ -116,7 +116,9 @@ const AdminProjectTable = () => {
                   <td className="pl-2 py-2 max-w-52">
                     <span className="font-semibold">{project.name}</span>
                     <br />
-                    <span>{project.description.substring(0, 30)}...</span>
+                    {project.description && (
+                      <span>{project.description.substring(0, 30)}...</span>
+                    )}
                   </td>
                   <td>
                     <div className="flex gap-2">
