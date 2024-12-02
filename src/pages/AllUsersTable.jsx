@@ -35,7 +35,7 @@ export default function AllUsersTable() {
 
   return (
     <div className="min-h-screen">
-      <div className="w-fit mx-auto gap-2 md:flex md:justify-between lg:w-full my-6">
+      <div className="w-fit mx-auto gap-2  md:flex md:justify-between md:w-full lg:w-full my-6">
         <div className="w-fit my-2">
           <div className="relative">
             <CiSearch className="absolute top-[11px] left-2" />
