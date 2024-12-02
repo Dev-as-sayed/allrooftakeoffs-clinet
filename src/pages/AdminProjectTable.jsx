@@ -116,17 +116,12 @@ const AdminProjectTable = () => {
                   <td className="pl-2 py-2 max-w-52">
                     <span className="font-semibold">{project.name}</span>
                     <br />
-                    <span>{project.description}</span>
+                    <span>{project.description.substring(0, 30)}...</span>
                   </td>
                   <td>
                     <div className="flex gap-2">
                       {project.assignedOn ? (
                         <>
-                          {/* <img
-                            src={project.assignedOn?.image}
-                            alt=""
-                            className="w-10 rounded-full"
-                          /> */}
                           {project.assignedOn?.image ? (
                             <img
                               className="rounded-full w-10 h-10 my-1"

@@ -47,7 +47,7 @@ const UserTable = () => {
 
   return (
     <div className="min-h-screen">
-      <div className="w-fit mx-auto gap-2  md:flex lg:w-full md:flex-row lg:flex-row  md:justify-between lg:justify-between my-6">
+      <div className="w-fit mx-auto gap-2 md:mx-0 lg:mx-0  md:flex lg:w-full md:flex-row lg:flex-row  md:justify-between lg:justify-between my-6">
         {/* Search and Filter UI */}
 
         <div className="w-fit  mx-auto md:mx-0 lg:mx-0 my-2">
