@@ -13,6 +13,7 @@ const UserTable = () => {
   const [tData, setTData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [, setErrors] = useState("");
   const axiosSecure = useAxiosSecure();
   const url = "/get-projects";
   const pdfRefs = useRef({});
@@ -22,10 +23,9 @@ const UserTable = () => {
     axiosSecure
       .get(url, { params: query })
       .then((res) => {
-        if (!res.data.success) alert(res.data.message);
         setTData(res.data.data);
       })
-      .catch((err) => console.error(err.message))
+      .catch((err) => setErrors(err))
       .finally(() => setLoading(false));
   };
 
