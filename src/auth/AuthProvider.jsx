@@ -55,7 +55,6 @@ const AuthProvider = ({ children }) => {
     const response = await axiosPublic
       .post("/login", { email, password })
       .then((res) => {
-        console.log(res.data);
         if (res.data.success) {
           const { user, token } = res.data.data;
 
@@ -68,7 +67,6 @@ const AuthProvider = ({ children }) => {
         } else {
           // Show alert if login fails
           alert(`Login failed: ${response.data.message}`);
-          console.error("Login failed:", response.data.message);
         }
       });
   };
