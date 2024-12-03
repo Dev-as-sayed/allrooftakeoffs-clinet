@@ -66,13 +66,9 @@ const NavBar = () => {
         )}
 
         <div className="flex gap-3 h-fit items-center">
-          {isAdmin ? (
-            <Button className="text-white bg-primary py-5">
-              <Link to="/addNewProject">Upload Project</Link>
-            </Button>
-          ) : (
-            <></>
-          )}
+          <Button className="text-white bg-primary py-5">
+            <Link to="/addNewProject">Upload Project</Link>
+          </Button>
           <button>
             <CiBellOn className="w-10 h-10 p-2 border-2 border-gray-400 rounded-full" />
           </button>
