@@ -54,12 +54,7 @@ const AddNewProjects = () => {
     const posting_date = formatDate(today);
     const onarDetail = { userName, userAddress, userPhone, userEmail };
 
-    const assignedOn = {
-      _id: client._id,
-      name: client.name,
-      image: client.image,
-    };
-    const project = {
+    let project = {
       name,
       location,
       dateline,
@@ -67,10 +62,17 @@ const AddNewProjects = () => {
       onarDetail,
       description,
       subTotal,
-      assignedOn,
       total,
       gst,
     };
+
+    if (isAdmin) {
+      project.assignedOn = {
+        _id: client._id,
+        name: client.name,
+        image: client.image,
+      };
+    }
 
     console.log(project);
 
