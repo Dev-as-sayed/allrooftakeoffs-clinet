@@ -29,9 +29,12 @@ const AddNewProjects = () => {
   const url = "/addProject";
   const axiouSecure = useAxiosSecure();
 
-  useEffect(() => {
-    axiouSecure.get("/get-userData").then((res) => setUsers(res.data.data));
-  }, [axiouSecure]);
+  if (isAdmin) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useEffect(() => {
+      axiouSecure.get("/get-userData").then((res) => setUsers(res.data.data));
+    }, [axiouSecure]);
+  }
   const handelAddNewProject = (e) => {
     e.preventDefault();
 
