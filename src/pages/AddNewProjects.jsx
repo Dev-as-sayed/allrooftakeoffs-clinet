@@ -29,12 +29,11 @@ const AddNewProjects = () => {
   const url = "/addProject";
   const axiouSecure = useAxiosSecure();
 
-  if (isAdmin) {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useEffect(() => {
+  useEffect(() => {
+    if (isAdmin) {
       axiouSecure.get("/get-userData").then((res) => setUsers(res.data.data));
-    }, [axiouSecure]);
-  }
+    }
+  }, [axiouSecure, isAdmin]);
   const handelAddNewProject = (e) => {
     e.preventDefault();
 
@@ -51,13 +50,12 @@ const AddNewProjects = () => {
     const userAddress = form.userAddress.value;
     const userPhone = form.userPhone.value;
     const userEmail = form.userEmail.value;
-    const client = form.client.value;
 
     const today = new Date();
     const posting_date = formatDate(today);
     const onarDetail = { userName, userAddress, userPhone, userEmail };
 
-    let project = {
+    const project = {
       name,
       location,
       dateline,
@@ -70,6 +68,7 @@ const AddNewProjects = () => {
     };
 
     if (isAdmin) {
+      const client = form.client.value;
       project.assignedOn = {
         _id: client._id,
         name: client.name,
@@ -114,7 +113,7 @@ const AddNewProjects = () => {
       <div className=" h-fit my-3 items-center ">
         <div>
           <p className="flex gap-3 ">
-            <Link to="/users">
+            <Link to="/">
               <FaArrowLeftLong className="text-2xl text-textGray" />{" "}
             </Link>
             Create new Project
