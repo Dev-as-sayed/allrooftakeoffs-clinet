@@ -137,12 +137,6 @@ const AddNewProjects = () => {
             {isAdmin && (
               <div className="w-full flex flex-col">
                 <label>Select Client</label>
-                {/* <input
-                  type="text"
-                  name="name"
-                  placeholder="Type here"
-                  className="w-full pl-2 bg-bgGray h-8 border-2 rounded-md"
-                /> */}
                 <select
                   name="client"
                   className="w-full pl-2 bg-bgGray h-8 border-2 rounded-md"

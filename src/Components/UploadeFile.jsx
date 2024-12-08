@@ -21,60 +21,32 @@ const UploadeFile = ({ projectId }) => {
     setOpen(false);
   };
 
-  // Handle file upload to server
-
   const handleUpload = async () => {
     if (!file) return;
+
     const formData = new FormData();
-    formData.append("file", file); // `file` is the file you want to upload
+    formData.append("file", file); // Attach the file
 
     setUploading(true); // Start loading
     setUploadStatus(""); // Clear any previous messages
 
     try {
+      // eslint-disable-next-line no-unused-vars
       const response = await axiosSecure.post(url, formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
-          // "Content-Type": "application/pdf",
+          "Content-Type": "multipart/form-data", // Set content type
         },
       });
-      console.log(response.data);
       setUploadStatus("File uploaded successfully!");
       message.success("File uploaded successfully!");
     } catch (error) {
       console.error("Upload failed:", error);
       setUploadStatus("File upload failed. Please try again.");
-      alert("File upload failed. Please try again.");
+      message.error("File upload failed. Please try again.");
     } finally {
       setUploading(false); // End loading
     }
   };
-
-  // const handleUpload = async () => {
-  //   if (!file) return;
-  //   const formData = new FormData();
-  //   formData.append("file", file); // `file` is the file you want to upload
-
-  //   setUploading(true); // Start loading
-  //   setUploadStatus(""); // Clear any previous messages
-
-  //   try {
-  //     const response = await axiosSecure.post(url, formData, {
-  //       headers: {
-  //         // Do not set Content-Type manually; let the browser handle it
-  //       },
-  //     });
-  //     console.log(response.data);
-  //     setUploadStatus("File uploaded successfully!");
-  //     message.success("File uploaded successfully!");
-  //   } catch (error) {
-  //     console.error("Upload failed:", error);
-  //     setUploadStatus("File upload failed. Please try again.");
-  //     alert("File upload failed. Please try again.");
-  //   } finally {
-  //     setUploading(false); // End loading
-  //   }
-  // };
 
   return (
     <div>
