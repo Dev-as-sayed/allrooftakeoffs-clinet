@@ -1,5 +1,5 @@
 import { Button } from "antd";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { Link, useParams } from "react-router-dom";
 import useAxiosSecure from "../hooks/AxoisSecure/useAxiosSecure";
@@ -7,12 +7,17 @@ import UploadeFile from "../Components/UploadeFile";
 import { MdOutlineFileDownload } from "react-icons/md";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { AuthContext } from "../auth/AuthProvider";
 
 const ProjectsView = () => {
   const [project, setProjet] = useState({});
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
   const componentRef = useRef(); // Reference to the component for PDF generation
+
+  const { user } = useContext(AuthContext);
+
+  const isAdmin = user?.role === "Admin";
 
   const url = `/get-project/${id}`;
   useEffect(() => {
@@ -83,7 +88,7 @@ const ProjectsView = () => {
       <div className="flex justify-between">
         <div>
           <p className="flex gap-3 my-3 ">
-            <Link to="/projects">
+            <Link to="/">
               <FaArrowLeftLong className="text-2xl text-textGray" />{" "}
             </Link>
             Project View
@@ -150,61 +155,46 @@ const ProjectsView = () => {
             <>
               <div className="flex justify-between mb-4">
                 <p className="text-textGray">File and attachment</p>
-                <Button
-                  className="bg-transparent border-primary text-primary"
-                  onClick={handleDownloadAll}
-                >
-                  Download all
-                </Button>
-              </div>
-              {project?.files?.map((file, index) => (
-                <div key={index} className="flex h-fit justify-between pb-1 ">
-                  <p className="text-textGray my-auto">
-                    {file?.fileName ? <>{file.fileName}</> : "attached fiel"}
-                  </p>
-                  <Button className="bg-transparent border-primary text-primary">
-                    <a
-                      href={`${file?.downloadableLink}`}
-                      rel="noopener noreferrer"
-                    >
-                      Download
-                    </a>
-                  </Button>
-                </div>
-              ))}
-            </>
-            <UploadeFile projectId={id} />
-            {/* {isAdmin ? (
-              <FileUpload projectId={id} />
-            ) : (
-              <>
-                <div className="flex justify-between mb-4">
-                  <p className="text-textGray">File and attachment</p>
+                {project?.files?.length > 0 && (
                   <Button
                     className="bg-transparent border-primary text-primary"
                     onClick={handleDownloadAll}
                   >
                     Download all
                   </Button>
+                )}
+              </div>
+              {project?.files?.length > 0 ? (
+                <div>
+                  {project.files.map((file, index) => (
+                    <div
+                      key={index}
+                      className="flex h-fit justify-between pb-1"
+                    >
+                      <p className="text-textGray my-auto">
+                        {file?.fileName || "Attached file"}
+                      </p>
+                      <Button className="bg-transparent border-primary text-primary">
+                        <a
+                          href={`${file?.downloadableLink}`}
+                          rel="noopener noreferrer"
+                          target="_self"
+                        >
+                          Download
+                        </a>
+                      </Button>
+                    </div>
+                  ))}
                 </div>
-                {project?.files?.map((file, index) => (
-                  <div key={index} className="flex h-fit justify-between pb-1 ">
-                    <p className="text-textGray my-auto">
-                      {file?.fileName ? <>{file.fileName}</> : "attached fiel"}
-                    </p>
-                    <Button className="bg-transparent border-primary text-primary">
-                      <a
-                        href={`${file?.downloadableLink}`}
-                        rel="noopener noreferrer"
-                      >
-                        Download
-                      </a>
-                    </Button>
-                  </div>
-                ))}
-              </>
-            )} */}
+              ) : (
+                <div className="flex items-center justify-center h-32">
+                  <p className="text-lg text-gray-500">File not attached yet</p>
+                </div>
+              )}
+            </>
+            {isAdmin && <UploadeFile projectId={id} />}
           </div>
+
           <div className="flex-1 space-y-4">
             <div className="bg-white p-4 rounded-md">
               <h4>Job detail</h4>

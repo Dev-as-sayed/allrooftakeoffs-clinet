@@ -90,6 +90,7 @@ const AddNewProjects = () => {
           timer: 1500,
         });
         form.reset();
+        setTotal(0);
       })
       .catch((err) => {
         console.log(err);

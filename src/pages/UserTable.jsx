@@ -1,11 +1,9 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { Button, Spin } from "antd";
-import { MdOutlineFileDownload } from "react-icons/md";
 import { GoChevronDown } from "react-icons/go";
 import { CiSearch } from "react-icons/ci";
 import useAxiosSecure from "../hooks/AxoisSecure/useAxiosSecure";
 import { Link } from "react-router-dom";
-import ProjectPDFView from "../Components/ProjectsPDFView";
 import dayjs from "dayjs";
 
 const UserTable = () => {
@@ -16,7 +14,6 @@ const UserTable = () => {
   const [, setErrors] = useState("");
   const axiosSecure = useAxiosSecure();
   const url = "/get-projects";
-  const pdfRefs = useRef({});
 
   const fetchData = (query) => {
     setLoading(true);
@@ -40,10 +37,6 @@ const UserTable = () => {
     fetchData(query);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [axiosSecure, activeButton, search]);
-
-  const handleDownload = (projectId) => {
-    pdfRefs.current[projectId]?.downloadPDF();
-  };
 
   return (
     <div className="min-h-screen">
@@ -129,19 +122,6 @@ const UserTable = () => {
                       <Button>
                         <Link to={`/project/${data?._id}`}>View</Link>
                       </Button>
-                      <button
-                        className="px-2 py-1 rounded-md border-2 border-primary"
-                        onClick={() => handleDownload(data._id)}
-                      >
-                        <span className="flex gap-2">
-                          <MdOutlineFileDownload className="mt-1" /> Download
-                        </span>
-                      </button>
-                      {/* Render ProjectPDFView for each project */}
-                      <ProjectPDFView
-                        ref={(el) => (pdfRefs.current[data._id] = el)}
-                        project={data}
-                      />
                     </div>
                   </td>
                 </tr>
