@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import { FaArrowLeftLong } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAxiosSecure from "../hooks/AxoisSecure/useAxiosSecure";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../auth/AuthProvider";
@@ -11,7 +11,7 @@ const AddNewProjects = () => {
   const [gst, setGst] = useState(0);
   const [total, setTotal] = useState(0);
   const [users, setUsers] = useState([]);
-
+  const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const isAdmin = user?.role === "Admin";
   useEffect(() => {
@@ -81,7 +81,6 @@ const AddNewProjects = () => {
     axiouSecure
       .post(url, project)
       .then((res) => {
-        console.log(res.data);
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -89,8 +88,11 @@ const AddNewProjects = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        form.reset();
+        console.log(res.data);
+
         setTotal(0);
+        form.reset();
+        navigate(`/project/${res?.data?.data?._id}`);
       })
       .catch((err) => {
         console.log(err);
@@ -133,6 +135,7 @@ const AddNewProjects = () => {
                 name="name"
                 placeholder="Type here"
                 className="w-full pl-2 bg-bgGray h-8 border-2 rounded-md"
+                required
               />
             </div>
             {isAdmin && (
@@ -164,6 +167,7 @@ const AddNewProjects = () => {
                     name="location"
                     placeholder="Type here"
                     className="w-full pl-2 bg-bgGray h-8 border-2 rounded-md"
+                    required
                   />
                 </div>
               </div>
@@ -172,10 +176,11 @@ const AddNewProjects = () => {
                 <div className="flex flex-col">
                   <label>Date</label>
                   <input
-                    type="text"
+                    type="date"
                     name="dateline"
                     placeholder="Type here"
                     className="w-full pl-2 bg-bgGray h-8 border-2 rounded-md"
+                    required
                   />
                 </div>
               </div>
@@ -191,6 +196,7 @@ const AddNewProjects = () => {
                     name="userName"
                     placeholder="Type here"
                     className="w-full pl-2 bg-bgGray h-8 border-2 rounded-md"
+                    required
                   />
                 </div>
                 <div className="flex flex-col">
@@ -200,6 +206,7 @@ const AddNewProjects = () => {
                     name="userAddress"
                     placeholder="Type here"
                     className="w-full pl-2 bg-bgGray h-8 border-2 rounded-md"
+                    required
                   />
                 </div>
                 <div className="flex flex-col md:flex-row gap-4">
@@ -210,15 +217,17 @@ const AddNewProjects = () => {
                       name="userEmail"
                       placeholder="Type here"
                       className="w-full pl-2 bg-bgGray h-8 border-2 rounded-md"
+                      required
                     />
                   </div>
                   <div className="flex flex-col w-full md:w-1/2">
                     <label>Phone</label>
                     <input
-                      type="text"
+                      type="number"
                       name="userPhone"
                       placeholder="Type here"
                       className="w-full pl-2 bg-bgGray h-8 border-2 rounded-md"
+                      required
                     />
                   </div>
                 </div>
@@ -248,6 +257,7 @@ const AddNewProjects = () => {
                   value={subTotal}
                   onChange={(e) => setSubTotal(e.target.value)}
                   className="w-full bg-bgGray h-8 border-2 rounded-md"
+                  required
                 />
               </div>
               <div className="flex flex-col w-full md:w-1/3">
@@ -258,6 +268,7 @@ const AddNewProjects = () => {
                   value={gst}
                   onChange={(e) => setGst(e.target.value)}
                   className="w-full bg-bgGray h-8 border-2 rounded-md"
+                  required
                 />
               </div>
               <div className="flex flex-col w-full md:w-1/3">
