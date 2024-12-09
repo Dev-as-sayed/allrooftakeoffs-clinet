@@ -1,8 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import useAxiosSecure from "../hooks/AxoisSecure/useAxiosSecure";
-import ProjectPDFView from "../Components/ProjectsPDFView";
-import { MdOutlineFileDownload } from "react-icons/md";
 import { Button, Spin } from "antd";
 import { GoChevronDown } from "react-icons/go";
 
@@ -11,7 +9,6 @@ const AsignsdProjects = () => {
   const [tData, setTData] = useState([]);
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
-  const pdfRefs = useRef({});
   const url = `/get-projects/${id}`;
 
   useEffect(() => {
@@ -25,9 +22,6 @@ const AsignsdProjects = () => {
       .catch((err) => console.log(err));
   }, [axiosSecure, url]);
 
-  const handleDownload = (projectId) => {
-    pdfRefs.current[projectId]?.downloadPDF();
-  };
   return (
     <div className="min-h-screen my-4">
       <div className="overflow-x-auto bg-white p-4 rounded-md">
@@ -68,19 +62,6 @@ const AsignsdProjects = () => {
                       <Button>
                         <Link to={`/project/${data?._id}`}>View</Link>
                       </Button>
-                      <button
-                        className="px-2 py-1 rounded-md border-2 border-primary"
-                        onClick={() => handleDownload(data._id)}
-                      >
-                        <span className="flex gap-2">
-                          <MdOutlineFileDownload className="mt-1" /> Download
-                        </span>
-                      </button>
-                      {/* Render ProjectPDFView for each project */}
-                      <ProjectPDFView
-                        ref={(el) => (pdfRefs.current[data._id] = el)}
-                        project={data}
-                      />
                     </div>
                   </td>
                 </tr>
