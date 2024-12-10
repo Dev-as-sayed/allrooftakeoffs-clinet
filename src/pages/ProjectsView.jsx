@@ -1,5 +1,5 @@
 import { Button } from "antd";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { Link, useParams } from "react-router-dom";
 import useAxiosSecure from "../hooks/AxoisSecure/useAxiosSecure";
@@ -7,7 +7,6 @@ import UploadeFile from "../Components/UploadeFile";
 import { MdOutlineFileDownload } from "react-icons/md";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import { AuthContext } from "../auth/AuthProvider";
 
 const ProjectsView = () => {
   const [project, setProjet] = useState({});
@@ -15,9 +14,9 @@ const ProjectsView = () => {
   const axiosSecure = useAxiosSecure();
   const componentRef = useRef(); // Reference to the component for PDF generation
 
-  const { user } = useContext(AuthContext);
+  // const { user } = useContext(AuthContext);
 
-  const isAdmin = user?.role === "Admin";
+  // const isAdmin = user?.role === "Admin";
 
   const url = `/get-project/${id}`;
   useEffect(() => {

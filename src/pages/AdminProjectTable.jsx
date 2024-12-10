@@ -5,6 +5,9 @@ import { CiSearch } from "react-icons/ci";
 import useAxiosSecure from "../hooks/AxoisSecure/useAxiosSecure";
 import { Button } from "antd";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import { MdIncompleteCircle } from "react-icons/md";
+import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 
 const AdminProjectTable = () => {
   const [activeButton, setActiveButton] = useState("All Projects");
@@ -47,6 +50,7 @@ const AdminProjectTable = () => {
     const debounceFetch = setTimeout(fetchProjects, 500);
 
     return () => clearTimeout(debounceFetch);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [axiosSecure, search, activeButton]);
 
   // Fetch users for assignment options
@@ -62,6 +66,51 @@ const AdminProjectTable = () => {
 
     fetchUsers();
   }, [axiosSecure]);
+
+  const handleMarkComplete = async (projectId) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to mark this project as complete?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, mark it complete!",
+      cancelButtonText: "No, keep it running",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const response = await axiosSecure.put(
+            `/updateProjectToComplete/${projectId}`
+          );
+          if (response.data.success) {
+            // Update the state to reflect the status change
+            setProjects((prevProjects) =>
+              prevProjects.map((project) =>
+                project._id === projectId
+                  ? { ...project, status: "complete" }
+                  : project
+              )
+            );
+            Swal.fire(
+              "Success!",
+              "Project has been marked as complete.",
+              "success"
+            );
+          } else {
+            Swal.fire(
+              "Error",
+              response.data.message || "Failed to update project status",
+              "error"
+            );
+          }
+        } catch (error) {
+          console.error("Error marking project as complete:", error);
+          Swal.fire("Error", "An error occurred. Please try again.", "error");
+        }
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire("Cancelled", "The project remains unchanged.", "info");
+      }
+    });
+  };
 
   return (
     <div className="min-h-screen">
@@ -149,9 +198,26 @@ const AdminProjectTable = () => {
                   <td>${project.total}</td>
                   <td>{project.dateline}</td>
                   <td className="text-primary">
-                    <Button>
-                      <Link to={`/project/${project._id}`}>View</Link>
-                    </Button>
+                    <div className="flex justify-around">
+                      <Button>
+                        <Link to={`/project/${project._id}`}>View</Link>
+                      </Button>
+                      <div className="w-fit my-auto ">
+                        {project.status === "running" || !project.status ? (
+                          <button className="flex">
+                            <MdIncompleteCircle
+                              className="text-secondary border-2 text-2xl rounded-full  p-1 border-secondary"
+                              onClick={() => handleMarkComplete(project._id)}
+                            />
+                          </button>
+                        ) : (
+                          <p className="text-success font-semibold text-center w-full capitalize">
+                            {/* {project.status} */}
+                            <IoCheckmarkDoneCircleOutline className="text-2xl" />
+                          </p>
+                        )}
+                      </div>
+                    </div>
                   </td>
                 </tr>
               ))
