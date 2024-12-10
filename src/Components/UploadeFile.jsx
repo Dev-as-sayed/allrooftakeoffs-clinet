@@ -102,7 +102,13 @@ const UploadeFile = ({ projectId }) => {
             disabled={!file || uploading}
             className="mt-4 bg-secondary text-white w-full"
           >
-            {uploading ? <Spin size="small" /> : "Upload"}
+            {uploading ? (
+              <span className="text-secondary">
+                Uploading <Spin size="small" />
+              </span>
+            ) : (
+              "Upload"
+            )}
           </Button>
           {uploadStatus && <p className="mt-2 text-center">{uploadStatus}</p>}
         </div>

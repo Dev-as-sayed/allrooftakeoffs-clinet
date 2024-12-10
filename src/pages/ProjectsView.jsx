@@ -192,7 +192,8 @@ const ProjectsView = () => {
                 </div>
               )}
             </>
-            {isAdmin && <UploadeFile projectId={id} />}
+            <UploadeFile projectId={id} />
+            {/* {isAdmin && <UploadeFile projectId={id} />} */}
           </div>
 
           <div className="flex-1 space-y-4">
@@ -213,7 +214,7 @@ const ProjectsView = () => {
               <div className="h-[2px] bg-black"></div>
               <div className="flex justify-between text-textBlack font-semibold">
                 <h2>Total</h2>
-                <p>{project?.subTotal + project?.gst}</p>
+                <p>{project?.total}</p>
               </div>
             </div>
           </div>

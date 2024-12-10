@@ -11,6 +11,8 @@ const AddNewProjects = () => {
   const [gst, setGst] = useState(0);
   const [total, setTotal] = useState(0);
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const isAdmin = user?.role === "Admin";
@@ -36,6 +38,7 @@ const AddNewProjects = () => {
   }, [axiouSecure, isAdmin]);
   const handelAddNewProject = (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const form = e.target;
 
@@ -45,7 +48,7 @@ const AddNewProjects = () => {
     const description = form.description.value;
     const subTotal = form.subTotal.value;
     const gst = form.gst.value;
-    const total = form.total.value;
+    // const total = form.total.value;
     const userName = form.userName.value;
     const userAddress = form.userAddress.value;
     const userPhone = form.userPhone.value;
@@ -88,20 +91,18 @@ const AddNewProjects = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        console.log(res.data);
-
         setTotal(0);
         form.reset();
         navigate(`/project/${res?.data?.data?._id}`);
       })
       .catch((err) => {
-        console.log(err);
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "Faild to add new project",
+          text: err?.message || "Failed to add new project",
         });
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   const handelResetForm = (e) => {
@@ -295,9 +296,10 @@ const AddNewProjects = () => {
             </Button>
             <Button
               className="w-full text-white bg-primary py-5"
-              htmlType="submit" // Use htmlType to define as submit button
+              htmlType="submit"
+              loading={loading} // Ant Design provides a built-in loader for buttons
             >
-              Save Project
+              {loading ? "Saving..." : "Save Project"}
             </Button>
           </div>
         </form>
