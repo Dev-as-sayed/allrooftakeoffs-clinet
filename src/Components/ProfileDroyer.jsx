@@ -8,6 +8,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 const ProfileDroyer = () => {
   const [open, setOpen] = useState(false);
   const { user, logout } = useContext(AuthContext);
+  const isUser = user.role === "User";
 
   const showDrawer = () => {
     setOpen(true);
@@ -54,9 +55,11 @@ const ProfileDroyer = () => {
                 <p className=""> Back</p>
               </div>
               <div className="flex h-fit gap-2">
-                <Button className="bg-secondary text-white">
-                  <Link to="/myProjects">My Projects</Link>
-                </Button>
+                {isUser && (
+                  <Button className="bg-secondary text-white">
+                    <Link to="/myProjects">My Projects</Link>
+                  </Button>
+                )}
                 <Button
                   className="bg-red-500 text-white"
                   onClick={handelLogOut}
