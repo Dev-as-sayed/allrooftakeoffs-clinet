@@ -77,6 +77,7 @@ const AddNewProjects = () => {
         name: client.name,
         image: client.image,
       };
+      project.userId = user._id;
     }
 
     console.log(project);

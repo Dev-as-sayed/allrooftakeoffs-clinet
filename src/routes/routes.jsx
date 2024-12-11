@@ -11,6 +11,7 @@ import UsersTabaleDetaile from "../Components/UsersTabaleDetaile";
 import AdminRoutes from "./AdminRoutes";
 import AsignsdProjects from "../pages/AsignsdProjects";
 import User from "../Layout/user";
+import MyProjects from "../pages/MyProjects";
 
 export const router = createBrowserRouter([
   {
@@ -62,6 +63,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoutes>
             <UsersTabaleDetaile />
+          </PrivateRoutes>
+        ),
+      },
+      {
+        path: "/myProjects",
+        element: (
+          <PrivateRoutes>
+            <MyProjects />
           </PrivateRoutes>
         ),
       },

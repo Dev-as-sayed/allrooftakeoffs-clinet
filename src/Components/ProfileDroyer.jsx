@@ -2,7 +2,7 @@ import { Button, Drawer, Space } from "antd";
 import { useContext, useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { AuthContext } from "../auth/AuthProvider";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
 const ProfileDroyer = () => {
@@ -45,7 +45,7 @@ const ProfileDroyer = () => {
         extra={<Space></Space>}
         title={
           <>
-            <div className="flex justify-between">
+            <div className="flex items-center justify-between">
               <div className="flex gap-3 h-fit">
                 <FaArrowLeftLong
                   className=" my-auto hover:bottom-2"
@@ -53,7 +53,10 @@ const ProfileDroyer = () => {
                 />
                 <p className=""> Back</p>
               </div>
-              <div>
+              <div className="flex h-fit gap-2">
+                <Button className="bg-secondary text-white">
+                  <Link to="/myProjects">My Projects</Link>
+                </Button>
                 <Button
                   className="bg-red-500 text-white"
                   onClick={handelLogOut}

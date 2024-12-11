@@ -1,4 +1,4 @@
-import { Input } from "antd";
+import { Input, notification } from "antd"; // Import notification
 import authImg from "../assets/auth.png";
 import logo from "../assets/logo.png";
 import { useContext } from "react";
@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 const Login = () => {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
+
   const handelLogin = (e) => {
     e.preventDefault();
 
@@ -16,12 +17,20 @@ const Login = () => {
     const password = form.password.value;
 
     login({ email, password })
-      // eslint-disable-next-line no-unused-vars
-      .then((res) => {
+      .then(() => {
         navigate("/");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        // Show notification on login failure
+        notification.error({
+          message: "Login Failed",
+          description:
+            err.response?.data?.message || "Invalid email or password",
+          placement: "topRight",
+        });
+      });
   };
+
   return (
     <div className="flex flex-col-reverse md:flex-row lg:flex-row">
       {/* Left side: Image */}
