@@ -70,7 +70,7 @@ const AddNewProjects = () => {
       gst,
     };
 
-    // If the user is Admin, include the client info
+    // If the user is Admin
     if (isAdmin) {
       const clientId = form.client.value; // Selected client ID
 
