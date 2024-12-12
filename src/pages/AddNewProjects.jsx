@@ -229,7 +229,6 @@ const AddNewProjects = () => {
                       name="userPhone"
                       placeholder="Type here"
                       className="w-full pl-2 bg-bgGray h-8 border-2 rounded-md"
-                      required
                     />
                   </div>
                 </div>
