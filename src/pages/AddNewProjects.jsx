@@ -149,17 +149,6 @@ const AddNewProjects = () => {
             {isAdmin && (
               <div className="w-full flex flex-col">
                 <label>Select Client</label>
-                {/* <select
-                  name="client"
-                  className="w-full pl-2 bg-bgGray h-8 border-2 rounded-md"
-                >
-                  <option value={""}>Select a client</option>
-                  {users.map((user) => (
-                    <>
-                      <option value={user}>{user?.name}</option>
-                    </>
-                  ))}
-                </select> */}
                 <select
                   name="client"
                   className="w-full pl-2 bg-bgGray h-8 border-2 rounded-md"
@@ -174,7 +163,6 @@ const AddNewProjects = () => {
               </div>
             )}
           </div>
-
           <div className="flex flex-col md:flex-row gap-4 w-full h-fit my-4">
             <div className="w-full md:w-1/2 flex flex-col gap-y-4">
               <div className="border-2 border-bgGray p-4 rounded-md">
@@ -186,7 +174,6 @@ const AddNewProjects = () => {
                     name="location"
                     placeholder="Type here"
                     className="w-full pl-2 bg-bgGray h-8 border-2 rounded-md"
-                    required
                   />
                 </div>
               </div>
@@ -199,7 +186,6 @@ const AddNewProjects = () => {
                     name="dateline"
                     placeholder="Type here"
                     className="w-full pl-2 bg-bgGray h-8 border-2 rounded-md"
-                    required
                   />
                 </div>
               </div>
@@ -215,7 +201,6 @@ const AddNewProjects = () => {
                     name="userName"
                     placeholder="Type here"
                     className="w-full pl-2 bg-bgGray h-8 border-2 rounded-md"
-                    required
                   />
                 </div>
                 <div className="flex flex-col">
@@ -225,18 +210,16 @@ const AddNewProjects = () => {
                     name="userAddress"
                     placeholder="Type here"
                     className="w-full pl-2 bg-bgGray h-8 border-2 rounded-md"
-                    required
                   />
                 </div>
                 <div className="flex flex-col md:flex-row gap-4">
                   <div className="flex flex-col w-full md:w-1/2">
                     <label>Email</label>
                     <input
-                      type="text"
+                      type="email"
                       name="userEmail"
                       placeholder="Type here"
                       className="w-full pl-2 bg-bgGray h-8 border-2 rounded-md"
-                      required
                     />
                   </div>
                   <div className="flex flex-col w-full md:w-1/2">
