@@ -8,7 +8,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 const ProfileDroyer = () => {
   const [open, setOpen] = useState(false);
   const { user, logout } = useContext(AuthContext);
-  const isUser = user.role === "User";
+  const isUser = user?.role === "User";
 
   const showDrawer = () => {
     setOpen(true);
