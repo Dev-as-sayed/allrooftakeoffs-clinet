@@ -36,6 +36,7 @@ const AddNewProjects = () => {
       axiouSecure.get("/get-userData").then((res) => setUsers(res.data.data));
     }
   }, [axiouSecure, isAdmin]);
+
   const handelAddNewProject = (e) => {
     e.preventDefault();
     setLoading(true);
@@ -48,7 +49,6 @@ const AddNewProjects = () => {
     const description = form.description.value;
     const subTotal = form.subTotal.value;
     const gst = form.gst.value;
-    // const total = form.total.value;
     const userName = form.userName.value;
     const userAddress = form.userAddress.value;
     const userPhone = form.userPhone.value;
@@ -70,25 +70,31 @@ const AddNewProjects = () => {
       gst,
     };
 
+    // If the user is Admin, include the client info
     if (isAdmin) {
-      const client = form.client.value;
-      project.assignedOn = {
-        _id: client._id,
-        name: client.name,
-        image: client.image,
-      };
-      project.userId = user._id;
+      const clientId = form.client.value; // Selected client ID
+
+      const client = users.find((user) => user._id === clientId);
+      if (client) {
+        project.assignedOn = {
+          _id: client._id,
+          name: client.name,
+          image: client.image,
+        };
+        project.userId = user._id;
+      }
     }
 
     console.log(project);
 
+    // Submit the project
     axiouSecure
       .post(url, project)
       .then((res) => {
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: "Project added successful...!",
+          title: "Project added successfully!",
           showConfirmButton: false,
           timer: 1500,
         });
@@ -143,7 +149,7 @@ const AddNewProjects = () => {
             {isAdmin && (
               <div className="w-full flex flex-col">
                 <label>Select Client</label>
-                <select
+                {/* <select
                   name="client"
                   className="w-full pl-2 bg-bgGray h-8 border-2 rounded-md"
                 >
@@ -152,6 +158,17 @@ const AddNewProjects = () => {
                     <>
                       <option value={user}>{user?.name}</option>
                     </>
+                  ))}
+                </select> */}
+                <select
+                  name="client"
+                  className="w-full pl-2 bg-bgGray h-8 border-2 rounded-md"
+                >
+                  <option value={""}>Select a client</option>
+                  {users.map((user) => (
+                    <option key={user._id} value={user._id}>
+                      {user?.name}
+                    </option>
                   ))}
                 </select>
               </div>
