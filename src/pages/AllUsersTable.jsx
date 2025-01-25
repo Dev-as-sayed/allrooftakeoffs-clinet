@@ -98,7 +98,7 @@ export default function AllUsersTable() {
                       ) : (
                         <div className="rounded-full w-full h-10 flex justify-center align-middle bg-bgGray">
                           <h1 className="h-fit my-auto text-xl text-textBlack font-serif font-medium">
-                            {data.name.slice(0, 2)}
+                            {data?.name?.slice(0, 2)}
                           </h1>
                         </div>
                       )}
